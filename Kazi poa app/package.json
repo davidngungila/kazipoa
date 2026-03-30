@@ -1,0 +1,23 @@
+{
+  "name": "kazipoa-app",
+  "version": "1.0.0",
+  "description": "Kazipoa - Professional Booking and Service Platform",
+  "main": "js/main.js",
+  "type": "module",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000 --bind 127.0.0.1",
+    "build": "echo 'Build script not configured yet'",
+    "test": "echo 'Test script not configured yet'"
+  },
+  "keywords": [
+    "booking",
+    "service",
+    "professional",
+    "platform"
+  ],
+  "author": "Kazipoa Team",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}

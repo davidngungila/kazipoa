@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html class="light" lang="sw"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kazipoa - Tafuta Kazi Tanzania</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0f00e7",
+                        "background-light": "#f6f5f8",
+                        "background-dark": "#100f23",
+                        "platinum": "#4b5563",
+                        "gold": "#b45309",
+                        "silver": "#64748b",
+                        "bronze": "#92400e",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .liquid-bg {
+            background: linear-gradient(135deg, #0f00e7 0%, #7e22ce 50%, #3b82f6 100%);
+            filter: blur(80px);
+            opacity: 0.15;
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            z-index: -1;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        body {
+          min-height: max(884px, 100dvh);
+        }
+
+        /* Kazipoa "Liquid Motion" & "Liquid Glass" Utility CSS */
+        :root {
+          --brand-blue: #0f00e7;
+          --liquid-glass-bg: rgba(255, 255, 255, 0.4);
+          --liquid-glass-border: rgba(255, 255, 255, 0.5);
+          --liquid-glass-blur: 15px;
+        }
+
+        /* 1. Transparent Liquid Glass Panels */
+        .liquid-glass-card {
+          background: var(--liquid-glass-bg);
+          backdrop-filter: blur(var(--liquid-glass-blur));
+          -webkit-backdrop-filter: blur(var(--liquid-glass-blur));
+          border: 1px solid var(--liquid-glass-border);
+          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+          border-radius: 24px;
+        }
+
+        /* 2. Interactive Ripple/Wave Effect for Buttons */
+        .liquid-button {
+          position: relative;
+          overflow: hidden;
+          transition: transform 0.2s ease;
+        }
+
+        .liquid-button:active {
+          transform: scale(0.96);
+        }
+
+        .liquid-button::after {
+          content: "";
+          display: block;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          pointer-events: none;
+          background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+          background-repeat: no-repeat;
+          background-position: 50%;
+          transform: scale(10, 10);
+          opacity: 0;
+          transition: transform 0.5s, opacity 1s;
+        }
+
+        .liquid-button:active::after {
+          transform: scale(0, 0);
+          opacity: 0.3;
+          transition: 0s;
+        }
+
+        /* 3. Fluid Background Animation */
+        @keyframes fluidMotion {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+
+        .liquid-bg-animated {
+          background: linear-gradient(-45deg, #f0f4ff, #e0e7ff, #ffffff, #dbeafe);
+          background-size: 400% 400%;
+          animation: fluidMotion 15s ease infinite;
+        }
+
+        /* 4. Motion on Scroll (Subtle parallax/fade) */
+        .motion-reveal {
+          opacity: 0;
+          transform: translateY(20px);
+          transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .motion-reveal.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        /* Nav specific animations */
+        .nav-active .material-symbols-outlined {
+            transform: translateY(-4px);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .nav-active p {
+            transform: scale(1.1);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen relative overflow-x-hidden">
+<!-- Liquid Motion Background Elements -->
+<div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+<div class="liquid-bg"></div>
+</div>
+<div class="relative flex h-full min-h-screen w-full flex-col pb-24">
+<!-- Top Navigation -->
+<div class="flex items-center glass-panel sticky top-0 z-50 p-4 justify-between">
+<div class="flex size-12 shrink-0 items-center">
+<div class="bg-primary/10 rounded-full size-10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-2xl">work</span>
+</div>
+</div>
+<h2 class="text-slate-900 dark:text-white text-xl font-bold leading-tight tracking-tight flex-1 ml-2">Kazipoa</h2>
+<div class="flex gap-2 items-center">
+<button class="flex items-center justify-center rounded-full size-10 bg-white/50 dark:bg-slate-800/50 text-slate-900 dark:text-white">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDf4Bgqqi2QujgMn5MeCtuTs-LsuyZeZcUNUE8jWvvE2Q6t-CBgvylYhMBic8B7bP5CooDzywcz-i_0QnrO1_-MKSmCkP1pv0HZ5ahAwnxKV6IXe06Aqs8dUEEdhDq4KD_Ihh3lqQQlTHipptKOEaKI2ZwLobFzrGDr1kpAhftIu2Ka4jO2Lsg_R1MBaz6HGbyMEOeTSIIIQSj11aPhzG_k6yERcn0ebrfPIV7m1ZSND3Z_kSbOMywu4SASpb9rUDZisdfDvEinew");'>
+</div>
+</div>
+</div>
+
+    <!-- Hero Section -->
+<div class="px-4 py-6">
+<div class="relative w-full rounded-xl overflow-hidden min-h-[180px] flex flex-col justify-end p-6 glass-panel">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent z-0"></div>
+<div class="relative z-10">
+<h1 class="text-2xl font-bold text-slate-900 leading-tight">Pata huduma mbalimbali</h1>
+<p class="text-slate-600 mt-1 text-sm">Chaguo ni lako</p>
+</div>
+</div>
+</div>
+<!-- Search Bar Floating Panel -->
+<div class="px-4 -mt-10 relative z-20">
+<div class="glass-panel rounded-xl p-2 shadow-xl shadow-primary/5">
+<label class="flex flex-col w-full">
+<div class="flex w-full items-stretch rounded-lg h-12 bg-white/80">
+<div class="text-slate-400 flex items-center justify-center pl-4">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input flex w-full border-none bg-transparent focus:ring-0 text-slate-900 placeholder:text-slate-400 px-3 text-base" placeholder="Tafuta fundi, dereva, au mwalimu..." value=""/>
+<button class="bg-primary text-white px-4 rounded-lg m-1 font-medium flex items-center gap-1" onclick="window.location.href='04.ClientID-registration.html'">
+<span class="text-sm">Tafuta</span>
+</button>
+</div>
+</label>
+</div>
+</div>
+<!-- Filters Horizontal Scroll -->
+<div class="flex gap-3 p-4 overflow-x-auto no-scrollbar flex-nowrap">
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary text-white px-5 shadow-lg shadow-primary/20">
+<span class="text-sm font-semibold">Zote</span>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full glass-panel px-5 text-slate-700">
+<span class="material-symbols-outlined text-primary text-xl">construction</span>
+<span class="text-sm font-medium">Ujenzi</span>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full glass-panel px-5 text-slate-700">
+<span class="material-symbols-outlined text-primary text-xl">restaurant</span>
+<span class="text-sm font-medium">Hotelini</span>
+</button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full glass-panel px-5 text-slate-700">
+<span class="material-symbols-outlined text-primary text-xl">laptop_mac</span>
+<span class="text-sm font-medium">Tehama</span>
+</button>
+</div>
+<!-- Content Section: Recommended Jobs -->
+<div class="px-4 pb-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Zilizopendekezwa</h3>
+<a class="text-primary text-sm font-semibold" href="#">Zote</a>
+</div>
+<!-- Job Card 1: Platinum Tier -->
+<div class="glass-panel rounded-xl p-4 mb-4 border-l-4 border-primary motion-reveal visible">
+<div class="flex justify-between items-start mb-3">
+<div class="flex gap-3">
+<div class="size-12 rounded-lg bg-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary text-3xl">domain</span>
+</div>
+<div>
+<div class="flex items-center gap-1.5 mb-0.5">
+<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-platinum uppercase border border-slate-200">Platinum</span>
+<div class="flex items-center gap-0.5 text-emerald-600">
+<span class="material-symbols-outlined text-xs font-bold">check_circle</span>
+<span class="text-[10px] font-bold">Verified</span>
+</div>
+</div>
+<h4 class="font-bold text-slate-900">Mhasibu Msaidizi</h4>
+<p class="text-xs text-slate-500">Peak Financials • Dar es Salaam</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-300">bookmark</span>
+</div>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-1 rounded uppercase">Muda Kamili</span>
+<span class="bg-slate-100 text-slate-600 text-[10px] font-bold px-2 py-1 rounded uppercase">Miaka 2+ Exp</span>
+</div>
+<div class="mb-4">
+<p class="text-primary font-bold text-sm">TZS 850,000/mwezi</p>
+</div>
+<div class="flex justify-between items-center pt-3 border-t border-slate-100">
+<div class="flex gap-2 w-full">
+<button class="liquid-button flex-1 py-2 px-4 rounded-lg border border-primary text-primary text-xs font-bold bg-white" onclick="window.location.href='05.ClientID-login.html'">
+    Wasiliana
+  </button>
+<button class="liquid-button flex-1 py-2 px-4 rounded-lg bg-primary text-white text-xs font-bold" onclick="window.location.href='04.ClientID-registration.html'">
+    Weka Miadi
+  </button>
+</div>
+</div>
+</div>
+<!-- Job Card 2: Gold Tier -->
+<div class="glass-panel rounded-xl p-4 mb-4 border-l-4 border-gold motion-reveal visible">
+<div class="flex justify-between items-start mb-3">
+<div class="flex gap-3">
+<div class="size-12 rounded-lg bg-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-gold text-3xl">restaurant</span>
+</div>
+<div>
+<div class="flex items-center gap-1.5 mb-0.5">
+<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-gold uppercase border border-slate-200">Gold</span>
+<div class="flex items-center gap-0.5 text-emerald-600">
+<span class="material-symbols-outlined text-xs font-bold">check_circle</span>
+<span class="text-[10px] font-bold">Verified</span>
+</div>
+</div>
+<h4 class="font-bold text-slate-900">Mfupa wa Chakula</h4>
+<p class="text-xs text-slate-500">Royal Kitchen • Mwanza</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-300">bookmark</span>
+</div>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-1 rounded uppercase">Muda Kamili</span>
+<span class="bg-slate-100 text-slate-600 text-[10px] font-bold px-2 py-1 rounded uppercase">Miaka 5+ Exp</span>
+</div>
+<div class="mb-4">
+<p class="text-gold font-bold text-sm">TZS 650,000/mwezi</p>
+</div>
+<div class="flex justify-between items-center pt-3 border-t border-slate-100">
+<div class="flex gap-2 w-full">
+<button class="liquid-button flex-1 py-2 px-4 rounded-lg border border-gold text-gold text-xs font-bold bg-white" onclick="window.location.href='05.ClientID-login.html'">
+    Wasiliana
+  </button>
+<button class="liquid-button flex-1 py-2 px-4 rounded-lg bg-gold text-white text-xs font-bold" onclick="window.location.href='04.ClientID-registration.html'">
+    Weka Miadi
+  </button>
+</div>
+</div>
+</div>
+<!-- Job Card 3: Silver Tier -->
+<div class="glass-panel rounded-xl p-4 mb-4 border-l-4 border-silver motion-reveal visible">
+<div class="flex justify-between items-start mb-3">
+<div class="flex gap-3">
+<div class="size-12 rounded-lg bg-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-silver text-3xl">school</span>
+</div>
+<div>
+<div class="flex items-center gap-1.5 mb-0.5">
+<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-silver uppercase border border-slate-200">Silver</span>
+<div class="flex items-center gap-0.5 text-emerald-600">
+<span class="material-symbols-outlined text-xs font-bold">check_circle</span>
+<span class="text-[10px] font-bold">Verified</span>
+</div>
+</div>
+<h4 class="font-bold text-slate-900">Mwalimu wa Hisabati</h4>
+<p class="text-xs text-slate-500">St. Mary's School • Arusha</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-300">bookmark</span>
+</div>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-1 rounded uppercase">Muda Kamili</span>
+<span class="bg-slate-100 text-slate-600 text-[10px] font-bold px-2 py-1 rounded uppercase">Miaka 3+ Exp</span>
+</div>
+<div class="mb-4">
+<p class="text-silver font-bold text-sm">TZS 450,000/mwezi</p>
+</div>
+<div class="flex justify-between items-center pt-3 border-t border-slate-100">
+<div class="flex gap-2 w-full">
+<button class="liquid-button flex-1 py-2 px-4 rounded-lg border border-silver text-silver text-xs font-bold bg-white" onclick="window.location.href='05.ClientID-login.html'">
+    Wasiliana
+  </button>
+<button class="liquid-button flex-1 py-2 px-4 rounded-lg bg-silver text-white text-xs font-bold" onclick="window.location.href='04.ClientID-registration.html'">
+    Weka Miadi
+  </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <!-- Footer -->
+    <footer class="glass-panel mt-16 px-6 py-8">
+        <div class="container mx-auto text-center">
+            <p class="text-gray-600 dark:text-gray-400">
+                © 2026 Kazipoa. Haki zote zimehifadhiwa.
+            </p>
+        </div>
+    </footer>
+
+    <!-- App Script -->
+<script type="module" src="../js/main.js"></script>
+</body>
+</html>

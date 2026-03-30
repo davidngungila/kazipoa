@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#0f00e7",
+              "background-light": "#f6f5f8",
+              "background-dark": "#100f23",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        :root {
+            --brand-blue: #0f00e7;
+            --liquid-glass-bg: rgba(255, 255, 255, 0.4);
+            --liquid-glass-border: rgba(255, 255, 255, 0.5);
+            --liquid-glass-blur: 15px;
+        }
+
+        /* 1. Transparent Liquid Glass Panels */
+        .liquid-glass-card {
+            background: var(--liquid-glass-bg);
+            backdrop-filter: blur(var(--liquid-glass-blur));
+            -webkit-backdrop-filter: blur(var(--liquid-glass-blur));
+            border: 1px solid var(--liquid-glass-border);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
+
+        /* 2. Interactive Ripple/Wave Effect for Buttons */
+        .liquid-button {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+
+        .liquid-button:active {
+            transform: scale(0.96);
+        }
+
+        .liquid-button::after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+            background-repeat: no-repeat;
+            background-position: 50%;
+            transform: scale(10, 10);
+            opacity: 0;
+            transition: transform 0.5s, opacity 1s;
+        }
+
+        .liquid-button:active::after {
+            transform: scale(0, 0);
+            opacity: 0.3;
+            transition: 0s;
+        }
+
+        /* 3. Fluid Background Animation */
+        @keyframes fluidMotion {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .liquid-bg {
+            background: linear-gradient(-45deg, #f0f4ff, #e0e7ff, #ffffff, #dbeafe);
+            background-size: 400% 400%;
+            animation: fluidMotion 15s ease infinite;
+        }
+
+        /* 4. Motion on Scroll (Subtle parallax/fade) */
+        .motion-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: revealUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes revealUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        body {
+            min-height: max(884px, 100dvh);
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative flex min-h-screen w-full flex-col max-w-md mx-auto bg-background-light dark:bg-background-dark shadow-2xl overflow-x-hidden liquid-bg">
+<!-- Header -->
+<header class="relative z-10 px-6 pt-8 pb-4 flex items-center justify-between">
+<button class="liquid-button w-10 h-10 flex items-center justify-center rounded-full bg-white/50 dark:bg-primary/20 backdrop-blur-md border border-white/20">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="text-xl font-black tracking-tight">Agiza Huduma</h1>
+<button class="liquid-button w-10 h-10 flex items-center justify-center rounded-full bg-white/50 dark:bg-primary/20 backdrop-blur-md border border-white/20">
+<span class="material-symbols-outlined text-primary">more_vert</span>
+</button>
+</header>
+<main class="relative z-10 px-6 flex-1 space-y-6">
+<!-- Service Provider Card -->
+<div class="liquid-glass-card rounded-3xl p-4 flex items-center gap-4 motion-reveal">
+<div class="w-16 h-16 rounded-2xl overflow-hidden relative ring-2 ring-white/50 shadow-md">
+<img alt="Professional Electrician" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjMwIhzU7aiNXQ6XoNwF6MlS25cKrl6bSSOTMDQu7SWYOcFHHnM3CDjDVIvAocXCnuC--KzGbU1_x995Jm8vIj0QCjaX0OtDIKlVmQpjRX0KAPCPYnajnCEtQipxJffdNkR_wvNuTVhFZ98tPtAan3ESF6iQxcU_rAPDRB7qr5m55WNJJ_2eriUzc33llW7HGrvx_ZYAU7Oxgh6A_A0E-6WwNlW1g-30B2EeXf0yVSNgXtWDTDoPDSz1GNvML5lSxfBuXVjsgYGzE"/>
+</div>
+<div>
+<h2 class="font-black text-lg tracking-tight">Juma Saidi</h2>
+<p class="text-slate-600 dark:text-slate-400 text-sm font-medium">Fundi Umeme Aliyebobea</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-amber-500 text-sm fill-1">star</span>
+<span class="text-xs font-bold">4.9 (Mapitio 124)</span>
+</div>
+</div>
+</div>
+<!-- Date Selection -->
+<section class="space-y-4 motion-reveal" style="animation-delay: 0.1s;">
+<div class="flex items-center justify-between px-1">
+<h3 class="text-xs font-black uppercase tracking-[0.2em] flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">event</span>
+                    Chagua Tarehe
+                </h3>
+<span class="text-primary font-bold text-sm">Oktoba 2023</span>
+</div>
+<div class="liquid-glass-card rounded-3xl p-5">
+<div class="grid grid-cols-7 gap-2 mb-4">
+<div class="text-center text-[10px] font-black text-slate-400 uppercase tracking-widest">Mo</div>
+<div class="text-center text-[10px] font-black text-slate-400 uppercase tracking-widest">Tu</div>
+<div class="text-center text-[10px] font-black text-slate-400 uppercase tracking-widest">We</div>
+<div class="text-center text-[10px] font-black text-slate-400 uppercase tracking-widest">Th</div>
+<div class="text-center text-[10px] font-black text-slate-400 uppercase tracking-widest">Fr</div>
+<div class="text-center text-[10px] font-black text-primary/70 uppercase tracking-widest">Sa</div>
+<div class="text-center text-[10px] font-black text-primary/70 uppercase tracking-widest">Su</div>
+</div>
+<div class="grid grid-cols-7 gap-2">
+<div class="h-10 flex items-center justify-center text-slate-300 font-medium">28</div>
+<div class="h-10 flex items-center justify-center text-slate-300 font-medium">29</div>
+<div class="h-10 flex items-center justify-center text-slate-300 font-medium">30</div>
+<div class="h-10 flex items-center justify-center text-slate-300 font-medium">31</div>
+<button class="liquid-button h-10 flex items-center justify-center rounded-xl font-bold hover:bg-white/50 transition-colors">1</button>
+<button class="liquid-button h-10 flex items-center justify-center rounded-xl font-bold hover:bg-white/50 transition-colors">2</button>
+<button class="liquid-button h-10 flex items-center justify-center rounded-xl font-bold hover:bg-white/50 transition-colors">3</button>
+<button class="liquid-button h-10 flex items-center justify-center rounded-xl font-bold hover:bg-white/50 transition-colors">4</button>
+<button class="liquid-button h-10 flex items-center justify-center rounded-xl font-bold hover:bg-white/50 transition-colors">5</button>
+<button class="liquid-button h-10 flex items-center justify-center rounded-xl font-bold hover:bg-white/50 transition-colors">6</button>
+<button class="liquid-button h-10 flex items-center justify-center rounded-xl bg-primary text-white font-black shadow-lg shadow-primary/30">7</button>
+<button class="liquid-button h-10 flex items-center justify-center rounded-xl font-bold hover:bg-white/50 transition-colors">8</button>
+<button class="liquid-button h-10 flex items-center justify-center rounded-xl font-bold hover:bg-white/50 transition-colors">9</button>
+<button class="liquid-button h-10 flex items-center justify-center rounded-xl font-bold hover:bg-white/50 transition-colors">10</button>
+<button class="liquid-button h-10 flex items-center justify-center rounded-xl font-bold hover:bg-white/50 transition-colors">11</button>
+<button class="liquid-button h-10 flex items-center justify-center rounded-xl font-bold hover:bg-white/50 transition-colors">12</button>
+</div>
+</div>
+</section>
+<!-- Time Slots -->
+<section class="space-y-4 motion-reveal" style="animation-delay: 0.2s;">
+<h3 class="text-xs font-black uppercase tracking-[0.2em] flex items-center gap-2 px-1">
+<span class="material-symbols-outlined text-primary text-lg">schedule</span>
+                Muda Unaopatikana
+            </h3>
+<div class="grid grid-cols-3 gap-3">
+<button class="liquid-button liquid-glass-card py-3 px-2 rounded-2xl text-sm font-bold hover:bg-primary/5 transition-all">09:00 AM</button>
+<button class="liquid-button py-3 px-2 rounded-2xl bg-primary text-white text-sm font-black shadow-lg shadow-primary/20">10:30 AM</button>
+<button class="liquid-button liquid-glass-card py-3 px-2 rounded-2xl text-sm font-bold hover:bg-primary/5 transition-all">01:00 PM</button>
+<button class="liquid-button liquid-glass-card py-3 px-2 rounded-2xl text-sm font-bold hover:bg-primary/5 transition-all">02:30 PM</button>
+<button class="liquid-button liquid-glass-card py-3 px-2 rounded-2xl text-sm font-bold hover:bg-primary/5 transition-all">04:00 PM</button>
+<button class="py-3 px-2 rounded-2xl bg-slate-200/50 dark:bg-slate-800/50 text-slate-400 text-sm font-bold cursor-not-allowed border border-transparent">05:30 PM</button>
+</div>
+</section>
+<!-- Location Preview -->
+<section class="pb-40 motion-reveal" style="animation-delay: 0.3s;">
+<h3 class="text-xs font-black uppercase tracking-[0.2em] flex items-center gap-2 px-1 mb-4">
+<span class="material-symbols-outlined text-primary text-lg">location_on</span>
+                Eneo la Huduma
+            </h3>
+<div class="h-28 rounded-3xl overflow-hidden relative liquid-glass-card p-1">
+<div class="w-full h-full rounded-[22px] overflow-hidden relative">
+<img alt="Map Location" class="w-full h-full object-cover grayscale opacity-40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAh8k8pk8wA3HiWeDcYWSzqZB8KeMC8mkAsgz_v_rwLVbqoa7X_EfmUEK-Yype2IP3tmPzpRRJYx4SmQINFXIc1qFxVtPDm7oS8Qbt3K3WH35p7NvgUY6FsHSMTtiMYT0jNdhNHvbnPxcrELAJAAxzIlEjBJBRMtvKOn_hP_Vj5S58gYjSqxuGll54H-9vVZWSlA0A6xKwzkc9ynrPNLsrutHVauO3iOdU-t3JD7jXrgeA-t0zYKGsLcUP4FMTgxbD2Wn5X8D6aDSw"/>
+<div class="absolute inset-0 bg-primary/5 backdrop-blur-[1px]"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="flex items-center gap-2 bg-white/90 dark:bg-slate-900/90 px-4 py-2 rounded-full shadow-xl">
+<span class="material-symbols-outlined text-primary text-lg fill-1">location_on</span>
+<span class="text-xs font-black">Masaki, Dar es Salaam</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Price & Action Panel -->
+<footer class="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-20 p-4">
+<div class="liquid-glass-card rounded-3xl px-6 py-6 overflow-hidden">
+<div class="flex justify-between items-center mb-6 relative z-10">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-[10px] uppercase tracking-[0.2em] font-black">Jumla Kuu</p>
+<div class="flex items-baseline gap-1">
+<span class="text-3xl font-black text-primary">45,000</span>
+<span class="text-sm font-black opacity-70">TZS</span>
+</div>
+</div>
+<div class="text-right">
+<p class="text-slate-500 dark:text-slate-400 text-[10px] font-bold">Ada: 5,000 TZS</p>
+<p class="text-slate-500 dark:text-slate-400 text-[10px] font-bold">Muda: ~2h</p>
+</div>
+</div>
+<button class="liquid-button w-full py-4 bg-primary text-white rounded-2xl font-black text-lg shadow-xl shadow-primary/30 flex items-center justify-center gap-2">
+                Thibitisha Miadi
+                <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</footer>
+<!-- Bottom Safe Area Spacer -->
+<div class="h-6 w-full shrink-0"></div>
+</div>
+    <!-- App Script -->
+    <script type="module" src="../js/main.js"></script>
+</body>
+</html>

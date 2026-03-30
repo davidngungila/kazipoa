@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html class="light" lang="sw"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kazipoa - Wasifu Professional</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary-fixed-variant": "#4338ca",
+              "on-secondary": "#ffffff",
+              "secondary-fixed": "#e0e7ff",
+              "outline-variant": "rgba(255, 255, 255, 0.3)",
+              "on-background": "#0f172a",
+              "surface-container-highest": "#d1d5db",
+              "on-error-container": "#991b1b",
+              "error": "#ef4444",
+              "surface-container-lowest": "#ffffff",
+              "surface-container": "#f1f5f9",
+              "on-secondary-fixed": "#000000",
+              "tertiary-fixed-dim": "#fed7aa",
+              "surface-container-low": "rgba(255, 255, 255, 0.4)",
+              "secondary": "#6366f1",
+              "on-primary-fixed": "#000000",
+              "surface": "#f8fafc",
+              "secondary-fixed-dim": "#c7d2fe",
+              "on-primary-fixed-variant": "#0f00e7",
+              "on-primary-container": "#0f00e7",
+              "inverse-surface": "#1e293b",
+              "inverse-primary": "#bfc1ff",
+              "tertiary": "#f59e0b",
+              "on-tertiary-fixed-variant": "#b45309",
+              "surface-dim": "#e5e7eb",
+              "outline": "#cbd5e1",
+              "background": "#f8fafc",
+              "surface-variant": "#f1f5f9",
+              "surface-container-high": "#e2e8f0",
+              "surface-bright": "#ffffff",
+              "primary-fixed-dim": "#c7d2fe",
+              "on-secondary-container": "#312e81",
+              "on-surface-variant": "#475569",
+              "primary-fixed": "#e0e7ff",
+              "on-primary": "#ffffff",
+              "on-tertiary-fixed": "#000000",
+              "tertiary-container": "#fef3c7",
+              "surface-tint": "#0f00e7",
+              "tertiary-fixed": "#ffedd5",
+              "primary": "#0f00e7",
+              "inverse-on-surface": "#f8fafc",
+              "secondary-container": "#e0e7ff",
+              "on-tertiary-container": "#92400e",
+              "on-surface": "#0f172a",
+              "on-error": "#ffffff",
+              "on-tertiary": "#ffffff",
+              "error-container": "#fee2e2",
+              "primary-container": "rgba(15, 0, 231, 0.1)"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        :root {
+            --brand-blue: #0f00e7;
+            --liquid-glass-bg: rgba(255, 255, 255, 0.4);
+            --liquid-glass-border: rgba(255, 255, 255, 0.5);
+            --liquid-glass-blur: 15px;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* 1. Transparent Liquid Glass Panels */
+        .liquid-glass-card {
+            background: var(--liquid-glass-bg);
+            backdrop-filter: blur(var(--liquid-glass-blur));
+            -webkit-backdrop-filter: blur(var(--liquid-glass-blur));
+            border: 1px solid var(--liquid-glass-border);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            border-radius: 24px;
+        }
+
+        /* 2. Interactive Ripple/Wave Effect for Buttons */
+        .liquid-button {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+
+        .liquid-button:active {
+            transform: scale(0.96);
+        }
+
+        .liquid-button::after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+            background-repeat: no-repeat;
+            background-position: 50%;
+            transform: scale(10, 10);
+            opacity: 0;
+            transition: transform 0.5s, opacity 1s;
+        }
+
+        .liquid-button:active::after {
+            transform: scale(0, 0);
+            opacity: 0.3;
+            transition: 0s;
+        }
+
+        /* 3. Fluid Background Animation */
+        @keyframes fluidMotion {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .liquid-bg {
+            background: linear-gradient(-45deg, #f0f4ff, #e0e7ff, #ffffff, #dbeafe);
+            background-size: 400% 400%;
+            animation: fluidMotion 15s ease infinite;
+        }
+
+        .platinum-gradient {
+            background: linear-gradient(135deg, #e2e8f0 0%, #ffffff 50%, #cbd5e1 100%);
+        }
+
+        body {
+            min-height: 100dvh;
+        }
+    </style>
+</head>
+<body class="liquid-bg font-body text-on-surface min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl fixed top-0 w-full z-50 border-b border-white/30 dark:border-slate-800/50 shadow-sm dark:shadow-none">
+<div class="flex items-center justify-between px-6 h-16 w-full">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-blue-700 dark:text-blue-400">account_circle</span>
+<h1 class="text-xl font-black text-blue-700 dark:text-blue-400 uppercase tracking-tighter font-['Inter']">Kazipoa</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 hover:opacity-80 transition-opacity cursor-pointer">notifications</span>
+</div>
+</div>
+</header>
+<main class="pt-24 px-6 max-w-lg mx-auto space-y-8">
+<!-- Profile Section -->
+<section class="flex flex-col items-center text-center space-y-4">
+<div class="relative">
+<div class="w-32 h-32 rounded-full overflow-hidden shadow-xl border-4 border-white/60 backdrop-blur-sm">
+<img alt="Professional profile" class="w-full h-full object-cover" data-alt="Close up portrait of a smiling professional man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_hbBiw___7FnfXaRoPKQtZHe1lBnIi7Ne7m-djyx4SIOs8NDUtIns7pLNHcboOR3uYYulM1afhc7AjYzsxPgPL-KvOWTAQ_n7ZfijkgUTmBbWbkZopi_Qy-Vlib7wv-ek6AXo_NLQxOvsVAVE4P4NCq6gDTexMg7mKC5AnKery4QPtQS_hL7Aj6OidOBI_t-4ayJ8zSyocEEQ_BhDy-w1MQ2Ztv5ANrVHuHqzi6VU8DIdR2dQ51BbSUlXOvK18c_F2x_JiCxx6bc"/>
+</div>
+<div class="absolute bottom-1 right-1 bg-primary text-white p-1.5 rounded-full border-2 border-white flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-[14px]" style='font-variation-settings: "FILL" 1;'>verified</span>
+</div>
+</div>
+<div>
+<p class="text-xs font-bold text-primary uppercase tracking-widest mb-1">Karibu tena</p>
+<h2 class="text-xl font-bold tracking-tight">David Ngugila</h2>
+<div class="flex items-center justify-center gap-2 mt-1">
+<span class="platinum-gradient text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-slate-200/50 shadow-sm text-slate-700">PLATINUM</span>
+<span class="text-sm text-on-surface-variant font-medium">Fundi Umeme Aliyeidhinishwa</span>
+</div>
+</div>
+</section>
+<!-- Earnings Glass Card -->
+<div class="liquid-glass-card p-6 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-8 opacity-10 pointer-events-none group-hover:scale-110 transition-transform duration-700">
+<span class="material-symbols-outlined text-8xl">payments</span>
+</div>
+<p class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Jumla ya Mapato: MWEZI HUU</p>
+<div class="mt-2 flex items-baseline gap-2">
+<span class="text-4xl font-black tracking-tight text-primary">1,450,000</span>
+<span class="text-sm font-bold text-primary/70">TZS</span>
+</div>
+<div class="mt-6 h-2.5 w-full bg-white/50 rounded-full overflow-hidden border border-white/20">
+<div class="h-full bg-primary rounded-full w-[92%] shadow-[0_0_10px_rgba(15,0,231,0.3)]"></div>
+</div>
+<div class="flex justify-between mt-3">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">LENGO: 1.5M</span>
+<span class="text-[10px] font-bold text-primary uppercase">92% IMEFIKIWA</span>
+</div>
+</div>
+<!-- Quick Actions Grid -->
+<section class="grid grid-cols-2 gap-4">
+<button class="liquid-glass-card liquid-button p-5 flex flex-col items-start gap-4 shadow-sm text-left">
+<div class="bg-primary/15 p-3 rounded-2xl">
+<span class="material-symbols-outlined text-primary">engineering</span>
+</div>
+<span class="text-sm font-bold leading-tight">Ofisi yangu</span>
+</button>
+<button class="liquid-glass-card liquid-button p-5 flex flex-col items-start gap-4 shadow-sm text-left">
+<div class="bg-secondary/15 p-3 rounded-2xl">
+<span class="material-symbols-outlined text-secondary">calendar_month</span>
+</div>
+<span class="text-sm font-bold leading-tight">Angalia<br/>Miadi</span>
+</button>
+<button class="liquid-glass-card liquid-button p-5 flex flex-col items-start gap-4 shadow-sm text-left">
+<div class="bg-slate-400/15 p-3 rounded-2xl">
+<span class="material-symbols-outlined text-slate-700">settings</span>
+</div>
+<span class="text-sm font-bold leading-tight">Wasifu wangu</span>
+</button>
+<button class="liquid-glass-card liquid-button p-5 flex flex-col items-start gap-4 shadow-sm text-left">
+<div class="bg-tertiary/15 p-3 rounded-2xl">
+<span class="material-symbols-outlined text-tertiary">insights</span>
+</div>
+<span class="text-sm font-bold leading-tight">Ripoti ya<br/>Uchambuzi</span>
+</button>
+</section>
+<!-- Stats Row Glass Panel -->
+<div class="flex justify-between items-center liquid-glass-card px-6 py-5">
+<div class="text-center">
+<p class="text-lg font-black leading-none text-on-surface">4.9</p>
+<p class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mt-1.5">DARAJA</p>
+</div>
+<div class="h-8 w-px bg-white/40"></div>
+<div class="text-center">
+<p class="text-lg font-black leading-none text-on-surface">124</p>
+<p class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mt-1.5">KAZI</p>
+</div>
+<div class="h-8 w-px bg-white/40"></div>
+<div class="text-center">
+<p class="text-lg font-black leading-none text-on-surface">98%</p>
+<p class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mt-1.5">AMINIKA</p>
+</div>
+</div>
+<!-- Logout Action -->
+<button class="w-full flex items-center justify-center gap-3 py-4 text-error font-bold text-sm tracking-wide bg-error-container/20 rounded-2xl border border-error/10 hover:bg-error-container/30 transition-colors liquid-button">
+<span class="material-symbols-outlined text-error">logout</span>
+            Ondoka
+        </button>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-safe bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl h-20 z-50 rounded-t-[32px] border-t border-white/40 dark:border-slate-800/50 shadow-[0_-8px_32px_rgba(0,0,0,0.08)]">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-600 dark:hover:text-blue-300" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold uppercase tracking-widest font-['Inter'] mt-1">Nyumbani</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 hover:text-blue-600 dark:hover:text-blue-300" href="#">
+<span class="material-symbols-outlined">event_available</span>
+<span class="text-[10px] font-bold uppercase tracking-widest font-['Inter'] mt-1">Miadi Yangu</span>
+</a>
+<!-- Active Tab: Wasifu -->
+<a class="flex flex-col items-center justify-center bg-blue-700/10 dark:bg-blue-400/10 text-blue-700 dark:text-blue-400 rounded-2xl px-4 py-1.5 active:scale-90 transition-transform duration-300" href="#">
+<span class="material-symbols-outlined" style='font-variation-settings: "FILL" 1;'>person</span>
+<span class="text-[10px] font-bold uppercase tracking-widest font-['Inter'] mt-1">Wasifu</span>
+</a>
+</nav>
+
+    <!-- App Script -->
+    <script type="module" src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nafasi Za Wateja - Kazipoa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .liquid-bg {
+            background: linear-gradient(135deg, #0f00e7 0%, #7e22ce 50%, #3b82f6 100%);
+            filter: blur(80px);
+            opacity: 0.15;
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            z-index: -1;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark .glass-panel {
+            background: rgba(16, 15, 35, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="liquid-bg"></div>
+    
+    <!-- Navigation -->
+    <nav class="glass-panel sticky top-0 z-30 px-6 py-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <a href="01.Index.html" class="text-2xl font-bold text-primary flex items-center gap-2">
+                    <span>🚀</span>
+                    <span>Kazipoa</span>
+                </a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700" data-action="toggle-theme">
+                    <span class="material-symbols-outlined">dark_mode</span>
+                </button>
+                <a href="13.Dashboard.html" class="text-primary hover:underline">
+                    <span class="material-symbols-outlined">home</span>
+                </a>
+                <button class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700" data-action="logout">
+                    <span class="material-symbols-outlined">logout</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+        <div class="max-w-6xl mx-auto">
+            <h1 class="text-3xl font-bold mb-8 flex items-center gap-2">
+                <span class="material-symbols-outlined">groups</span>
+                Nafasi Za Wateja
+            </h1>
+
+            <!-- Filter Tabs -->
+            <div class="flex gap-2 mb-6 overflow-x-auto">
+                <button class="px-4 py-2 bg-primary text-white rounded-lg whitespace-nowrap">
+                    Zote (15)
+                </button>
+                <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 whitespace-nowrap">
+                    Zinazosubiri (3)
+                </button>
+                <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 whitespace-nowrap">
+                    Zilizothibitishwa (8)
+                </button>
+                <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 whitespace-nowrap">
+                Zilizokamilika (4)
+                </button>
+                <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 whitespace-nowrap">
+                    Zilizoghairiwa (0)
+                </button>
+            </div>
+
+            <!-- Bookings List -->
+            <div class="space-y-4">
+                <!-- Pending Booking -->
+                <div class="glass-panel p-6 rounded-xl">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex items-center gap-4">
+                            <div class="text-3xl">👤</div>
+                            <div>
+                                <h3 class="text-lg font-semibold">Grace Mwanga</h3>
+                                <p class="text-gray-600 dark:text-gray-400">grace.mwanga@email.com</p>
+                                <p class="text-sm text-gray-500">+255 712 345 678</p>
+                            </div>
+                        </div>
+                        <span class="badge badge-warning">Inasubiri</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div class="bg-white dark:bg-gray-800 p-3 rounded-lg">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Huduma</p>
+                            <p class="font-medium">Upishi</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 p-3 rounded-lg">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Bei</p>
+                            <p class="font-medium">TZS 80,000</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 p-3 rounded-lg">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Tarehe</p>
+                            <p class="font-medium">Apr 2, 2026</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 p-3 rounded-lg">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Muda</p>
+                            <p class="font-medium">10:00 - 12:00</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 p-3 rounded-lg mb-4">
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Maelezo</p>
+                        <p class="text-sm">Nahituali kupika chakula cha harusi kwa watu 20. Tafadhali kuwa na uzoefu wa upishi wa vyakula vya kitamaduni.</p>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <button class="bg-success text-white px-4 py-2 rounded-lg hover:bg-success/90">
+                            <span class="material-symbols-outlined text-sm">check</span>
+                            Thibitisha
+                        </button>
+                        <button class="bg-error text-white px-4 py-2 rounded-lg hover:bg-error/90">
+                            <span class="material-symbols-outlined text-sm">close</span>
+                            Kataa
+                        </button>
+                        <button class="border border-gray-300 dark:border-gray-600 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <span class="material-symbols-outlined text-sm">phone</span>
+                            Piga Simu
+                        </button>
+                        <button class="border border-gray-300 dark:border-gray-600 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <span class="material-symbols-outlined text-sm">message</span>
+                            Tuma Ujumbe
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Confirmed Booking -->
+                <div class="glass-panel p-6 rounded-xl">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex items-center gap-4">
+                            <div class="text-3xl">👨</div>
+                            <div>
+                                <h3 class="text-lg font-semibold">David Masanja</h3>
+                                <p class="text-gray-600 dark:text-gray-400">david.masanja@email.com</p>
+                                <p class="text-sm text-gray-500">+255 765 432 109</p>
+                            </div>
+                        </div>
+                        <span class="badge badge-primary">Imethibitishwa</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div class="bg-white dark:bg-gray-800 p-3 rounded-lg">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Huduma</p>
+                            <p class="font-medium">Ufundi</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 p-3 rounded-lg">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Bei</p>
+                            <p class="font-medium">TZS 150,000</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 p-3 rounded-lg">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Tarehe</p>
+                            <p class="font-medium">Apr 1, 2026</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 p-3 rounded-lg">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Muda</p>
+                            <p class="font-medium">14:00 - 17:00</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 p-3 rounded-lg mb-4">
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Maelezo</p>
+                            <p class="text-sm">Ninahitaji kabati la jikoni lenye vifaa vya kuwekea vyombo. Vipimo: 2m x 1m.</p>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90">
+                            <span class="material-symbols-outlined text-sm">check_circle</span>
+                            Alisha Kazi
+                        </button>
+                        <button class="border border-gray-300 dark:border-gray-600 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <span class="material-symbols-outlined text-sm">phone</span>
+                            Piga Simu
+                        </button>
+                        <button class="border border-gray-300 dark:border-gray-600 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <span class="material-symbols-outlined text-sm">message</span>
+                            Tuma Ujumbe
+                        </button>
+                        <button class="border border-gray-300 dark:border-gray-600 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <span class="material-symbols-outlined text-sm">edit</span>
+                            Badili Nafasi
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Completed Booking -->
+                <div class="glass-panel p-6 rounded-xl opacity-75">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex items-center gap-4">
+                            <div class="text-3xl">👩</div>
+                            <div>
+                                <h3 class="text-lg font-semibold">Sarah Joseph</h3>
+                                <p class="text-gray-600 dark:text-gray-400">sarah.joseph@email.com</p>
+                                <p class="text-sm text-gray-500">+255 734 567 890</p>
+                            </div>
+                        </div>
+                        <span class="badge badge-success">Imekamilika</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div class="bg-white dark:bg-gray-800 p-3 rounded-lg">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Huduma</p>
+                            <p class="font-medium">Usafi wa Nyumbani</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 p-3 rounded-lg">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Bei</p>
+                            <p class="font-medium">TZS 60,000</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 p-3 rounded-lg">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Tarehe</p>
+                            <p class="font-medium">Mar 30, 2026</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 p-3 rounded-lg">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Muda</p>
+                            <p class="font-medium">09:00 - 11:00</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 p-3 rounded-lg mb-4">
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Ukaguzi</p>
+                        <div class="flex items-center gap-2">
+                            <div class="flex text-yellow-400">
+                                <span class="material-symbols-outlined text-sm">star</span>
+                                <span class="material-symbols-outlined text-sm">star</span>
+                                <span class="material-symbols-outlined text-sm">star</span>
+                                <span class="material-symbols-outlined text-sm">star</span>
+                                <span class="material-symbols-outlined text-sm">star_border</span>
+                            </div>
+                            <span class="text-sm">4.0 - "Huduma nzuri, nyumba imekuwa safi sana!"</span>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90">
+                            <span class="material-symbols-outlined text-sm">repeat</span>
+                            Weka Nafasi Nyingine
+                        </button>
+                        <button class="border border-gray-300 dark:border-gray-600 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <span class="material-symbols-outlined text-sm">receipt_long</span>
+                            Ona Ankara
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-panel mt-16 px-6 py-8">
+        <div class="container mx-auto text-center">
+            <p class="text-gray-600 dark:text-gray-400">
+                © 2026 Kazipoa. Haki zote zimehifadhiwa.
+            </p>
+        </div>
+    </footer>
+
+    <!-- App Script -->
+    <script type="module" src="../js/main.js"></script>
+</body>
+</html>

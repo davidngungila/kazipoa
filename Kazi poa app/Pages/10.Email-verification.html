@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html class="light" lang="sw"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Professional Registration - Verification</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#0f00e7",
+              "on-surface": "#0f172a",
+              "on-surface-variant": "#475569",
+              "background": "#f8fafc",
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "2xl": "2rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Liquid Motion Background from reference */
+        .liquid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(120deg, #f6f5f8 0%, #e0e7ff 100%);
+            overflow: hidden;
+        }
+        .blob {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(180deg, rgba(15, 0, 231, 0.15) 0%, rgba(15, 0, 231, 0.05) 100%);
+            filter: blur(80px);
+            border-radius: 50%;
+            z-index: -1;
+            animation: move 25s infinite alternate;
+        }
+        .blob-2 {
+            width: 400px;
+            height: 400px;
+            right: -100px;
+            top: -100px;
+            background: rgba(15, 0, 231, 0.1);
+            animation-duration: 30s;
+            animation-delay: -5s;
+        }
+        @keyframes move {
+            from { transform: translate(-10%, -10%) rotate(0deg); }
+            to { transform: translate(20%, 20%) rotate(360deg); }
+        }
+
+        /* Glassmorphism from reference */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .platinum-gradient {
+            background: linear-gradient(135deg, #e2e8f0 0%, #ffffff 50%, #cbd5e1 100%);
+        }
+
+        /* Nav Active Dot from reference */
+        .nav-active-dot {
+            position: absolute;
+            bottom: -4px;
+            width: 4px;
+            height: 4px;
+            background: #0f00e7;
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-background font-body text-on-background min-h-screen">
+<div class="liquid-bg">
+<div class="blob"></div>
+<div class="blob blob-2"></div>
+</div>
+<!-- TopAppBar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex items-center px-4 h-16 bg-white/80 backdrop-blur-md border-b border-slate-200/50 shadow-sm">
+<div class="flex items-center w-full max-w-xl mx-auto">
+<button class="material-symbols-outlined text-primary p-2 hover:bg-primary/10 rounded-full transition-colors active:scale-95 duration-200" onclick="history.back()">arrow_back</button>
+<h1 class="font-bold text-lg tracking-tight text-on-surface flex-1 text-center pr-10">Thibitisha</h1>
+</div>
+</nav>
+<main class="pt-24 pb-32 px-6 max-w-lg mx-auto">
+<!-- Step Indicator from Reference (Step 2 Active) -->
+<div class="flex flex-col items-center mb-8">
+<div class="flex w-full flex-row items-center justify-center gap-3 py-2 bg-transparent">
+<div class="h-1.5 w-10 rounded-full bg-primary/30"></div>
+<div class="h-1.5 w-10 rounded-full bg-primary shadow-sm shadow-primary/30"></div>
+<div class="h-1.5 w-3 rounded-full bg-slate-300"></div>
+</div>
+<p class="text-[10px] font-bold uppercase tracking-widest text-primary/60 mt-1">Hatua ya 2 kati ya 3</p>
+</div>
+<!-- Main Glass Card -->
+<div class="glass-panel rounded-[2.5rem] p-8 shadow-2xl shadow-primary/5 relative overflow-hidden">
+<div class="flex flex-col items-center text-center relative z-10">
+<!-- Icon Area -->
+<div class="w-20 h-20 platinum-gradient rounded-full flex items-center justify-center shadow-inner mb-6 border border-white/60">
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">mark_email_read</span>
+</div>
+<!-- Headline -->
+<h2 class="text-2xl font-bold tracking-tight text-on-surface mb-3">Thibitisha Barua Pepe</h2>
+<!-- Message -->
+<p class="text-sm text-on-surface-variant leading-relaxed mb-8">
+                    Tumekutumia namba ya siri (OTP) kwenye barua pepe yako <span class="font-bold text-on-surface">johndoe@gmail.com</span>. Tafadhali iingize hapa chini.
+                </p>
+<!-- OTP Inputs (6-digit) -->
+<div class="flex gap-2 mb-10 justify-center">
+<input class="w-11 h-14 bg-white/60 border border-slate-200/50 rounded-xl text-center text-xl font-bold text-primary focus:ring-2 focus:ring-primary shadow-sm" maxlength="1" type="text"/>
+<input class="w-11 h-14 bg-white/60 border border-slate-200/50 rounded-xl text-center text-xl font-bold text-primary focus:ring-2 focus:ring-primary shadow-sm" maxlength="1" type="text"/>
+<input class="w-11 h-14 bg-white/60 border border-slate-200/50 rounded-xl text-center text-xl font-bold text-primary focus:ring-2 focus:ring-primary shadow-sm" maxlength="1" type="text"/>
+<input class="w-11 h-14 bg-white/60 border border-slate-200/50 rounded-xl text-center text-xl font-bold text-primary focus:ring-2 focus:ring-primary shadow-sm" maxlength="1" type="text"/>
+<input class="w-11 h-14 bg-white/60 border border-slate-200/50 rounded-xl text-center text-xl font-bold text-primary focus:ring-2 focus:ring-primary shadow-sm" maxlength="1" type="text"/>
+<input class="w-11 h-14 bg-white/60 border border-slate-200/50 rounded-xl text-center text-xl font-bold text-primary focus:ring-2 focus:ring-primary shadow-sm" maxlength="1" type="text"/>
+</div>
+<!-- Primary Action -->
+<button class="w-full bg-primary text-white font-bold h-14 rounded-2xl shadow-xl shadow-primary/25 hover:scale-[1.02] active:scale-95 transition-all duration-200 mb-6 flex items-center justify-center gap-2 group">
+<span>Thibitisha</span>
+<span class="material-symbols-outlined text-lg transition-transform group-hover:translate-x-1">chevron_right</span>
+</button>
+<!-- Secondary Link -->
+<button class="text-sm font-bold text-primary hover:underline transition-all">
+                    Tuma Tena
+                </button>
+</div>
+</div>
+<!-- Support Illustration -->
+<div class="mt-12 flex items-center justify-center gap-6 opacity-40 grayscale pointer-events-none">
+<img alt="Security Icon" class="w-8 h-8" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmJ1eYt7Pz5C6M4PuXGoZZlbh6ZXZ7Pfs7QorqPxfxY6pgkga-1nIzp3f5A6T7nhEzZuGz9Y7jxQzPa14XlqC7S3i42l_ey-1lidk7sMT00EYvZxZae8U1qZJEB2FPQQGKbBJSWAdMOpb7qj8nmxwk8qORk2p3a-KHd0vYGb1Z1H_YQjS0F5wbQ0A-tGn-YrSFaGRsGKMMJ3T0GP6q2a5-5itDDeZ-CipgCXmat4KkvfOMNll52jgPBeJWd-lU4lGNEStUaqA83O0"/>
+<img alt="Privacy Icon" class="w-8 h-8" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwS5sFF7fGsg8XeJjBBcB-HXbkhdV1Idi-fvspogTL3bRdVn9EP9WNyXnPMqkz2NDi_FQr4qp30lQcTVGJqVZQYi70MG-gMGQAhPqL9d80aSQOjPnXUn3d3ORJ8Ao2IY_LOUvuF5hjjsnuTkJSTAdxc2oFnTfw-K4MV3B7gcjb3XpHDDN1TuyDqZQwEqZOyV_QYqacSzeDpV5rBYUOJhwJbE50Ejs-tYgcLEKovbydZ7XRRRrn6b11hbFLDggtbrbtKMXCBLyxTy8"/>
+</div>
+</main>
+<!-- BottomNavBar from Reference Style -->
+<footer class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-t border-slate-200/50 px-6 py-3 z-30">
+<div class="flex justify-between items-center max-w-xl mx-auto">
+<!-- Nyumbani -->
+<div class="flex flex-col items-center gap-1 opacity-40 cursor-pointer">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Nyumbani</span>
+</div>
+<!-- Miadi Yangu -->
+<div class="flex flex-col items-center gap-1 opacity-40 cursor-pointer">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Miadi Yangu</span>
+</div>
+<!-- Wasifu (Active) -->
+<div class="relative flex flex-col items-center gap-1 text-primary cursor-pointer">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Wasifu</span>
+<div class="nav-active-dot"></div>
+</div>
+</div>
+</footer>
+</body></html>

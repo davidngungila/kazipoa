@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uthibitisho Wa Barua Pepe - Kazipoa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .liquid-bg {
+            background: linear-gradient(135deg, #0f00e7 0%, #7e22ce 50%, #3b82f6 100%);
+            filter: blur(80px);
+            opacity: 0.15;
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            z-index: -1;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark .glass-panel {
+            background: rgba(16, 15, 35, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="liquid-bg"></div>
+    
+    <!-- Navigation -->
+    <nav class="glass-panel sticky top-0 z-30 px-6 py-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <a href="01.Index.html" class="text-2xl font-bold text-primary flex items-center gap-2">
+                    <span>🚀</span>
+                    <span>Kazipoa</span>
+                </a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700" data-action="toggle-theme">
+                    <span class="material-symbols-outlined">dark_mode</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+        <div class="max-w-md mx-auto">
+            <div class="glass-panel p-8 rounded-xl text-center">
+                <div class="text-6xl mb-6">📧</div>
+                <h1 class="text-3xl font-bold mb-4">Thibitisha Barua Pepe</h1>
+                <p class="text-gray-600 dark:text-gray-400 mb-8">
+                    Tumekutumia barua pepe ya uthibitisho. Tafadhali angalia kwenye kasha lako na bofya kiungo cha uthibitisho.
+                </p>
+
+                <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-8">
+                    <p class="text-sm text-blue-800 dark:text-blue-200">
+                        <strong>Barua pepe:</strong> <span id="user-email">user@example.com</span>
+                    </p>
+                </div>
+
+                <div class="space-y-4">
+                    <button 
+                        onclick="window.location.href='13.Dashboard.html'"
+                        class="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary/90 transition-all"
+                    >
+                        Nimepata Kiungo
+                    </button>
+                    
+                    <button 
+                        onclick="resendEmail()"
+                        class="w-full border border-primary text-primary py-3 rounded-lg font-semibold hover:bg-primary hover:text-white transition-all"
+                    >
+                        Tuma Upya Barua Pepe
+                    </button>
+                </div>
+
+                <div class="mt-8 text-center">
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                        Hamkupata barua pepe?
+                    </p>
+                    <ul class="text-left text-sm text-gray-600 dark:text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm">check_circle</span>
+                            Angalia kwenye folda la spam
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm">check_circle</span>
+                            Hakikisha barua pepe ni sahihi
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm">check_circle</span>
+Subiri dakika 5 kisha jaribu tena
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-600">
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        Kama bado unakumbwa, 
+                        <a href="#" class="text-primary hover:underline">wasiliana na msaada</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-panel mt-16 px-6 py-8">
+        <div class="container mx-auto text-center">
+            <p class="text-gray-600 dark:text-gray-400">
+                © 2026 Kazipoa. Haki zote zimehifadhiwa.
+            </p>
+        </div>
+    </footer>
+
+    <!-- App Script -->
+    <script type="module" src="../js/main.js"></script>
+    <script>
+        function resendEmail() {
+            // Simulate resending email
+            const button = event.target;
+            button.textContent = 'Inatumwa...';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                button.textContent = 'Barua Pepe Imetumwa Upya!';
+                button.classList.remove('border-primary', 'text-primary');
+                button.classList.add('bg-success', 'text-white');
+                
+                setTimeout(() => {
+                    button.textContent = 'Tuma Upya Barua Pepe';
+                    button.classList.remove('bg-success', 'text-white');
+                    button.classList.add('border-primary', 'text-primary');
+                    button.disabled = false;
+                }, 3000);
+            }, 2000);
+        }
+
+        // Set user email from URL params or storage
+        const urlParams = new URLSearchParams(window.location.search);
+        const email = urlParams.get('email') || 'user@example.com';
+        document.getElementById('user-email').textContent = email;
+    </script>
+</body>
+</html>

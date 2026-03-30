@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+<html class="light" lang="sw"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Miadi Yangu - Marketplace</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-high": "#e2e8f0",
+              "tertiary-fixed": "#ffedd5",
+              "background": "#f8fafc",
+              "tertiary-container": "#fef3c7",
+              "secondary": "#6366f1",
+              "surface-container-lowest": "#ffffff",
+              "on-background": "#0f172a",
+              "on-secondary-fixed-variant": "#4338ca",
+              "on-error-container": "#991b1b",
+              "primary-fixed": "#e0e7ff",
+              "on-primary-container": "#0f00e7",
+              "inverse-on-surface": "#f8fafc",
+              "outline-variant": "rgba(255, 255, 255, 0.3)",
+              "on-primary": "#ffffff",
+              "on-tertiary": "#ffffff",
+              "error-container": "#fee2e2",
+              "on-secondary-container": "#312e81",
+              "surface-container": "#f1f5f9",
+              "on-error": "#ffffff",
+              "surface-container-low": "rgba(255, 255, 255, 0.4)",
+              "primary-fixed-dim": "#c7d2fe",
+              "on-tertiary-container": "#92400e",
+              "on-surface-variant": "#475569",
+              "surface": "#f8fafc",
+              "surface-container-highest": "#d1d5db",
+              "inverse-primary": "#bfc1ff",
+              "on-secondary": "#ffffff",
+              "on-primary-fixed-variant": "#0f00e7",
+              "surface-dim": "#e5e7eb",
+              "surface-variant": "#f1f5f9",
+              "secondary-container": "#e0e7ff",
+              "primary": "#0f00e7",
+              "on-secondary-fixed": "#000000",
+              "tertiary-fixed-dim": "#fed7aa",
+              "secondary-fixed-dim": "#c7d2fe",
+              "primary-container": "rgba(15, 0, 231, 0.1)",
+              "surface-tint": "#0f00e7",
+              "on-tertiary-fixed": "#000000",
+              "on-tertiary-fixed-variant": "#b45309",
+              "on-primary-fixed": "#000000",
+              "on-surface": "#0f172a",
+              "surface-bright": "#ffffff",
+              "tertiary": "#f59e0b",
+              "inverse-surface": "#1e293b",
+              "secondary-fixed": "#e0e7ff",
+              "error": "#ef4444",
+              "outline": "#cbd5e1"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .liquid-glass {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .mesh-gradient-bg {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(15, 0, 231, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.05) 0px, transparent 50%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="mesh-gradient-bg font-body text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full px-6 flex justify-between items-center h-16 bg-white/70 backdrop-blur-md z-50 border-b border-white/30 shadow-sm">
+<div class="flex items-center gap-4">
+<button class="text-blue-700 active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="text-blue-700 font-headline font-bold text-lg tracking-tight">Miadi Yangu</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-blue-700 active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<main class="pt-20 px-4 max-w-2xl mx-auto space-y-6">
+<!-- Search and Filters -->
+<section class="space-y-4">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full pl-12 pr-4 py-4 rounded-2xl border-none liquid-glass shadow-sm focus:ring-2 focus:ring-primary/20 text-on-surface placeholder-slate-400" placeholder="Tafuta miadi yako..." type="text"/>
+</div>
+<div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide no-underline">
+<button class="px-5 py-2 rounded-full bg-primary text-white font-medium text-sm whitespace-nowrap shadow-lg shadow-primary/20 transition-all active:scale-95">Zilizokubaliwa</button>
+<button class="px-5 py-2 rounded-full liquid-glass text-slate-600 font-medium text-sm whitespace-nowrap border border-white/50 active:scale-95">Zinasubiri</button>
+<button class="px-5 py-2 rounded-full liquid-glass text-slate-600 font-medium text-sm whitespace-nowrap border border-white/50 active:scale-95">Zilizokataliwa</button>
+<button class="px-5 py-2 rounded-full liquid-glass text-slate-600 font-medium text-sm whitespace-nowrap border border-white/50 active:scale-95">Zilizopita</button>
+</div>
+</section>
+<!-- Main Content: Active Bookings (Zilizokubaliwa) -->
+<section class="space-y-4">
+<div class="flex justify-between items-end px-2">
+<h2 class="text-xl font-headline font-bold text-on-surface">Zilizokubaliwa</h2>
+<span class="text-xs font-label font-bold text-primary uppercase tracking-widest">2 Miadi</span>
+</div>
+<!-- Booking Card 1 -->
+<div class="liquid-glass rounded-[2rem] p-6 shadow-xl relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4">
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Inaendelea</span>
+</div>
+<div class="flex gap-4 items-start mb-6">
+<div class="w-16 h-16 rounded-2xl overflow-hidden shadow-inner bg-slate-100 flex-shrink-0">
+<img alt="Professional Plumber" class="w-full h-full object-cover" data-alt="Close up of professional plumber smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8D6FHRQoJ6z0gFQ7mxIM5nYlb-DfuxXw391vBHWkv4ECreccz7po0IJ9tWcXH3Md3pY8fNkvOOy66xK4-B4XKo5LzYGYXVL29Rx8Bx2H2epLw9vu4h_xtYoL6AK8fWv52faGsyYb5gTIybatYm1SxvPWCghaXl1Dpumr9_f2adXgOHjd-dcz2e1Rd4wxO9CuPMoI7KJQMjsoYHsC1rTx8MW09gHwSIYhCUaJg-PDiAz5W1tTjtfBuEiVWkBcaM-PQhnG5se7XQ0s"/>
+</div>
+<div>
+<h3 class="font-bold text-lg leading-tight">Juma Rashid</h3>
+<p class="text-slate-500 text-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="plumbing">plumbing</span>
+                            Fundi Bomba
+                        </p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-yellow-500 text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold">4.9</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-6">
+<div class="bg-white/30 rounded-2xl p-3 flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-xl" data-icon="calendar_month">calendar_month</span>
+</div>
+<div>
+<p class="text-[10px] uppercase font-bold text-slate-400">Tarehe</p>
+<p class="text-sm font-bold">Oktoba 24</p>
+</div>
+</div>
+<div class="bg-white/30 rounded-2xl p-3 flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-xl" data-icon="schedule">schedule</span>
+</div>
+<div>
+<p class="text-[10px] uppercase font-bold text-slate-400">Muda</p>
+<p class="text-sm font-bold">14:00 Jioni</p>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-white/20">
+<div>
+<p class="text-[10px] uppercase font-bold text-slate-400">Gharama</p>
+<p class="text-lg font-black text-primary tracking-tight">TZS 45,000</p>
+</div>
+<button class="bg-primary text-white px-6 py-3 rounded-2xl font-bold text-sm shadow-lg shadow-primary/30 active:scale-95 duration-200 transition-all">
+                        Maelezo zaidi
+                    </button>
+</div>
+</div>
+<!-- Booking Card 2 -->
+<div class="liquid-glass rounded-[2rem] p-6 shadow-xl relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4">
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Imehakikiwa</span>
+</div>
+<div class="flex gap-4 items-start mb-6">
+<div class="w-16 h-16 rounded-2xl overflow-hidden shadow-inner bg-slate-100 flex-shrink-0">
+<img alt="Electrician Specialist" class="w-full h-full object-cover" data-alt="Electrical professional working on panel" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-qP9yQzyJDiZONhRyMNvgLKqL0mAyvCbC4Pt4mAFznEaw0e5les7GHNse6G6y6BrFgrdLE5J9TRW-C7N-q4nHUmXZFWH-nHlZUDxj0Cdr0ealHNVwbW8kF9rsrvdSEU6fUx6-k_ryUarxgSZdkVHn-Y48OgKVeM1LalZSkN9wpT9qO16y7ysW_5DdQir4VzBV43m3mdOAZiPItihB4qfFkePktZEiBgZv0q2jBwnVQj7KW_A94CIxKuF5lO2laTlcGvbdpn7Qn8Y"/>
+</div>
+<div>
+<h3 class="font-bold text-lg leading-tight">Sarah Mussa</h3>
+<p class="text-slate-500 text-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="electrical_services">electrical_services</span>
+                            Fundi Umeme
+                        </p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-yellow-500 text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold">5.0</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-6">
+<div class="bg-white/30 rounded-2xl p-3 flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-xl" data-icon="calendar_month">calendar_month</span>
+</div>
+<div>
+<p class="text-[10px] uppercase font-bold text-slate-400">Tarehe</p>
+<p class="text-sm font-bold">Oktoba 28</p>
+</div>
+</div>
+<div class="bg-white/30 rounded-2xl p-3 flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-xl" data-icon="schedule">schedule</span>
+</div>
+<div>
+<p class="text-[10px] uppercase font-bold text-slate-400">Muda</p>
+<p class="text-sm font-bold">09:00 Alfajiri</p>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-white/20">
+<div>
+<p class="text-[10px] uppercase font-bold text-slate-400">Gharama</p>
+<p class="text-lg font-black text-primary tracking-tight">TZS 35,000</p>
+</div>
+<button class="bg-primary text-white px-6 py-3 rounded-2xl font-bold text-sm shadow-lg shadow-primary/30 active:scale-95 duration-200 transition-all">
+                        Maelezo zaidi
+                    </button>
+</div>
+</div>
+</section>
+<!-- Secondary Section: Incoming (Zinasubiri) -->
+<section class="space-y-4">
+<div class="flex justify-between items-end px-2">
+<h2 class="text-xl font-headline font-bold text-on-surface">Zinasubiri</h2>
+</div>
+<div class="liquid-glass rounded-3xl p-4 flex items-center gap-4 border-white/60">
+<div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600">
+<span class="material-symbols-outlined" data-icon="pending">pending</span>
+</div>
+<div class="flex-1">
+<p class="font-bold text-sm">Usafi wa Nyumba</p>
+<p class="text-xs text-slate-500">Ombi limetumwa kwa Neema John</p>
+</div>
+<div class="text-right">
+<p class="text-xs font-bold text-primary">Kusubiri...</p>
+<p class="text-[10px] text-slate-400">Dakika 5 zilizopita</p>
+</div>
+</div>
+</section>
+<!-- Third Section: Past (Zilizopita) -->
+<section class="space-y-4">
+<div class="flex justify-between items-end px-2">
+<h2 class="text-xl font-headline font-bold text-on-surface">Zilizopita</h2>
+</div>
+<div class="bg-white/20 rounded-3xl p-5 border border-white/20 space-y-4 opacity-80 hover:opacity-100 transition-opacity">
+<div class="flex justify-between items-start">
+<div class="flex gap-3 items-center">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-white shadow-sm">
+<img alt="Past Contractor" class="w-full h-full object-cover" data-alt="Portrait of service provider" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBweCSgEig-Hk94_WjJsPHSDOZ1KjfnACbzDlXgBpc7T4BocizLZMGp4KUE18hS0oc1-DAQWK1VEWn86cKzYO0hXg_1wF4x9PCAUBXa_53gi5nGcKYlgJbNWSxrTdRF8DP-ZHkG4-S-wm-WLI08vIj_rLUQJPAyD9t3AqJ-_gGwuZ0KKPaEUvwkJYGB-oQSqFur2ORtqPZLh-AO1yo-fEr33zbtGJpEsjkjHQgELUhC5M9on2jDtGs6FOWmsjGVSffVgGrG_Yf2LX0"/>
+</div>
+<div>
+<p class="font-bold text-sm">Fundi AC - Ally</p>
+<p class="text-[10px] text-slate-500 font-medium">Ilikamilika: Oktoba 10, 2023</p>
+</div>
+</div>
+<span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">ILIKAMILIKA</span>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 bg-white/50 text-slate-700 rounded-xl text-xs font-bold active:scale-95 transition-all border border-white/40">Toa Maoni</button>
+<button class="flex-1 py-2 bg-primary/10 text-primary rounded-xl text-xs font-bold active:scale-95 transition-all">Agiza Tena</button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-safe bg-white/70 backdrop-blur-md z-50 h-20 border-t border-white/40 shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+<a class="flex flex-col items-center justify-center text-slate-500 px-4 py-1 hover:text-blue-600 transition-all active:scale-90 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-headline font-bold text-[10px] uppercase tracking-widest mt-1">Nyumbani</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-blue-600/10 text-blue-700 rounded-2xl px-4 py-1 active:scale-90 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+<span class="font-headline font-bold text-[10px] uppercase tracking-widest mt-1">Miadi Yangu</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 px-4 py-1 hover:text-blue-600 transition-all active:scale-90 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-headline font-bold text-[10px] uppercase tracking-widest mt-1">Wasifu</span>
+</a>
+</nav>
+</body></html>

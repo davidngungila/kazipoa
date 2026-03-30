@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jisajili - Mtaalamu | Kazipoa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .liquid-bg {
+            background: linear-gradient(135deg, #0f00e7 0%, #7e22ce 50%, #3b82f6 100%);
+            filter: blur(80px);
+            opacity: 0.15;
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            z-index: -1;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark .glass-panel {
+            background: rgba(16, 15, 35, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="liquid-bg"></div>
+    
+    <!-- Navigation -->
+    <nav class="glass-panel sticky top-0 z-30 px-6 py-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <a href="01.Index.html" class="text-2xl font-bold text-primary flex items-center gap-2">
+                    <span>🚀</span>
+                    <span>Kazipoa</span>
+                </a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700" data-action="toggle-theme">
+                    <span class="material-symbols-outlined">dark_mode</span>
+                </button>
+                <a href="08.Pro-account-login.html" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90">
+                    Ingia
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+        <div class="max-w-md mx-auto">
+            <div class="glass-panel p-8 rounded-xl">
+                <div class="text-center mb-8">
+                    <div class="text-4xl mb-4">👨‍🔧</div>
+                    <h1 class="text-3xl font-bold mb-2">Jisajili kama Mtaalamu</h1>
+                    <p class="text-gray-600 dark:text-gray-400">Unde akaunti yako ya mtaalamu</p>
+                </div>
+
+                <form class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Jina Kamili</label>
+                        <input 
+                            type="text" 
+                            name="name"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"
+                            placeholder="Jina lako kamili"
+                            required
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Barua Pepe</label>
+                        <input 
+                            type="email" 
+                            name="email"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"
+                            placeholder="barua.pepe@mfano.com"
+                            required
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Nenosiri</label>
+                        <input 
+                            type="password" 
+                            name="password"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"
+                            placeholder="Nenosiri sako"
+                            required
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Thibitisha Nenosiri</label>
+                        <input 
+                            type="password" 
+                            name="confirmPassword"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"
+                            placeholder="Rudia nenosiri"
+                            required
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Namba ya Simu</label>
+                        <input 
+                            type="tel" 
+                            name="phone"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"
+                            placeholder="+255 7xx xxx xxx"
+                            required
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Ujuzi Wako</label>
+                        <select 
+                            name="specialization"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"
+                            required
+                        >
+                            <option value="">Chagua ujuzi wako</option>
+                            <option value="Hair Styling">Urembo wa Nywele</option>
+                            <option value="Home Cleaning">Usafi wa Nyumbani</option>
+                            <option value="Plumbing">Mfereji</option>
+                            <option value="Electrical">Umeme</option>
+                            <option value="Carpentry">Ufundi</option>
+                            <option value="Gardening">Michekano</option>
+                            <option value="Cooking">Upishi</option>
+                            <option value="Driving">Uendesha Gari</option>
+                            <option value="Tutoring">Ufundishaji</option>
+                            <option value="Other">Nyingine</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Maelezo ya Huduma</label>
+                        <textarea 
+                            name="description"
+                            rows="3"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"
+                            placeholder="Eleza huduma zinazotolewa..."
+                        ></textarea>
+                    </div>
+
+                    <div class="flex items-center">
+                        <input type="checkbox" id="terms" class="mr-2" required>
+                        <label for="terms" class="text-sm">
+                            Nakubali <a href="#" class="text-primary hover:underline">masharti ya huduma</a> na <a href="#" class="text-primary hover:underline">sera ya faragha</a>
+                        </label>
+                    </div>
+
+                    <button 
+                        type="submit"
+                        class="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary/90 transition-all transform hover:scale-105"
+                    >
+                        Jisajili kama Mtaalamu
+                    </button>
+                </form>
+
+                <div class="mt-8 text-center">
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Tayari una akaunti? 
+                        <a href="08.Pro-account-login.html" class="text-primary hover:underline font-semibold">
+                            Ingia hapa
+                        </a>
+                    </p>
+                </div>
+
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        Au jisajili kama:
+                    </p>
+                    <div class="mt-4 space-y-2">
+                        <a href="04.ClientID-registration.html" class="block w-full border border-primary text-primary py-2 rounded-lg hover:bg-primary hover:text-white transition-all">
+                            Mteja (Client)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-panel mt-16 px-6 py-8">
+        <div class="container mx-auto text-center">
+            <p class="text-gray-600 dark:text-gray-400">
+                © 2026 Kazipoa. Haki zote zimehifadhiwa.
+            </p>
+        </div>
+    </footer>
+
+    <!-- App Script -->
+    <script type="module" src="../js/main.js"></script>
+</body>
+</html>

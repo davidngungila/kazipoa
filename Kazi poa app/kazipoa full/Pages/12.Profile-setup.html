@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usanidi Wa Wasifu - Kazipoa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .liquid-bg {
+            background: linear-gradient(135deg, #0f00e7 0%, #7e22ce 50%, #3b82f6 100%);
+            filter: blur(80px);
+            opacity: 0.15;
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            z-index: -1;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark .glass-panel {
+            background: rgba(16, 15, 35, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="liquid-bg"></div>
+    
+    <!-- Navigation -->
+    <nav class="glass-panel sticky top-0 z-30 px-6 py-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <a href="01.Index.html" class="text-2xl font-bold text-primary flex items-center gap-2">
+                    <span>🚀</span>
+                    <span>Kazipoa</span>
+                </a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700" data-action="toggle-theme">
+                    <span class="material-symbols-outlined">dark_mode</span>
+                </button>
+                <a href="13.Dashboard.html" class="text-primary hover:underline">
+                    <span class="material-symbols-outlined">home</span>
+                </a>
+                <button class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700" data-action="logout">
+                    <span class="material-symbols-outlined">logout</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+        <!-- Content will be injected by JavaScript -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-panel mt-16 px-6 py-8">
+        <div class="container mx-auto text-center">
+            <p class="text-gray-600 dark:text-gray-400">
+                © 2026 Kazipoa. Haki zote zimehifadhiwa.
+            </p>
+        </div>
+    </footer>
+
+    <!-- App Script -->
+    <script type="module" src="../js/main.js"></script>
+</body>
+</html>

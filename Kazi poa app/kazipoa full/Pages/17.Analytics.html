@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Takwimu - Kazipoa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .liquid-bg {
+            background: linear-gradient(135deg, #0f00e7 0%, #7e22ce 50%, #3b82f6 100%);
+            filter: blur(80px);
+            opacity: 0.15;
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            z-index: -1;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark .glass-panel {
+            background: rgba(16, 15, 35, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="liquid-bg"></div>
+    
+    <!-- Navigation -->
+    <nav class="glass-panel sticky top-0 z-30 px-6 py-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <a href="01.Index.html" class="text-2xl font-bold text-primary flex items-center gap-2">
+                    <span>🚀</span>
+                    <span>Kazipoa</span>
+                </a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700" data-action="toggle-theme">
+                    <span class="material-symbols-outlined">dark_mode</span>
+                </button>
+                <a href="13.Dashboard.html" class="text-primary hover:underline">
+                    <span class="material-symbols-outlined">home</span>
+                </a>
+                <button class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700" data-action="logout">
+                    <span class="material-symbols-outlined">logout</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+        <div class="max-w-7xl mx-auto">
+            <h1 class="text-3xl font-bold mb-8 flex items-center gap-2">
+                <span class="material-symbols-outlined">analytics</span>
+                Takwimu
+            </h1>
+
+            <!-- Date Range Filter -->
+            <div class="glass-panel p-4 rounded-xl mb-8">
+                <div class="flex flex-wrap items-center gap-4">
+                    <div class="flex items-center gap-2">
+                        <label class="text-sm font-medium">Kutoka:</label>
+                        <input type="date" class="px-3 py-2 border rounded-lg bg-white dark:bg-gray-800" value="2026-03-01">
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <label class="text-sm font-medium">Mpaka:</label>
+                        <input type="date" class="px-3 py-2 border rounded-lg bg-white dark:bg-gray-800" value="2026-03-31">
+                    </div>
+                    <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90">
+                        <span class="material-symbols-outlined text-sm">filter_list</span>
+                        Chuja
+                    </button>
+                    <button class="border border-gray-300 dark:border-gray-600 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <span class="material-symbols-outlined text-sm">download</span>
+                        Pakua
+                    </button>
+                </div>
+            </div>
+
+            <!-- Overview Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="glass-panel p-6 rounded-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-3xl">💰</div>
+                        <span class="text-xs text-success bg-green-100 dark:bg-green-900 px-2 py-1 rounded">+12.5%</span>
+                    </div>
+                    <h3 class="text-sm text-gray-600 dark:text-gray-400 mb-1">Jumla Ya Mapato</h3>
+                    <p class="text-2xl font-bold">TZS 4.2M</p>
+                </div>
+                <div class="glass-panel p-6 rounded-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-3xl">📅</div>
+                        <span class="text-xs text-success bg-green-100 dark:bg-green-900 px-2 py-1 rounded">+8.3%</span>
+                    </div>
+                    <h3 class="text-sm text-gray-600 dark:text-gray-400 mb-1">Jumla Ya Nafasi</h3>
+                    <p class="text-2xl font-bold">127</p>
+                </div>
+                <div class="glass-panel p-6 rounded-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-3xl">⭐</div>
+                        <span class="text-xs text-warning bg-yellow-100 dark:bg-yellow-900 px-2 py-1 rounded">+0.2</span>
+                    </div>
+                    <h3 class="text-sm text-gray-600 dark:text-gray-400 mb-1">Wakaguzi Wastani</h3>
+                    <p class="text-2xl font-bold">4.8</p>
+                </div>
+                <div class="glass-panel p-6 rounded-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-3xl">👥</div>
+                        <span class="text-xs text-success bg-green-100 dark:bg-green-900 px-2 py-1 rounded">+15.7%</span>
+                    </div>
+                    <h3 class="text-sm text-gray-600 dark:text-gray-400 mb-1">Wateja Wapya</h3>
+                    <p class="text-2xl font-bold">89</p>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <!-- Revenue Chart -->
+                <div class="glass-panel p-6 rounded-xl">
+                    <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined">trending_up</span>
+                        Mapato Kwa Mwezi
+                    </h2>
+                    <canvas id="revenueChart" width="400" height="200"></canvas>
+                </div>
+
+                <!-- Bookings Chart -->
+                <div class="glass-panel p-6 rounded-xl">
+                    <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined">bar_chart</span>
+                        Nafasi Kwa Siku
+                    </h2>
+                    <canvas id="bookingsChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+
+            <!-- Services Performance -->
+            <div class="glass-panel p-6 rounded-xl mb-8">
+                <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined">leaderboard</span>
+                    Utendaji Wa Huduma
+                </h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-gray-200 dark:border-gray-600">
+                                <th class="text-left py-2 px-4">Huduma</th>
+                                <th class="text-center py-2 px-4">Nafasi</th>
+                                <th class="text-center py-2 px-4">Mapato</th>
+                                <th class="text-center py-2 px-4">Wakaguzi</th>
+                                <th class="text-center py-2 px-4">Ukaguzi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-100 dark:border-gray-700">
+                                <td class="py-3 px-4 font-medium">Urembo wa Nywele</td>
+                                <td class="text-center py-3 px-4">45</td>
+                                <td class="text-center py-3 px-4">TZS 1.8M</td>
+                                <td class="text-center py-3 px-4">4.9</td>
+                                <td class="text-center py-3 px-4">38</td>
+                            </tr>
+                            <tr class="border-b border-gray-100 dark:border-gray-700">
+                                <td class="py-3 px-4 font-medium">Usafi wa Nyumbani</td>
+                                <td class="text-center py-3 px-4">32</td>
+                                <td class="text-center py-3 px-4">TZS 960K</td>
+                                <td class="text-center py-3 px-4">4.7</td>
+                                <td class="text-center py-3 px-4">28</td>
+                            </tr>
+                            <tr class="border-b border-gray-100 dark:border-gray-700">
+                                <td class="py-3 px-4 font-medium">Mfereji</td>
+                                <td class="text-center py-3 px-4">28</td>
+                                <td class="text-center py-3 px-4">TZS 1.4M</td>
+                                <td class="text-center py-3 px-4">4.8</td>
+                                <td class="text-center py-3 px-4">22</td>
+                            </tr>
+                            <tr class="border-b border-gray-100 dark:border-gray-700">
+                                <td class="py-3 px-4 font-medium">Upishi</td>
+                                <td class="text-center py-3 px-4">15</td>
+                                <td class="text-center py-3 px-4">TZS 600K</td>
+                                <td class="text-center py-3 px-4">5.0</td>
+                                <td class="text-center py-3 px-4">15</td>
+                            </tr>
+                            <tr class="border-b border-gray-100 dark:border-gray-700">
+                                <td class="py-3 px-4 font-medium">Ufundi</td>
+                                <td class="text-center py-3 px-4">7</td>
+                                <td class="text-center py-3 px-4">TZS 440K</td>
+                                <td class="text-center py-3 px-4">4.6</td>
+                                <td class="text-center py-3 px-4">5</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="glass-panel p-6 rounded-xl">
+                <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined">history</span>
+                    Shughuli Za Hivi Karibuni
+                </h2>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-success rounded-full flex items-center justify-center text-white text-sm">+</div>
+                            <div>
+                                <p class="font-medium">Nafasi Mpya - Urembo wa Nywele</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Grace Mwanga - TZS 50,000</p>
+                            </div>
+                        </div>
+                        <span class="text-sm text-gray-500">2 dakika iliyopita</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm">⭐</div>
+                            <div>
+                                <p class="font-medium">Ukaguzi Mpya - 5.0</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Sarah Joseph - Upishi</p>
+                            </div>
+                        </div>
+                        <span class="text-sm text-gray-500">15 dakika iliyopita</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-warning rounded-full flex items-center justify-center text-white text-sm">✓</div>
+                            <div>
+                                <p class="font-medium">Nafasi Imekamilika</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">David Masanja - Mfereji</p>
+                            </div>
+                        </div>
+                        <span class="text-sm text-gray-500">1 saa iliyopita</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-info rounded-full flex items-center justify-center text-white text-sm">👤</div>
+                            <div>
+                                <p class="font-medium">Mteja Mpya</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">John Mwangi amejiunga</p>
+                            </div>
+                        </div>
+                        <span class="text-sm text-gray-500">2 masaa iliyopita</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-panel mt-16 px-6 py-8">
+        <div class="container mx-auto text-center">
+            <p class="text-gray-600 dark:text-gray-400">
+                © 2026 Kazipoa. Haki zote zimehifadhiwa.
+            </p>
+        </div>
+    </footer>
+
+    <!-- App Script -->
+    <script type="module" src="../js/main.js"></script>
+    <script>
+        // Revenue Chart
+        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+        new Chart(revenueCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Mapato (TZS)',
+                    data: [2800000, 3200000, 3800000, 4200000, 4100000, 4500000],
+                    borderColor: '#0f00e7',
+                    backgroundColor: 'rgba(15, 0, 231, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return 'TZS ' + (value / 1000000).toFixed(1) + 'M';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Bookings Chart
+        const bookingsCtx = document.getElementById('bookingsChart').getContext('2d');
+        new Chart(bookingsCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Nafasi',
+                    data: [12, 19, 15, 25, 22, 30, 18],
+                    backgroundColor: '#6366f1'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

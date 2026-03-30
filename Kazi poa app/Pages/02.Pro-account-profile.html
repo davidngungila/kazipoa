@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html lang="sw"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0f00e7",
+                        "background-light": "#f6f5f8",
+                        "background-dark": "#100f23",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        :root {
+            --brand-blue: #0f00e7;
+            --liquid-glass-bg: rgba(255, 255, 255, 0.4);
+            --liquid-glass-border: rgba(255, 255, 255, 0.5);
+            --liquid-glass-blur: 15px;
+        }
+
+        /* 1. Transparent Liquid Glass Panels */
+        .liquid-glass-card {
+            background: var(--liquid-glass-bg);
+            backdrop-filter: blur(var(--liquid-glass-blur));
+            -webkit-backdrop-filter: blur(var(--liquid-glass-blur));
+            border: 1px solid var(--liquid-glass-border);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            border-radius: 24px;
+        }
+
+        /* 2. Interactive Ripple/Wave Effect for Buttons */
+        .liquid-button {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+
+        .liquid-button:active {
+            transform: scale(0.96);
+        }
+
+        .liquid-button::after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+            background-repeat: no-repeat;
+            background-position: 50%;
+            transform: scale(10, 10);
+            opacity: 0;
+            transition: transform 0.5s, opacity 1s;
+        }
+
+        .liquid-button:active::after {
+            transform: scale(0, 0);
+            opacity: 0.3;
+            transition: 0s;
+        }
+
+        /* 3. Fluid Background Animation */
+        @keyframes fluidMotion {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .liquid-bg {
+            background: linear-gradient(-45deg, #f0f4ff, #e0e7ff, #ffffff, #dbeafe);
+            background-size: 400% 400%;
+            animation: fluidMotion 15s ease infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 4. Motion on Scroll (Subtle parallax/fade) */
+        .motion-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: revealUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes revealUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .pro-grade-platinum {
+            background: linear-gradient(135deg, #e5e7eb 0%, #ffffff 50%, #9ca3af 100%);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative flex min-h-screen w-full flex-col max-w-md mx-auto bg-background-light dark:bg-background-dark shadow-2xl overflow-x-hidden">
+<!-- Header -->
+<div class="sticky top-0 z-50 flex items-center bg-white/60 dark:bg-background-dark/60 backdrop-blur-xl p-4 justify-between border-b border-white/20">
+<button class="text-slate-900 dark:text-slate-100 flex size-10 items-center justify-center rounded-full hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h2 class="text-lg font-bold leading-tight tracking-tight flex-1 text-center">Wasifu wa Mtaalamu</h2>
+<div class="flex items-center justify-end">
+<div class="flex items-center gap-2">
+<a class="liquid-button flex items-center gap-1 px-4 py-2 rounded-full bg-primary text-white hover:shadow-lg transition-all" href="tel:+255712345678">
+<span class="material-symbols-outlined text-lg">call</span>
+<span class="text-xs font-bold whitespace-nowrap">+255 622606497</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Hero Section -->
+<div class="relative p-6 liquid-bg">
+<div class="flex flex-col items-center gap-6 relative z-10 motion-reveal">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-36 w-36 ring-4 ring-white/50 shadow-2xl" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCjMwIhzU7aiNXQ6XoNwF6MlS25cKrl6bSSOTMDQu7SWYOcFHHnM3CDjDVIvAocXCnuC--KzGbU1_x995Jm8vIj0QCjaX0OtDIKlVmQpjRX0KAPCPYnajnCEtQipxJffdNkR_wvNuTVhFZ98tPtAan3ESF6iQxcU_rAPDRB7qr5m55WNJJ_2eriUzc33llW7HGrvx_ZYAU7Oxgh6A_A0E-6WwNlW1g-30B2EeXf0yVSNgXtWDTDoPDSz1GNvML5lSxfBuXVjsgYGzE");'>
+</div>
+<div class="absolute bottom-2 right-2 bg-primary text-white p-1.5 rounded-full border-4 border-white flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-[18px] font-bold">verified</span>
+</div>
+</div>
+<div class="flex flex-col items-center text-center">
+<div class="flex items-center gap-2">
+<h1 class="text-3xl font-black tracking-tight text-slate-900">Juma Saidi</h1>
+<div class="pro-grade-platinum px-3 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
+<span class="text-[10px] font-black text-slate-700 tracking-wider uppercase">Platinum Pro</span>
+<span class="material-symbols-outlined text-primary text-xs font-bold fill-1">verified</span>
+</div>
+</div>
+<p class="text-primary font-bold flex items-center gap-1 mt-2 text-lg">
+<span class="material-symbols-outlined text-xl">electric_bolt</span>
+                        Fundi Umeme Aliyeidhinishwa
+                    </p>
+<div class="flex items-center gap-1 text-slate-500 mt-1 font-medium">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span>Dar es Salaam, Tanzania</span>
+</div>
+</div>
+<div class="flex w-full px-4 mt-2">
+<button class="liquid-button flex-1 flex items-center justify-center gap-2 rounded-2xl h-14 bg-primary text-white text-lg font-bold shadow-xl shadow-primary/20 hover:shadow-primary/40 transition-all">
+<span class="material-symbols-outlined text-xl">calendar_month</span>
+<span>Weka Miadi Sasa</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Main Content Area -->
+<div class="flex flex-col gap-6 p-4">
+<!-- Quick Stats -->
+<div class="flex gap-3 motion-reveal" style="animation-delay: 0.1s;">
+<div class="liquid-glass-card flex-1 flex flex-col gap-1 p-4 items-center text-center">
+<p class="text-slate-900 dark:text-slate-100 text-xl font-black">4.9</p>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-amber-400 text-xs fill-1">star</span>
+<p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest">DARAJA</p>
+</div>
+</div>
+<div class="liquid-glass-card flex-1 flex flex-col gap-1 p-4 items-center text-center">
+<p class="text-slate-900 dark:text-slate-100 text-xl font-black">128</p>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-xs">task_alt</span>
+<p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest">KAZI</p>
+</div>
+</div>
+<div class="liquid-glass-card flex-1 flex flex-col gap-1 p-4 items-center text-center">
+<p class="text-slate-900 dark:text-slate-100 text-xl font-black">Miaka 8</p>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-emerald-500 text-xs">history_edu</span>
+<p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest">UZOEFU</p>
+</div>
+</div>
+</div>
+<!-- Services Horizontal -->
+<div class="motion-reveal" style="animation-delay: 0.2s;">
+<h3 class="text-xs font-black text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2 uppercase tracking-[0.2em] ml-1">
+<span class="material-symbols-outlined text-primary text-lg">category</span>
+                    HUDUMA KUU
+                </h3>
+<div class="flex gap-3 overflow-x-auto pb-4 scrollbar-hide px-1">
+<div class="flex-shrink-0 liquid-glass-card p-4 w-40 flex flex-col gap-3">
+<div class="bg-primary/10 w-10 h-10 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">home_repair_service</span>
+</div>
+<div>
+<p class="text-sm font-bold leading-tight">Ufungaji wa Umeme Nyumbani</p>
+</div>
+</div>
+<div class="flex-shrink-0 liquid-glass-card p-4 w-40 flex flex-col gap-3">
+<div class="bg-primary/10 w-10 h-10 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">solar_power</span>
+</div>
+<div>
+<p class="text-sm font-bold leading-tight">Mifumo ya Sola</p>
+</div>
+</div>
+<div class="flex-shrink-0 liquid-glass-card p-4 w-40 flex flex-col gap-3">
+<div class="bg-primary/10 w-10 h-10 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">factory</span>
+</div>
+<div>
+<p class="text-sm font-bold leading-tight">Umeme wa Viwandani</p>
+</div>
+</div>
+<div class="flex-shrink-0 liquid-glass-card p-4 w-40 flex flex-col gap-3">
+<div class="bg-primary/10 w-10 h-10 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">bolt</span>
+</div>
+<div>
+<p class="text-sm font-bold leading-tight">Marekebisho ya Haraka</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Schedule (Ratiba) -->
+<div class="liquid-glass-card p-5 motion-reveal" style="animation-delay: 0.3s;">
+<h3 class="text-xs font-black text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2 uppercase tracking-[0.2em]">
+<span class="material-symbols-outlined text-primary text-lg">event_available</span>
+                    RATIBA
+                </h3>
+<div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+<div class="flex-shrink-0 flex flex-col items-center justify-center w-12 h-16 rounded-xl bg-primary text-white shadow-lg shadow-primary/20">
+<span class="text-[10px] font-bold uppercase">LEO</span>
+<span class="text-lg font-black">24</span>
+</div>
+<div class="flex-shrink-0 flex flex-col items-center justify-center w-12 h-16 rounded-xl bg-white/50 border border-white/40">
+<span class="text-[10px] text-slate-500 font-bold uppercase">Kes</span>
+<span class="text-lg font-black">25</span>
+</div>
+<div class="flex-shrink-0 flex flex-col items-center justify-center w-12 h-16 rounded-xl bg-white/50 border border-white/40">
+<span class="text-[10px] text-slate-500 font-bold uppercase">Jum</span>
+<span class="text-lg font-black">26</span>
+</div>
+<div class="flex-shrink-0 flex flex-col items-center justify-center w-12 h-16 rounded-xl bg-white/50 border border-white/40">
+<span class="text-[10px] text-slate-500 font-bold uppercase">Alh</span>
+<span class="text-lg font-black">27</span>
+</div>
+</div>
+<div class="mt-4 grid grid-cols-2 gap-3">
+<div class="flex items-center justify-between p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+<div class="flex flex-col">
+<span class="text-[11px] font-bold">09:00 - 11:00</span>
+<span class="text-[9px] text-emerald-600 font-black uppercase tracking-wider">WAZI</span>
+</div>
+<span class="material-symbols-outlined text-emerald-500 text-sm fill-1">check_circle</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-xl bg-slate-100/50 opacity-40 grayscale">
+<div class="flex flex-col">
+<span class="text-[11px] font-bold">11:30 - 13:30</span>
+<span class="text-[9px] text-slate-500 font-black uppercase tracking-wider">IMEJAA</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-sm">lock</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+<div class="flex flex-col">
+<span class="text-[11px] font-bold">14:00 - 16:00</span>
+<span class="text-[9px] text-emerald-600 font-black uppercase tracking-wider">WAZI</span>
+</div>
+<span class="material-symbols-outlined text-emerald-500 text-sm fill-1">check_circle</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+<div class="flex flex-col">
+<span class="text-[11px] font-bold">16:30 - 18:30</span>
+<span class="text-[9px] text-emerald-600 font-black uppercase tracking-wider">WAZI</span>
+</div>
+<span class="material-symbols-outlined text-emerald-500 text-sm fill-1">check_circle</span>
+</div>
+</div>
+</div>
+<!-- Tabs & Portfolio -->
+<div class="motion-reveal" style="animation-delay: 0.4s;">
+<div class="flex border-b border-primary/10 mb-6">
+<a class="flex-1 text-center py-3 border-b-4 border-primary text-primary font-black text-sm tracking-widest uppercase" href="#">KAZI ZANGU</a>
+<a class="flex-1 text-center py-3 border-b-4 border-transparent text-slate-400 font-bold text-sm tracking-widest uppercase" href="#">MAONI</a>
+</div>
+<div class="grid grid-cols-2 gap-4 pb-28">
+<div class="group relative overflow-hidden rounded-2xl aspect-[4/5] shadow-lg transition-all hover:scale-[1.05]">
+<div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBj6S8iFRqo3lT2VHtZ9t2EJyDo7Ss6xd5-Q2_xjCczhR4GPznzTA4W4wQE6HPvTNyxzDJGSOT-2O_xIvYAtRDc9h4Id6Macf18eIqoA2Ck6FVLxRhVf2JZXx3Ys149Wp3ubkmJ7ZNWw_yD_bN2YzTfIwdSeJVLAPRgIPoRd8zy7_xSz1hNYS4a6Z1U9SmlIKAewcxDZkYzdXHCLSpDDiKtFSSxzAPUs2DsQJvakTNSHX3CLAPSx_Hck2uEQDa8AazwmfIfNNpGGeo');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent p-4 flex flex-col justify-end">
+<p class="text-white text-xs font-black tracking-wide">Ufungaji wa Nyumba ya Kisasa</p>
+<p class="text-white/60 text-[10px]">Oyster Bay Villa</p>
+</div>
+</div>
+<div class="group relative overflow-hidden rounded-2xl aspect-[4/5] shadow-lg transition-all hover:scale-[1.05]">
+<div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBs1BoK8tRdr-xYEp5wC7d_uSG7EFL6rUuhQus_ezww0m3Y9e_009kWvlH1Txvxf0s7MhmMdIWTlIk35HKOuX7hFLunMaa6ki4qcUZOIWy8ibvpzFHs4fJwIwVZT0BJDP-foifgpOsT8q8Xk7wPPM8EhPULxYWIcEKwnO5WUYle_CQ79RY9jycFiP8jDnuPFhdjHepOysPbaWtMFo22LYB7dZ_9ZqZXREW1Ri_R39CVSEVGqmIxrNYTAskE0J7FJoks4hEdx1cgW1Y');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent p-4 flex flex-col justify-end">
+<p class="text-white text-xs font-black tracking-wide">Ufungaji wa Jenereta</p>
+<p class="text-white/60 text-[10px]">Marekebisho ya Dharura</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Bar -->
+<div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white/80 dark:bg-background-dark/80 backdrop-blur-2xl border-t border-white/20 px-6 pb-8 pt-3 flex items-center justify-between z-50">
+<a class="flex flex-col items-center gap-1.5 text-primary" href="#">
+<span class="material-symbols-outlined text-[26px] fill-1">home</span>
+<p class="text-[9px] font-black uppercase tracking-[0.15em]">NYUMBANI</p>
+</a>
+<a class="flex flex-col items-center gap-1.5 text-slate-400" href="#">
+<span class="material-symbols-outlined text-[26px]">calendar_today</span>
+<p class="text-[9px] font-bold uppercase tracking-[0.15em]">MIADI YANGU</p>
+</a>
+<a class="flex flex-col items-center gap-1.5 text-slate-400" href="#">
+<span class="material-symbols-outlined text-[26px]">account_circle</span>
+<p class="text-[9px] font-bold uppercase tracking-[0.15em]">WASIFU</p>
+</a>
+</div>
+</div>
+</body></html>

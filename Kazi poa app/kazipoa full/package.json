@@ -1,0 +1,25 @@
+{
+  "name": "kazipoa-full-app",
+  "version": "1.0.0",
+  "description": "Kazipoa Full - Professional Booking and Service Platform (Dynamic Recreation)",
+  "main": "js/main.js",
+  "type": "module",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000 --bind 127.0.0.1",
+    "build": "echo 'Build script not configured yet'",
+    "test": "echo 'Test script not configured yet'"
+  },
+  "keywords": [
+    "booking",
+    "service",
+    "professional",
+    "platform",
+    "dynamic",
+    "interactive"
+  ],
+  "author": "Kazipoa Team",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}
