@@ -46,73 +46,73 @@ class KazipoaTheme {
   static const Color darkGlassBorder = Color(0x1AFFFFFF); // rgba(255, 255, 255, 0.1)
 
   // Text Styles
-  static TextStyle get headlineLarge => GoogleFonts.inter(
+  static TextStyle headlineLarge(Color onSurface) => GoogleFonts.inter(
     fontSize: 32,
     fontWeight: FontWeight.bold,
     color: onSurface,
   );
 
-  static TextStyle get headlineMedium => GoogleFonts.inter(
+  static TextStyle headlineMedium(Color onSurface) => GoogleFonts.inter(
     fontSize: 28,
     fontWeight: FontWeight.bold,
     color: onSurface,
   );
 
-  static TextStyle get headlineSmall => GoogleFonts.inter(
+  static TextStyle headlineSmall(Color onSurface) => GoogleFonts.inter(
     fontSize: 24,
     fontWeight: FontWeight.w600,
     color: onSurface,
   );
 
-  static TextStyle get titleLarge => GoogleFonts.inter(
+  static TextStyle titleLarge(Color onSurface) => GoogleFonts.inter(
     fontSize: 22,
     fontWeight: FontWeight.w600,
     color: onSurface,
   );
 
-  static TextStyle get titleMedium => GoogleFonts.inter(
+  static TextStyle titleMedium(Color onSurface) => GoogleFonts.inter(
     fontSize: 16,
     fontWeight: FontWeight.w500,
     color: onSurface,
   );
 
-  static TextStyle get titleSmall => GoogleFonts.inter(
+  static TextStyle titleSmall(Color onSurface) => GoogleFonts.inter(
     fontSize: 14,
     fontWeight: FontWeight.w500,
     color: onSurface,
   );
 
-  static TextStyle get bodyLarge => GoogleFonts.inter(
+  static TextStyle bodyLarge(Color onSurface) => GoogleFonts.inter(
     fontSize: 16,
     fontWeight: FontWeight.normal,
     color: onSurface,
   );
 
-  static TextStyle get bodyMedium => GoogleFonts.inter(
+  static TextStyle bodyMedium(Color onSurface) => GoogleFonts.inter(
     fontSize: 14,
     fontWeight: FontWeight.normal,
     color: onSurface,
   );
 
-  static TextStyle get bodySmall => GoogleFonts.inter(
+  static TextStyle bodySmall(Color onSurfaceVariant) => GoogleFonts.inter(
     fontSize: 12,
     fontWeight: FontWeight.normal,
     color: onSurfaceVariant,
   );
 
-  static TextStyle get labelLarge => GoogleFonts.inter(
+  static TextStyle labelLarge(Color onSurface) => GoogleFonts.inter(
     fontSize: 14,
     fontWeight: FontWeight.w500,
     color: onSurface,
   );
 
-  static TextStyle get labelMedium => GoogleFonts.inter(
+  static TextStyle labelMedium(Color onSurface) => GoogleFonts.inter(
     fontSize: 12,
     fontWeight: FontWeight.w500,
     color: onSurface,
   );
 
-  static TextStyle get labelSmall => GoogleFonts.inter(
+  static TextStyle labelSmall(Color onSurfaceVariant) => GoogleFonts.inter(
     fontSize: 11,
     fontWeight: FontWeight.w500,
     color: onSurfaceVariant,
@@ -142,22 +142,22 @@ class KazipoaTheme {
         surfaceContainerHigh: surfaceContainerHigh,
         surfaceContainerHighest: surfaceContainerHighest,
       ),
-      textTheme: const TextTheme(
-        displayLarge: headlineLarge,
-        displayMedium: headlineMedium,
-        displaySmall: headlineSmall,
-        headlineLarge: headlineLarge,
-        headlineMedium: headlineMedium,
-        headlineSmall: headlineSmall,
-        titleLarge: titleLarge,
-        titleMedium: titleMedium,
-        titleSmall: titleSmall,
-        bodyLarge: bodyLarge,
-        bodyMedium: bodyMedium,
-        bodySmall: bodySmall,
-        labelLarge: labelLarge,
-        labelMedium: labelMedium,
-        labelSmall: labelSmall,
+      textTheme: TextTheme(
+        displayLarge: headlineLarge(onSurface),
+        displayMedium: headlineMedium(onSurface),
+        displaySmall: headlineSmall(onSurface),
+        headlineLarge: headlineLarge(onSurface),
+        headlineMedium: headlineMedium(onSurface),
+        headlineSmall: headlineSmall(onSurface),
+        titleLarge: titleLarge(onSurface),
+        titleMedium: titleMedium(onSurface),
+        titleSmall: titleSmall(onSurface),
+        bodyLarge: bodyLarge(onSurface),
+        bodyMedium: bodyMedium(onSurface),
+        bodySmall: bodySmall(onSurfaceVariant),
+        labelLarge: labelLarge(onSurface),
+        labelMedium: labelMedium(onSurface),
+        labelSmall: labelSmall(onSurfaceVariant),
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: surfaceContainerLow,
@@ -166,7 +166,7 @@ class KazipoaTheme {
         scrolledUnderElevation: 1,
         shadowColor: onSurface.withOpacity(0.1),
         surfaceTintColor: primaryColor,
-        titleTextStyle: titleLarge,
+        titleTextStyle: titleLarge(onSurface),
         centerTitle: true,
       ),
       cardTheme: CardTheme(
@@ -190,7 +190,7 @@ class KazipoaTheme {
             borderRadius: BorderRadius.circular(12),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          textStyle: titleMedium,
+          textStyle: titleMedium(onSurface),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -201,7 +201,7 @@ class KazipoaTheme {
             borderRadius: BorderRadius.circular(12),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          textStyle: titleMedium,
+          textStyle: titleMedium(onSurface),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
@@ -211,7 +211,7 @@ class KazipoaTheme {
             borderRadius: BorderRadius.circular(12),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          textStyle: titleMedium,
+          textStyle: titleMedium(onSurface),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
@@ -238,24 +238,24 @@ class KazipoaTheme {
           borderSide: const BorderSide(color: errorColor, width: 2),
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        labelStyle: labelMedium,
-        hintStyle: labelMedium.copyWith(color: onSurfaceVariant),
+        labelStyle: labelMedium(onSurface),
+        hintStyle: labelMedium(onSurface).copyWith(color: onSurfaceVariant),
       ),
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: surfaceContainerLow,
         selectedItemColor: primaryColor,
         unselectedItemColor: onSurfaceVariant,
         type: BottomNavigationBarType.fixed,
         elevation: 8,
-        selectedLabelStyle: labelSmall,
-        unselectedLabelStyle: labelSmall,
+        selectedLabelStyle: labelSmall(onSurfaceVariant),
+        unselectedLabelStyle: labelSmall(onSurfaceVariant),
       ),
       chipTheme: ChipThemeData(
         backgroundColor: surfaceContainer,
         selectedColor: primaryColor.withOpacity(0.1),
         disabledColor: surfaceVariant,
-        labelStyle: labelMedium,
-        secondaryLabelStyle: labelSmall,
+        labelStyle: labelMedium(onSurface),
+        secondaryLabelStyle: labelSmall(onSurfaceVariant),
         brightness: Brightness.light,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         shape: RoundedRectangleBorder(
@@ -289,22 +289,22 @@ class KazipoaTheme {
         surfaceContainerHigh: darkBackground,
         surfaceContainerHighest: Color(0xFF1E293B),
       ),
-      textTheme: const TextTheme(
-        displayLarge: headlineLarge.copyWith(color: darkOnSurface),
-        displayMedium: headlineMedium.copyWith(color: darkOnSurface),
-        displaySmall: headlineSmall.copyWith(color: darkOnSurface),
-        headlineLarge: headlineLarge.copyWith(color: darkOnSurface),
-        headlineMedium: headlineMedium.copyWith(color: darkOnSurface),
-        headlineSmall: headlineSmall.copyWith(color: darkOnSurface),
-        titleLarge: titleLarge.copyWith(color: darkOnSurface),
-        titleMedium: titleMedium.copyWith(color: darkOnSurface),
-        titleSmall: titleSmall.copyWith(color: darkOnSurface),
-        bodyLarge: bodyLarge.copyWith(color: darkOnSurface),
-        bodyMedium: bodyMedium.copyWith(color: darkOnSurface),
-        bodySmall: bodySmall.copyWith(color: darkOnSurfaceVariant),
-        labelLarge: labelLarge.copyWith(color: darkOnSurface),
-        labelMedium: labelMedium.copyWith(color: darkOnSurface),
-        labelSmall: labelSmall.copyWith(color: darkOnSurfaceVariant),
+      textTheme: TextTheme(
+        displayLarge: headlineLarge(darkOnSurface),
+        displayMedium: headlineMedium(darkOnSurface),
+        displaySmall: headlineSmall(darkOnSurface),
+        headlineLarge: headlineLarge(darkOnSurface),
+        headlineMedium: headlineMedium(darkOnSurface),
+        headlineSmall: headlineSmall(darkOnSurface),
+        titleLarge: titleLarge(darkOnSurface),
+        titleMedium: titleMedium(darkOnSurface),
+        titleSmall: titleSmall(darkOnSurface),
+        bodyLarge: bodyLarge(darkOnSurface),
+        bodyMedium: bodyMedium(darkOnSurface),
+        bodySmall: bodySmall(darkOnSurfaceVariant),
+        labelLarge: labelLarge(darkOnSurface),
+        labelMedium: labelMedium(darkOnSurface),
+        labelSmall: labelSmall(darkOnSurfaceVariant),
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: darkSurface,
@@ -313,7 +313,7 @@ class KazipoaTheme {
         scrolledUnderElevation: 1,
         shadowColor: Colors.black.withOpacity(0.3),
         surfaceTintColor: primaryColor,
-        titleTextStyle: titleLarge.copyWith(color: darkOnSurface),
+        titleTextStyle: titleLarge(darkOnSurface),
         centerTitle: true,
       ),
       cardTheme: CardTheme(
@@ -337,7 +337,7 @@ class KazipoaTheme {
             borderRadius: BorderRadius.circular(12),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          textStyle: titleMedium,
+          textStyle: titleMedium(onSurface),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -348,7 +348,7 @@ class KazipoaTheme {
             borderRadius: BorderRadius.circular(12),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          textStyle: titleMedium,
+          textStyle: titleMedium(onSurface),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
@@ -358,7 +358,7 @@ class KazipoaTheme {
             borderRadius: BorderRadius.circular(12),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          textStyle: titleMedium,
+          textStyle: titleMedium(onSurface),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
@@ -385,24 +385,24 @@ class KazipoaTheme {
           borderSide: const BorderSide(color: errorColor, width: 2),
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        labelStyle: labelMedium.copyWith(color: darkOnSurface),
-        hintStyle: labelMedium.copyWith(color: darkOnSurfaceVariant),
+        labelStyle: labelMedium(darkOnSurface),
+        hintStyle: labelMedium(darkOnSurface).copyWith(color: darkOnSurfaceVariant),
       ),
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: darkSurface,
         selectedItemColor: primaryColor,
         unselectedItemColor: darkOnSurfaceVariant,
         type: BottomNavigationBarType.fixed,
         elevation: 8,
-        selectedLabelStyle: labelSmall,
-        unselectedLabelStyle: labelSmall,
+        selectedLabelStyle: labelSmall(darkOnSurfaceVariant),
+        unselectedLabelStyle: labelSmall(darkOnSurfaceVariant),
       ),
       chipTheme: ChipThemeData(
         backgroundColor: darkSurfaceVariant,
         selectedColor: primaryColor.withOpacity(0.2),
         disabledColor: darkBackground,
-        labelStyle: labelMedium.copyWith(color: darkOnSurface),
-        secondaryLabelStyle: labelSmall.copyWith(color: darkOnSurfaceVariant),
+        labelStyle: labelMedium(darkOnSurface),
+        secondaryLabelStyle: labelSmall(darkOnSurfaceVariant),
         brightness: Brightness.dark,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         shape: RoundedRectangleBorder(

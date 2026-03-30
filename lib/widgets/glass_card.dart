@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:ui';
 import '../theme/app_theme.dart';
 
 class GlassCard extends StatelessWidget {
@@ -271,6 +272,3 @@ class FrostedGlassCard extends StatelessWidget {
     return card;
   }
 }
-
-// Import for ImageFilter
-import 'dart:ui';

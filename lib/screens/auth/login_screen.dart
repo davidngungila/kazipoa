@@ -181,9 +181,7 @@ class _LoginScreenState extends State<LoginScreen>
                               const Spacer(),
                               Text(
                                 'Kitambulisho cha Mteja',
-                                style: KazipoaTheme.headlineSmall.copyWith(
-                                  color: isDark ? Colors.white : KazipoaTheme.onSurface,
-                                ),
+                                style: KazipoaTheme.headlineSmall(isDark ? Colors.white : KazipoaTheme.onSurface),
                               ),
                               const Spacer(flex: 2),
                             ],
@@ -216,16 +214,11 @@ class _LoginScreenState extends State<LoginScreen>
                                   const SizedBox(height: 16),
                                   Text(
                                     'Kazipoa',
-                                    style: KazipoaTheme.headlineMedium.copyWith(
-                                      color: isDark ? Colors.white : KazipoaTheme.primaryColor,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: KazipoaTheme.headlineMedium(isDark ? Colors.white : KazipoaTheme.primaryColor),
                                   ),
                                   Text(
                                     'Tafuta Kazi Tanzania',
-                                    style: KazipoaTheme.bodyMedium.copyWith(
-                                      color: isDark ? Colors.white70 : KazipoaTheme.onSurfaceVariant,
-                                    ),
+                                    style: KazipoaTheme.bodyMedium(isDark ? Colors.white70 : KazipoaTheme.onSurfaceVariant),
                                   ),
                                 ],
                               ),
@@ -251,9 +244,7 @@ class _LoginScreenState extends State<LoginScreen>
                                   const SizedBox(height: 8),
                                   Text(
                                     'Ingia kwenye akaunti yako kuendelea',
-                                    style: KazipoaTheme.bodyMedium.copyWith(
-                                      color: isDark ? Colors.white70 : KazipoaTheme.onSurfaceVariant,
-                                    ),
+                                    style: KazipoaTheme.bodyMedium(isDark ? Colors.white70 : KazipoaTheme.onSurfaceVariant),
                                   ),
                                   
                                   const SizedBox(height: 32),
@@ -261,9 +252,7 @@ class _LoginScreenState extends State<LoginScreen>
                                   // Email Field
                                   Text(
                                     'Barua Pepe',
-                                    style: KazipoaTheme.labelLarge.copyWith(
-                                      color: isDark ? Colors.white : KazipoaTheme.onSurface,
-                                    ),
+                                    style: KazipoaTheme.labelLarge(isDark ? Colors.white : KazipoaTheme.onSurface),
                                   ),
                                   const SizedBox(height: 8),
                                   TextFormField(
@@ -289,9 +278,7 @@ class _LoginScreenState extends State<LoginScreen>
                                   // Password Field
                                   Text(
                                     'Neno la Siri',
-                                    style: KazipoaTheme.labelLarge.copyWith(
-                                      color: isDark ? Colors.white : KazipoaTheme.onSurface,
-                                    ),
+                                    style: KazipoaTheme.labelLarge(isDark ? Colors.white : KazipoaTheme.onSurface),
                                   ),
                                   const SizedBox(height: 8),
                                   TextFormField(
@@ -333,9 +320,7 @@ class _LoginScreenState extends State<LoginScreen>
                                       },
                                       child: Text(
                                         'Umesahau neno la siri?',
-                                        style: KazipoaTheme.labelMedium.copyWith(
-                                          color: KazipoaTheme.primaryColor,
-                                        ),
+                                        style: KazipoaTheme.labelMedium(KazipoaTheme.primaryColor),
                                       ),
                                     ),
                                   ),
@@ -370,9 +355,7 @@ class _LoginScreenState extends State<LoginScreen>
                                         padding: const EdgeInsets.symmetric(horizontal: 16),
                                         child: Text(
                                           'AU',
-                                          style: KazipoaTheme.labelSmall.copyWith(
-                                            color: isDark ? Colors.white70 : KazipoaTheme.onSurfaceVariant,
-                                          ),
+                                          style: KazipoaTheme.labelSmall(isDark ? Colors.white70 : KazipoaTheme.onSurfaceVariant),
                                         ),
                                       ),
                                       Expanded(
@@ -419,9 +402,7 @@ class _LoginScreenState extends State<LoginScreen>
                                   Center(
                                     child: RichText(
                                       text: TextSpan(
-                                        style: KazipoaTheme.bodyMedium.copyWith(
-                                          color: isDark ? Colors.white70 : KazipoaTheme.onSurfaceVariant,
-                                        ),
+                                        style: KazipoaTheme.bodyMedium(isDark ? Colors.white70 : KazipoaTheme.onSurfaceVariant),
                                         children: [
                                           const TextSpan(text: 'Huna akaunti? '),
                                           WidgetSpan(
@@ -431,8 +412,7 @@ class _LoginScreenState extends State<LoginScreen>
                                               },
                                               child: Text(
                                                 'Jisajili',
-                                                style: KazipoaTheme.bodyMedium.copyWith(
-                                                  color: KazipoaTheme.primaryColor,
+                                                style: KazipoaTheme.bodyMedium(KazipoaTheme.primaryColor).copyWith(
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                               ),
