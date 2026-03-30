@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../models/professional_profile.dart';
+import '../models/user.dart';
 import '../theme/app_theme.dart';
 
 class ProfessionalCard extends StatelessWidget {
@@ -191,14 +192,14 @@ class ProfessionalCard extends StatelessWidget {
                     return Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: AppTheme.primaryColor.withOpacity(0.1),
+                        color: AppTheme.primaryPurple.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
                         service,
                         style: TextStyle(
                           fontSize: 10,
-                          color: AppTheme.primaryColor,
+                          color: AppTheme.primaryPurple,
                           fontWeight: FontWeight.w500,
                         ),
                       ),

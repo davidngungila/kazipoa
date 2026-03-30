@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'theme/app_theme.dart';
 import 'services/auth_service.dart';
-import 'navigation/main_navigation.dart';
+import 'screens/auth_wrapper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,9 +30,9 @@ class KaziPoaApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
-      home: const MainNavigation(),
+      home: const AuthWrapper(),
       routes: {
-        '/main': (context) => const MainNavigation(),
+        '/main': (context) => const AuthWrapper(),
       },
     );
   }
