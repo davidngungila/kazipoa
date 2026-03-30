@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kazipoa - Tafuta Kazi Tanzania</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f6f5f8 0%, #e0e7ff 100%);
+            min-height: 100vh;
+            color: #0f172a;
+            overflow-x: hidden;
+        }
+
+        /* Liquid Background Animation */
+        .liquid-bg {
+            position: fixed;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            background: linear-gradient(135deg, #0f00e7 0%, #7e22ce 50%, #3b82f6 100%);
+            filter: blur(80px);
+            opacity: 0.15;
+            z-index: -1;
+            animation: liquid 15s ease infinite;
+        }
+
+        @keyframes liquid {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(15, 0, 231, 0.05);
+            padding: 32px;
+            margin: 20px;
+            transition: transform 0.2s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Liquid Button */
+        .liquid-button {
+            background: linear-gradient(135deg, #0f00e7, #6366f1);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 16px 32px;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+
+        .liquid-button:hover {
+            transform: scale(1.05);
+        }
+
+        .liquid-button:active {
+            transform: scale(0.96);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #0f00e7, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+
+        .header p {
+            font-size: 18px;
+            color: #475569;
+            margin-bottom: 32px;
+        }
+
+        /* Login Form */
+        .login-form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #0f172a;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid rgba(71, 85, 105, 0.3);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            font-size: 16px;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #0f00e7;
+        }
+
+        /* Icons */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 60px 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 24px;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #0f00e7;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: #475569;
+            font-size: 14px;
+        }
+
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin: 60px 0;
+        }
+
+        .feature-card {
+            padding: 24px;
+            text-align: center;
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #0f00e7, #6366f1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            color: white;
+            font-size: 24px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 32px;
+            }
+            
+            .container {
+                padding: 20px 16px;
+            }
+            
+            .glass-card {
+                margin: 10px;
+                padding: 24px;
+            }
+        }
+
+        /* Dark Mode */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(135deg, #0a0a14 0%, #1a1a2e 100%);
+                color: #f1f5f9;
+            }
+            
+            .glass-card {
+                background: rgba(30, 41, 59, 0.8);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .form-group input {
+                background: rgba(30, 41, 59, 0.5);
+                color: #f1f5f9;
+                border-color: rgba(255, 255, 255, 0.1);
+            }
+            
+            .header p {
+                color: #cbd5e1;
+            }
+            
+            .stat-label {
+                color: #cbd5e1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="liquid-bg"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>Kazipoa</h1>
+            <p>Tafuta Kazi Tanzania - Professional Booking Platform</p>
+        </div>
+
+        <div class="glass-card login-form">
+            <h2 style="text-align: center; margin-bottom: 24px;">
+                <span class="material-symbols-outlined">login</span>
+                Kitambulisho cha Mteja
+            </h2>
+            
+            <div class="form-group">
+                <label for="email">Barua Pepe</label>
+                <input type="email" id="email" placeholder="name@example.com">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Neno la Siri</label>
+                <input type="password" id="password" placeholder="••••••••">
+            </div>
+            
+            <button class="liquid-button" style="width: 100%; margin-bottom: 16px;">
+                <span class="material-symbols-outlined">arrow_forward</span>
+                Ingia
+            </button>
+            
+            <div style="text-align: center;">
+                <a href="#" style="color: #0f00e7; text-decoration: none;">Umesahau neno la siri?</a>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="glass-card stat-card">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Miadi Ya Leo</div>
+            </div>
+            <div class="glass-card stat-card">
+                <div class="stat-number">48</div>
+                <div class="stat-label">Miadi Yote</div>
+            </div>
+            <div class="glass-card stat-card">
+                <div class="stat-number">4.8</div>
+                <div class="stat-label">Wakati Wa Kazi</div>
+            </div>
+            <div class="glass-card stat-card">
+                <div class="stat-number">250K</div>
+                <div class="stat-label">Mapato</div>
+            </div>
+        </div>
+
+        <div class="features">
+            <div class="glass-card feature-card">
+                <div class="feature-icon">
+                    <span class="material-symbols-outlined">work_outline</span>
+                </div>
+                <h3>Huduma Zote</h3>
+                <p>Pata huduma za kitaalamu kutoka kwa wataalamu wa karibu</p>
+            </div>
+            <div class="glass-card feature-card">
+                <div class="feature-icon">
+                    <span class="material-symbols-outlined">calendar_today</span>
+                </div>
+                <h3>Miadi Rahisi</h3>
+                <p>Panga miadi haraka na rahisi kwa kutumia programu yetu</p>
+            </div>
+            <div class="glass-card feature-card">
+                <div class="feature-icon">
+                    <span class="material-symbols-outlined">payments</span>
+                </div>
+                <h3>Malipo Salama</h3>
+                <p>Malipo salama na rahisi kwa njia zote za kawaida</p>
+            </div>
+        </div>
+
+        <div class="glass-card" style="text-align: center; margin-top: 40px;">
+            <h3>Huna akaunti?</h3>
+            <p>Jiunge na Kazipoa leo naanza kupata kazi bora</p>
+            <button class="liquid-button" style="margin-top: 16px;">
+                <span class="material-symbols-outlined">person_add</span>
+                Jisajili Sasa
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Add some interactivity
+        document.querySelectorAll('.liquid-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Create ripple effect
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.classList.add('ripple');
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Form validation
+        document.querySelector('.liquid-button').addEventListener('click', function() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if (!email || !password) {
+                alert('Tafadhali jaza sehemu zote');
+                return;
+            }
+            
+            // Simulate login
+            alert('Karibu Kazipoa! ' + email);
+        });
+    </script>
+
+    <style>
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple-animation 0.6s ease-out;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    </style>
+</body>
+</html>
