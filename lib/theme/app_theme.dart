@@ -10,9 +10,7 @@ class KazipoaTheme {
   static const Color tertiaryColor = Color(0xFFF59E0B);
   
   // Surface Colors
-  static const Color backgroundColor = Color(0xFFF8FAFC);
   static const Color surfaceColor = Color(0xFFF8FAFC);
-  static const Color surfaceVariant = Color(0xFFF1F5F9);
   static const Color surfaceContainer = Color(0xFFF1F5F9);
   static const Color surfaceContainerLow = Color(0xFFFFFFFF);
   static const Color surfaceContainerHigh = Color(0xFFE2E8F0);
@@ -22,7 +20,6 @@ class KazipoaTheme {
   static const Color onPrimary = Color(0xFFFFFFFF);
   static const Color onSecondary = Color(0xFFFFFFFF);
   static const Color onSurface = Color(0xFF0F172A);
-  static const Color onBackground = Color(0xFF0F172A);
   static const Color onSurfaceVariant = Color(0xFF475569);
   
   // Status Colors
@@ -128,19 +125,16 @@ class KazipoaTheme {
         secondary: secondaryColor,
         tertiary: tertiaryColor,
         surface: surfaceColor,
-        surfaceVariant: surfaceVariant,
-        background: backgroundColor,
+        surfaceContainerHighest: surfaceContainerHighest,
         onPrimary: onPrimary,
         onSecondary: onSecondary,
         onSurface: onSurface,
-        onBackground: onBackground,
         onSurfaceVariant: onSurfaceVariant,
         error: errorColor,
         onError: onPrimary,
         surfaceContainer: surfaceContainer,
         surfaceContainerLow: surfaceContainerLow,
         surfaceContainerHigh: surfaceContainerHigh,
-        surfaceContainerHighest: surfaceContainerHighest,
       ),
       textTheme: TextTheme(
         displayLarge: headlineLarge(onSurface),
@@ -164,15 +158,15 @@ class KazipoaTheme {
         foregroundColor: onSurface,
         elevation: 0,
         scrolledUnderElevation: 1,
-        shadowColor: onSurface.withOpacity(0.1),
+        shadowColor: onSurface.withValues(alpha: 0.1),
         surfaceTintColor: primaryColor,
         titleTextStyle: titleLarge(onSurface),
         centerTitle: true,
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: surfaceContainerLow,
         elevation: 2,
-        shadowColor: onSurface.withOpacity(0.1),
+        shadowColor: onSurface.withValues(alpha: 0.1),
         surfaceTintColor: primaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
@@ -184,7 +178,7 @@ class KazipoaTheme {
           backgroundColor: primaryColor,
           foregroundColor: onPrimary,
           elevation: 2,
-          shadowColor: primaryColor.withOpacity(0.3),
+          shadowColor: primaryColor.withValues(alpha: 0.3),
           surfaceTintColor: onPrimary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
@@ -252,8 +246,8 @@ class KazipoaTheme {
       ),
       chipTheme: ChipThemeData(
         backgroundColor: surfaceContainer,
-        selectedColor: primaryColor.withOpacity(0.1),
-        disabledColor: surfaceVariant,
+        selectedColor: primaryColor.withValues(alpha: 0.1),
+        disabledColor: surfaceContainerHighest,
         labelStyle: labelMedium(onSurface),
         secondaryLabelStyle: labelSmall(onSurfaceVariant),
         brightness: Brightness.light,
@@ -275,12 +269,9 @@ class KazipoaTheme {
         secondary: secondaryColor,
         tertiary: tertiaryColor,
         surface: darkSurface,
-        surfaceVariant: darkSurfaceVariant,
-        background: darkBackground,
         onPrimary: onPrimary,
         onSecondary: onSecondary,
         onSurface: darkOnSurface,
-        onBackground: darkOnBackground,
         onSurfaceVariant: darkOnSurfaceVariant,
         error: errorColor,
         onError: onPrimary,
@@ -311,15 +302,15 @@ class KazipoaTheme {
         foregroundColor: darkOnSurface,
         elevation: 0,
         scrolledUnderElevation: 1,
-        shadowColor: Colors.black.withOpacity(0.3),
+        shadowColor: Colors.black.withValues(alpha: 0.3),
         surfaceTintColor: primaryColor,
         titleTextStyle: titleLarge(darkOnSurface),
         centerTitle: true,
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: darkSurfaceVariant,
         elevation: 2,
-        shadowColor: Colors.black.withOpacity(0.3),
+        shadowColor: Colors.black.withValues(alpha: 0.3),
         surfaceTintColor: primaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
@@ -331,13 +322,13 @@ class KazipoaTheme {
           backgroundColor: primaryColor,
           foregroundColor: onPrimary,
           elevation: 2,
-          shadowColor: primaryColor.withOpacity(0.3),
+          shadowColor: primaryColor.withValues(alpha: 0.3),
           surfaceTintColor: onPrimary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          textStyle: titleMedium(onSurface),
+          textStyle: titleMedium(darkOnSurface),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -399,7 +390,7 @@ class KazipoaTheme {
       ),
       chipTheme: ChipThemeData(
         backgroundColor: darkSurfaceVariant,
-        selectedColor: primaryColor.withOpacity(0.2),
+        selectedColor: primaryColor.withValues(alpha: 0.2),
         disabledColor: darkBackground,
         labelStyle: labelMedium(darkOnSurface),
         secondaryLabelStyle: labelSmall(darkOnSurfaceVariant),

@@ -216,8 +216,8 @@ class _BookingsScreenState extends State<BookingsScreen>
                             },
                             backgroundColor: isDark 
                                 ? KazipoaTheme.darkSurfaceVariant
-                                : KazipoaTheme.surfaceVariant,
-                            selectedColor: KazipoaTheme.primaryColor.withOpacity(0.2),
+                                : KazipoaTheme.surfaceContainerHighest,
+                            selectedColor: KazipoaTheme.primaryColor.withValues(alpha: 0.2),
                             labelStyle: KazipoaTheme.labelMedium.copyWith(
                               color: isSelected 
                                   ? KazipoaTheme.primaryColor

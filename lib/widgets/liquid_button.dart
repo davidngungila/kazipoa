@@ -166,16 +166,16 @@ class _LiquidButtonState extends State<LiquidButton>
         (widget.type == ButtonType.elevated 
             ? KazipoaTheme.primaryColor 
             : Colors.transparent);
-    Color foregroundColor = widget.foregroundColor ?? 
+    Color buttonForegroundColor = widget.foregroundColor ?? 
         (widget.type == ButtonType.elevated 
             ? KazipoaTheme.onPrimary 
             : KazipoaTheme.primaryColor);
     Color rippleColor = widget.rippleColor ?? 
-        (isDark ? Colors.white.withOpacity(0.3) : Colors.black.withOpacity(0.1));
+        (isDark ? Colors.white.withValues(alpha: 0.3) : Colors.black.withValues(alpha: 0.1));
 
     if (widget.isDisabled) {
-      backgroundColor = backgroundColor.withOpacity(0.5);
-      foregroundColor = foregroundColor.withOpacity(0.5);
+      backgroundColor = backgroundColor.withValues(alpha: 0.5);
+      buttonForegroundColor = buttonForegroundColor.withValues(alpha: 0.5);
     }
 
     Widget buttonChild = AnimatedBuilder(
@@ -189,7 +189,7 @@ class _LiquidButtonState extends State<LiquidButton>
           ),
         );
       },
-      child: widget.child ?? _buildDefaultButton(backgroundColor, foregroundColor),
+      child: widget.child ?? _buildDefaultButton(backgroundColor, buttonForegroundColor),
     );
 
     if (widget.isLoading) {
@@ -201,13 +201,13 @@ class _LiquidButtonState extends State<LiquidButton>
             height: 16,
             child: CircularProgressIndicator(
               strokeWidth: 2,
-              valueColor: AlwaysStoppedAnimation<Color>(foregroundColor),
+              valueColor: AlwaysStoppedAnimation<Color>(buttonForegroundColor),
             ),
           ),
           const SizedBox(width: 8),
           widget.child ?? Text(
             widget.text,
-            style: widget.textStyle ?? KazipoaTheme.titleMedium,
+            style: widget.textStyle?.copyWith(color: buttonForegroundColor) ?? KazipoaTheme.titleMedium(Theme.of(context).colorScheme.onSurface),
           ),
         ],
       );
@@ -217,7 +217,7 @@ class _LiquidButtonState extends State<LiquidButton>
       duration: const Duration(milliseconds: 150),
       width: widget.width,
       height: widget.height ?? 48,
-      decoration: _getButtonDecoration(backgroundColor, isDark),
+      decoration: _getButtonDecoration(backgroundColor, isDark, buttonForegroundColor),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
@@ -227,7 +227,7 @@ class _LiquidButtonState extends State<LiquidButton>
           onTapCancel: _handleTapCancel,
           borderRadius: widget.borderRadius ?? BorderRadius.circular(12),
           splashColor: rippleColor,
-          highlightColor: rippleColor.withOpacity(0.5),
+          highlightColor: rippleColor.withValues(alpha: 0.5),
           child: Center(
             child: Padding(
               padding: widget.padding ?? const EdgeInsets.symmetric(horizontal: 24),
@@ -239,16 +239,16 @@ class _LiquidButtonState extends State<LiquidButton>
     );
   }
 
-  Widget _buildDefaultButton(Color backgroundColor, Color foregroundColor) {
+  Widget _buildDefaultButton(Color backgroundColor, Color buttonForegroundColor) {
     return Text(
       widget.text,
-      style: (widget.textStyle ?? KazipoaTheme.titleMedium).copyWith(
-        color: foregroundColor,
+      style: (widget.textStyle ?? KazipoaTheme.titleMedium(Theme.of(context).colorScheme.onSurface)).copyWith(
+        color: buttonForegroundColor,
       ),
     );
   }
 
-  BoxDecoration _getButtonDecoration(Color backgroundColor, bool isDark) {
+  BoxDecoration _getButtonDecoration(Color backgroundColor, bool isDark, Color buttonForegroundColor) {
     switch (widget.type) {
       case ButtonType.elevated:
         return BoxDecoration(
@@ -256,7 +256,7 @@ class _LiquidButtonState extends State<LiquidButton>
           borderRadius: widget.borderRadius ?? BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: backgroundColor.withOpacity(0.3),
+              color: backgroundColor.withValues(alpha: 0.3),
               blurRadius: widget.elevation * 2,
               offset: Offset(0, widget.elevation),
               spreadRadius: 0,
@@ -267,8 +267,8 @@ class _LiquidButtonState extends State<LiquidButton>
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    backgroundColor.withOpacity(0.8),
-                    backgroundColor.withOpacity(0.9),
+                    backgroundColor.withValues(alpha: 0.8),
+                    backgroundColor.withValues(alpha: 0.9),
                   ],
                 )
               : null,
@@ -278,7 +278,7 @@ class _LiquidButtonState extends State<LiquidButton>
         return BoxDecoration(
           color: backgroundColor,
           border: Border.all(
-            color: foregroundColor,
+            color: buttonForegroundColor,
             width: 1,
           ),
           borderRadius: widget.borderRadius ?? BorderRadius.circular(12),
@@ -287,8 +287,8 @@ class _LiquidButtonState extends State<LiquidButton>
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    foregroundColor.withOpacity(0.1),
-                    foregroundColor.withOpacity(0.05),
+                    buttonForegroundColor.withValues(alpha: 0.1),
+                    buttonForegroundColor.withValues(alpha: 0.05),
                   ],
                 )
               : null,
@@ -303,8 +303,8 @@ class _LiquidButtonState extends State<LiquidButton>
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    foregroundColor.withOpacity(0.1),
-                    foregroundColor.withOpacity(0.05),
+                    buttonForegroundColor.withValues(alpha: 0.1),
+                    buttonForegroundColor.withValues(alpha: 0.05),
                   ],
                 )
               : null,
@@ -394,8 +394,8 @@ class _RippleButtonState extends State<RippleButton>
     Color foregroundColor = widget.foregroundColor ?? KazipoaTheme.onPrimary;
 
     if (widget.isDisabled) {
-      backgroundColor = backgroundColor.withOpacity(0.5);
-      foregroundColor = foregroundColor.withOpacity(0.5);
+      backgroundColor = backgroundColor.withValues(alpha: 0.5);
+      foregroundColor = foregroundColor.withValues(alpha: 0.5);
     }
 
     return Container(
@@ -406,7 +406,7 @@ class _RippleButtonState extends State<RippleButton>
         borderRadius: widget.borderRadius ?? BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: backgroundColor.withOpacity(0.3),
+            color: backgroundColor.withValues(alpha: 0.3),
             blurRadius: 4,
             offset: const Offset(0, 2),
             spreadRadius: 0,
@@ -464,7 +464,7 @@ class _RippleButtonState extends State<RippleButton>
                             center: Alignment.center,
                             radius: _rippleAnimation.value * 2,
                             colors: [
-                              Colors.white.withOpacity(0.3 * (1 - _rippleAnimation.value)),
+                              Colors.white.withValues(alpha: 0.3 * (1 - _rippleAnimation.value)),
                               Colors.transparent,
                             ],
                           ),

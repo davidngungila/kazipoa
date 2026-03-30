@@ -52,8 +52,8 @@ class GlassCard extends StatelessWidget {
         boxShadow: boxShadow ?? [
           BoxShadow(
             color: isDark 
-                ? Colors.black.withOpacity(0.3)
-                : Colors.black.withOpacity(0.1),
+                ? Colors.black.withValues(alpha: 0.3)
+                : Colors.black.withValues(alpha: 0.1),
             blurRadius: blur,
             offset: const Offset(0, 8),
             spreadRadius: 0,
@@ -150,7 +150,7 @@ class _LiquidGlassCardState extends State<LiquidGlassCard>
                     end: Alignment.bottomRight,
                     colors: [
                       (isDark ? KazipoaTheme.darkGlassBackground : KazipoaTheme.glassBackground),
-                      (isDark ? KazipoaTheme.darkGlassBackground.withOpacity(0.6) : KazipoaTheme.glassBackground.withOpacity(0.6)),
+                      (isDark ? KazipoaTheme.darkGlassBackground.withValues(alpha: 0.6) : KazipoaTheme.glassBackground.withValues(alpha: 0.6)),
                     ],
                     stops: [
                       0.0,
@@ -169,8 +169,8 @@ class _LiquidGlassCardState extends State<LiquidGlassCard>
             boxShadow: [
               BoxShadow(
                 color: isDark 
-                    ? Colors.black.withOpacity(0.3)
-                    : Colors.black.withOpacity(0.1),
+                    ? Colors.black.withValues(alpha: 0.3)
+                    : Colors.black.withValues(alpha: 0.1),
                 blurRadius: 32,
                 offset: const Offset(0, 8),
                 spreadRadius: 0,
@@ -235,8 +235,8 @@ class FrostedGlassCard extends StatelessWidget {
         margin: margin,
         decoration: BoxDecoration(
           color: isDark 
-              ? Colors.white.withOpacity(0.1)
-              : Colors.white.withOpacity(opacity),
+              ? Colors.white.withValues(alpha: 0.1)
+              : Colors.white.withValues(alpha: opacity),
           borderRadius: borderRadius ?? BorderRadius.circular(24),
         ),
         child: BackdropFilter(
@@ -246,8 +246,8 @@ class FrostedGlassCard extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border.all(
                 color: isDark 
-                    ? Colors.white.withOpacity(0.1)
-                    : Colors.white.withOpacity(0.3),
+                    ? Colors.white.withValues(alpha: 0.1)
+                    : Colors.white.withValues(alpha: 0.3),
                 width: 1,
               ),
               borderRadius: borderRadius ?? BorderRadius.circular(24),
