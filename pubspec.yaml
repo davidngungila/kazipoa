@@ -87,32 +87,6 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
 
-  # Platform-specific configurations
   # Web configuration
   web:
-    # Enable web renderer selection
     renderer: canvaskit
-    # Enable web-specific features
-    generateSyntheticPackageFrontend: true
-
-  # Windows configuration
-  windows:
-    # Generate Windows executable
-    generate: true
-    # Window configuration
-    window_size: 1280x720
-    window_resizable: true
-
-  # macOS configuration
-  macos:
-    # Generate macOS app
-    generate: true
-    # App configuration
-    app_category: public.app-category.business
-
-  # Linux configuration
-  linux:
-    # Generate Linux executable
-    generate: true
-    # Desktop configuration
-    desktop_entry_name: Kazipoa
