@@ -1,0 +1,565 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
+
+class ClientIdLoginEnhanced extends StatefulWidget {
+  const ClientIdLoginEnhanced({super.key});
+
+  @override
+  State<ClientIdLoginEnhanced> createState() => _ClientIdLoginEnhancedState();
+}
+
+class _ClientIdLoginEnhancedState extends State<ClientIdLoginEnhanced>
+    with TickerProviderStateMixin {
+  final _formKey = GlobalKey<FormState>();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _rememberMe = false;
+  bool _obscurePassword = true;
+  
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    
+    // Responsive calculations
+    final padding = screenWidth * 0.04;
+    final titleFontSize = (screenWidth * 0.08).clamp(24.0, 32.0);
+    final subtitleFontSize = (screenWidth * 0.04).clamp(14.0, 18.0);
+    final heroHeight = screenHeight * 0.35;
+    
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Stack(
+        children: [
+          // Main Content
+          SafeArea(
+            child: Column(
+              children: [
+                // Header
+                _buildHeader(screenWidth),
+                
+                // Content
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        // Hero Section with Logo
+                        _buildHeroSection(screenWidth, heroHeight),
+                        
+                        // Welcome Text
+                        _buildWelcomeSection(titleFontSize, subtitleFontSize),
+                        
+                        // Login Form
+                        _buildLoginForm(screenWidth),
+                        
+                        // Footer
+                        _buildFooter(),
+                        
+                        SizedBox(height: screenHeight * 0.25), // Bottom nav space
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHeader(double screenWidth) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04, vertical: 8),
+      child: Row(
+        children: [
+          // Back Button
+          GestureDetector(
+            onTap: () => Navigator.pop(context),
+            child: Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+                size: 24,
+              ),
+            ),
+          ),
+          
+          const SizedBox(width: 16),
+          
+          // Title
+          Expanded(
+            child: Text(
+              'Kitambulisho cha Mteja',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                letterSpacing: -0.5,
+              ),
+            ),
+          ),
+          
+          const SizedBox(width: 64), // Balance the back button
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHeroSection(double screenWidth, double heroHeight) {
+    return Container(
+      height: heroHeight,
+      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04, vertical: 8),
+      child: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(24),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF00D1FF).withOpacity(0.1),
+              Colors.transparent,
+            ],
+          ),
+          border: Border.all(
+            color: Colors.white.withOpacity(0.15),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0xFF00D1FF).withOpacity(0.1),
+              blurRadius: 32,
+              spreadRadius: 0,
+            ),
+          ],
+        ),
+        child: Stack(
+          children: [
+            // Gradient Overlay
+            Positioned.fill(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(24),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xFF00D1FF).withOpacity(0.1),
+                      Colors.transparent,
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            
+            // Logo Container
+            Center(
+              child: Container(
+                width: 120,
+                height: 120,
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0xFF00D1FF).withOpacity(0.2),
+                      blurRadius: 40,
+                      spreadRadius: 0,
+                    ),
+                  ],
+                  border: Border.all(
+                    color: Colors.white.withOpacity(0.2),
+                  ),
+                ),
+                child: ClipOval(
+                  child: Container(
+                    color: Colors.grey.withOpacity(0.3),
+                    child: const Icon(
+                      Icons.work,
+                      color: Color(0xFF00D1FF),
+                      size: 60,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildWelcomeSection(double titleFontSize, double subtitleFontSize) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 32),
+      child: Column(
+        children: [
+          Text(
+            'Karibu Kazipoa',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: titleFontSize,
+              fontWeight: FontWeight.w900,
+              color: Colors.white,
+              letterSpacing: -0.5,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            'Tafadhali weka utambulisho wako wa kidijitali ili kuthibitisha wasifu wako na kuanza kuzungumza na mtaalamu wako.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: subtitleFontSize,
+              fontWeight: FontWeight.w500,
+              color: const Color(0xFF94A3B8),
+              height: 1.4,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLoginForm(double screenWidth) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.08),
+        borderRadius: BorderRadius.circular(32),
+        border: Border.all(
+          color: Colors.white.withOpacity(0.15),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Color(0xFF00D1FF).withOpacity(0.1),
+            blurRadius: 32,
+            spreadRadius: 0,
+          ),
+        ],
+      ),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            // Username Field
+            _buildFormField(
+              controller: _usernameController,
+              label: 'Jina la mtumiaji',
+              hintText: 'Weka jina la mtumiaji',
+              icon: Icons.alternate_email,
+            ),
+            
+            const SizedBox(height: 16),
+            
+            // Password Field
+            _buildPasswordField(),
+            
+            const SizedBox(height: 16),
+            
+            // Remember Me & Forgot Password
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Remember Me
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _rememberMe = !_rememberMe;
+                    });
+                  },
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 20,
+                        height: 20,
+                        decoration: BoxDecoration(
+                          color: _rememberMe ? Color(0xFF00D1FF) : Colors.white.withOpacity(0.05),
+                          borderRadius: BorderRadius.circular(4),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.2),
+                          ),
+                        ),
+                        child: _rememberMe
+                            ? const Icon(
+                                Icons.check,
+                                color: Colors.black,
+                                size: 16,
+                              )
+                            : null,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Nikumbuke',
+                        style: TextStyle(
+                          color: const Color(0xFF94A3B8),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                
+                // Forgot Password
+                GestureDetector(
+                  onTap: () {
+                    // TODO: Implement forgot password
+                  },
+                  child: const Text(
+                    'Umesahau nenosiri?',
+                    style: TextStyle(
+                      color: Color(0xFF00D1FF),
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            
+            const SizedBox(height: 24),
+            
+            // Login Button with Ripple Effect
+            _buildRippleButton(screenWidth),
+            
+            const SizedBox(height: 16),
+            
+            // Register Link
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Huna akaunti? ',
+                  style: TextStyle(
+                    color: const Color(0xFF94A3B8),
+                    fontSize: 14,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    HapticFeedback.lightImpact();
+                    // Navigate to pro registration
+                    context.go('/pro_registration');
+                  },
+                  child: const Text(
+                    'Jisajili',
+                    style: TextStyle(
+                      color: Color(0xFF00D1FF),
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFormField({
+    required TextEditingController controller,
+    required String label,
+    required String hintText,
+    required IconData icon,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            color: Color(0xFFE2E8F0),
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 8),
+        
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.4),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Colors.white.withOpacity(0.1),
+            ),
+          ),
+          child: TextFormField(
+            controller: controller,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.normal,
+            ),
+            decoration: InputDecoration(
+              hintText: hintText,
+              hintStyle: TextStyle(
+                color: Colors.grey.shade500,
+              ),
+              border: InputBorder.none,
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: const BorderSide(
+                  color: Color(0xFF00D1FF),
+                  width: 2,
+                ),
+              ),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 48, vertical: 16),
+              prefixIcon: Icon(
+                icon,
+                color: Colors.grey.shade400,
+                size: 20,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPasswordField() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Nenosiri',
+          style: TextStyle(
+            color: Color(0xFFE2E8F0),
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 8),
+        
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.4),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Colors.white.withOpacity(0.1),
+            ),
+          ),
+          child: TextFormField(
+            controller: _passwordController,
+            obscureText: _obscurePassword,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.normal,
+            ),
+            decoration: InputDecoration(
+              hintText: 'Weka nenosiri lako',
+              hintStyle: TextStyle(
+                color: Colors.grey.shade500,
+              ),
+              border: InputBorder.none,
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: const BorderSide(
+                  color: Color(0xFF00D1FF),
+                  width: 2,
+                ),
+              ),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 48, vertical: 16),
+              prefixIcon: Icon(
+                Icons.lock_open,
+                color: Colors.grey.shade400,
+                size: 20,
+              ),
+              suffixIcon: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _obscurePassword = !_obscurePassword;
+                  });
+                },
+                child: Icon(
+                  _obscurePassword ? Icons.visibility : Icons.visibility_off,
+                  color: Colors.grey.shade400,
+                  size: 20,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRippleButton(double screenWidth) {
+    return GestureDetector(
+      onTap: _submitLogin,
+      child: Container(
+        width: double.infinity,
+        height: 56,
+        decoration: BoxDecoration(
+          color: const Color(0xFF00D1FF),
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0xFF00D1FF).withOpacity(0.2),
+              blurRadius: 20,
+              spreadRadius: 0,
+            ),
+          ],
+        ),
+        child: Stack(
+          children: [
+            Center(
+              child: Text(
+                'Ingia',
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: -0.5,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFooter() {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      child: Text(
+        'UTHIBITISHO SALAMA KUTOKA KAZIPOA AUTH',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Colors.grey.shade600,
+          fontSize: 10,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 2,
+        ),
+      ),
+    );
+  }
+
+  void _submitLogin() {
+    if (_formKey.currentState!.validate()) {
+      HapticFeedback.heavyImpact();
+      // Navigate to landing page after successful login
+      context.go('/home');
+    }
+  }
+}
