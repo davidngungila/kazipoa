@@ -84,7 +84,7 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
                     end: Alignment.bottomRight,
                     colors: [
                       Colors.black,
-                      const Color(0xFF00D2FF).withOpacity(0.05 * _fadeAnimation.value),
+                      const Color(0xFF00D2FF).withValues(alpha: 0.05 * _fadeAnimation.value),
                       Colors.black,
                     ],
                   ),
@@ -138,10 +138,10 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
       height: 64,
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.6),
+        color: Colors.black.withValues(alpha: 0.6),
         border: Border(
           bottom: BorderSide(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha: 0.1),
           ),
         ),
       ),
@@ -208,7 +208,7 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
               width: 40,
               height: 8,
               decoration: BoxDecoration(
-                color: const Color(0xFF00D2FF).withOpacity(0.2),
+                color: const Color(0xFF00D2FF).withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(4),
               ),
             ),
@@ -217,7 +217,7 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
               width: 40,
               height: 8,
               decoration: BoxDecoration(
-                color: const Color(0xFF00D2FF).withOpacity(0.2),
+                color: const Color(0xFF00D2FF).withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(4),
               ),
             ),
@@ -239,7 +239,7 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
         Text(
           'HATUA YA 3 KATI YA 3 - MALIZI',
           style: TextStyle(
-            color: const Color(0xFF00D2FF).withOpacity(0.8),
+            color: const Color(0xFF00D2FF).withValues(alpha: 0.8),
             fontSize: 9,
             fontWeight: FontWeight.bold,
             letterSpacing: 2,
@@ -254,14 +254,14 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
       width: cardWidth,
       padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: Colors.white.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(40),
         border: Border.all(
-          color: Colors.white.withOpacity(0.1),
+          color: Colors.white.withValues(alpha: 0.1),
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF00D2FF).withOpacity(0.05),
+            color: const Color(0xFF00D2FF).withValues(alpha: 0.05),
             blurRadius: 40,
             spreadRadius: 0,
           ),
@@ -418,10 +418,10 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
         
         Container(
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.05),
+            color: Colors.white.withValues(alpha: 0.05),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
             ),
           ),
           child: TextFormField(
@@ -480,10 +480,10 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
         
         Container(
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.05),
+            color: Colors.white.withValues(alpha: 0.05),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
             ),
           ),
           child: TextFormField(
@@ -543,10 +543,10 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
         
         Container(
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.05),
+            color: Colors.white.withValues(alpha: 0.05),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
             ),
           ),
           child: DropdownButtonFormField<String>(
@@ -594,7 +594,7 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF00D2FF).withOpacity(0.2),
+            color: const Color(0xFF00D2FF).withValues(alpha: 0.2),
             blurRadius: 20,
             spreadRadius: 0,
           ),
@@ -630,15 +630,15 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
       child: Container(
         height: 80,
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.8),
+          color: Colors.black.withValues(alpha: 0.8),
           border: Border(
             top: BorderSide(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
             ),
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.5),
+              color: Colors.black.withValues(alpha: 0.5),
               blurRadius: 30,
               spreadRadius: 0,
               offset: const Offset(0, -4),
@@ -748,7 +748,7 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF00D2FF).withOpacity(0.4),
+                color: const Color(0xFF00D2FF).withValues(alpha: 0.4),
                 blurRadius: 16,
                 spreadRadius: 0,
               ),

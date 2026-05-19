@@ -91,7 +91,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
         shape: BoxShape.circle,
         gradient: RadialGradient(
           colors: [
-            const Color(0xFF00D4FF).withOpacity(0.15),
+            const Color(0xFF00D4FF).withValues(alpha: 0.15),
             Colors.transparent,
           ],
         ),
@@ -170,7 +170,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
       margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.all(26),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.03),
+        color: Colors.white.withValues(alpha: 0.03),
         borderRadius: BorderRadius.circular(40),
         border: Border.all(color: Colors.white12),
       ),
@@ -209,7 +209,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                 width: 42,
                 height: 55,
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.05),
+                  color: Colors.white.withValues(alpha: 0.05),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: Colors.white10),
                 ),

@@ -246,10 +246,10 @@ class _ClientsChatEnhancedState extends State<ClientsChatEnhanced> {
       height: 70,
       padding: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.03),
+        color: Colors.white.withValues(alpha: 0.03),
         border: Border(
           bottom: BorderSide(
-            color: const Color(0xFF7DD3FC).withOpacity(0.12),
+            color: const Color(0xFF7DD3FC).withValues(alpha: 0.12),
           ),
         ),
       ),
@@ -278,13 +278,13 @@ class _ClientsChatEnhancedState extends State<ClientsChatEnhanced> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(14),
                   border: Border.all(
-                    color: const Color(0xFF7DD3FC).withOpacity(0.2),
+                    color: const Color(0xFF7DD3FC).withValues(alpha: 0.2),
                   ),
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(14),
                   child: Container(
-                    color: Colors.grey.withOpacity(0.3),
+                    color: Colors.grey.withValues(alpha: 0.3),
                     child: const Icon(
                       Icons.person,
                       color: Color(0xFF7DD3FC),
@@ -313,7 +313,7 @@ class _ClientsChatEnhancedState extends State<ClientsChatEnhanced> {
                     _partnerRole,
                     style: TextStyle(
                       fontSize: 12,
-                      color: const Color(0xFF7DD3FC).withOpacity(0.8),
+                      color: const Color(0xFF7DD3FC).withValues(alpha: 0.8),
                     ),
                   ),
                 ],
@@ -340,9 +340,9 @@ class _ClientsChatEnhancedState extends State<ClientsChatEnhanced> {
       height: 38,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: const Color(0xFF7DD3FC).withOpacity(0.08),
+        color: const Color(0xFF7DD3FC).withValues(alpha: 0.08),
         border: Border.all(
-          color: const Color(0xFF7DD3FC).withOpacity(0.12),
+          color: const Color(0xFF7DD3FC).withValues(alpha: 0.12),
         ),
       ),
       child: Center(
@@ -361,12 +361,12 @@ class _ClientsChatEnhancedState extends State<ClientsChatEnhanced> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.forum_outlined, size: 48, color: Colors.white.withOpacity(0.2)),
+            Icon(Icons.forum_outlined, size: 48, color: Colors.white.withValues(alpha: 0.2)),
             const SizedBox(height: 12),
             Text(
               "Hakuna ujumbe bado.\nAnza mazungumzo!",
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 13),
+              style: TextStyle(color: Colors.white.withValues(alpha: 0.4), fontSize: 13),
             ),
           ],
         ),
@@ -396,13 +396,13 @@ class _ClientsChatEnhancedState extends State<ClientsChatEnhanced> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(
-                      color: const Color(0xFF7DD3FC).withOpacity(0.2),
+                      color: const Color(0xFF7DD3FC).withValues(alpha: 0.2),
                     ),
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Container(
-                      color: Colors.grey.withOpacity(0.3),
+                      color: Colors.grey.withValues(alpha: 0.3),
                       child: const Icon(
                         Icons.person,
                         color: Color(0xFF7DD3FC),
@@ -424,11 +424,11 @@ class _ClientsChatEnhancedState extends State<ClientsChatEnhanced> {
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                     decoration: BoxDecoration(
-                      color: isSent ? const Color(0xFF38BDF8) : Colors.white.withOpacity(0.03),
+                      color: isSent ? const Color(0xFF38BDF8) : Colors.white.withValues(alpha: 0.03),
                       border: isSent 
                           ? null
                           : Border.all(
-                              color: const Color(0xFF7DD3FC).withOpacity(0.14),
+                              color: const Color(0xFF7DD3FC).withValues(alpha: 0.14),
                             ),
                       borderRadius: BorderRadius.only(
                         topLeft: const Radius.circular(22),
@@ -455,7 +455,7 @@ class _ClientsChatEnhancedState extends State<ClientsChatEnhanced> {
                       _formatTime(message['created_at']),
                       style: TextStyle(
                         fontSize: 11,
-                        color: const Color(0xFF7DD3FC).withOpacity(0.65),
+                        color: const Color(0xFF7DD3FC).withValues(alpha: 0.65),
                       ),
                     ),
                   ),
@@ -473,10 +473,10 @@ class _ClientsChatEnhancedState extends State<ClientsChatEnhanced> {
       height: 70,
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.03),
+        color: Colors.white.withValues(alpha: 0.03),
         border: Border(
           top: BorderSide(
-            color: const Color(0xFF7DD3FC).withOpacity(0.12),
+            color: const Color(0xFF7DD3FC).withValues(alpha: 0.12),
           ),
         ),
       ),
@@ -498,13 +498,13 @@ class _ClientsChatEnhancedState extends State<ClientsChatEnhanced> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(999),
                   borderSide: BorderSide(
-                    color: const Color(0xFF7DD3FC).withOpacity(0.12),
+                    color: const Color(0xFF7DD3FC).withValues(alpha: 0.12),
                   ),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(999),
                   borderSide: BorderSide(
-                    color: const Color(0xFF7DD3FC).withOpacity(0.12),
+                    color: const Color(0xFF7DD3FC).withValues(alpha: 0.12),
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
@@ -515,7 +515,7 @@ class _ClientsChatEnhancedState extends State<ClientsChatEnhanced> {
                   ),
                 ),
                 filled: true,
-                fillColor: Colors.white.withOpacity(0.04),
+                fillColor: Colors.white.withValues(alpha: 0.04),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 0),
               ),
               onSubmitted: (_) => _sendMessage(),

@@ -42,7 +42,7 @@ class UIManager {
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
+                  color: Colors.black.withValues(alpha: 0.1),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),
@@ -179,7 +179,7 @@ class UIManager {
     _currentLoadingDialog = showOverlayNotification(
       (context) {
         return Material(
-          color: Colors.black.withOpacity(0.5),
+          color: Colors.black.withValues(alpha: 0.5),
           child: Center(
             child: Container(
               padding: const EdgeInsets.all(24),
@@ -188,7 +188,7 @@ class UIManager {
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 20,
                     offset: const Offset(0, 10),
                   ),
@@ -331,7 +331,7 @@ class UIManager {
               width: 50 * (1 + value),
               height: 50 * (1 + value),
               decoration: BoxDecoration(
-                color: (color ?? const Color(0xFF0F00E7)).withOpacity(0.3 - (0.3 * value)),
+                color: (color ?? const Color(0xFF0F00E7)).withValues(alpha: 0.3 - (0.3 * value)),
                 shape: BoxShape.circle,
               ),
             );
@@ -439,28 +439,28 @@ class UIManager {
         return {
           'background': const Color(0xFF10B981),
           'textColor': Colors.white,
-          'iconBackground': Colors.white.withOpacity(0.2),
+          'iconBackground': Colors.white.withValues(alpha: 0.2),
           'iconColor': Colors.white,
         };
       case 'error':
         return {
           'background': const Color(0xFFEF4444),
           'textColor': Colors.white,
-          'iconBackground': Colors.white.withOpacity(0.2),
+          'iconBackground': Colors.white.withValues(alpha: 0.2),
           'iconColor': Colors.white,
         };
       case 'warning':
         return {
           'background': const Color(0xFFF59E0B),
           'textColor': Colors.white,
-          'iconBackground': Colors.white.withOpacity(0.2),
+          'iconBackground': Colors.white.withValues(alpha: 0.2),
           'iconColor': Colors.white,
         };
       default: // info
         return {
           'background': const Color(0xFF0F00E7),
           'textColor': Colors.white,
-          'iconBackground': Colors.white.withOpacity(0.2),
+          'iconBackground': Colors.white.withValues(alpha: 0.2),
           'iconColor': Colors.white,
         };
     }

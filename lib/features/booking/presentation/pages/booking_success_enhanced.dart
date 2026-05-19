@@ -31,7 +31,7 @@ class BookingSuccessEnhanced extends StatelessWidget {
                       width: 140,
                       height: 140,
                       decoration: BoxDecoration(
-                        color: const Color(0xFF00E5FF).withOpacity(0.15),
+                        color: const Color(0xFF00E5FF).withValues(alpha: 0.15),
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -79,7 +79,7 @@ class BookingSuccessEnhanced extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.05),
+                    color: Colors.white.withValues(alpha: 0.05),
                     borderRadius: BorderRadius.circular(25),
                     border: Border.all(color: Colors.white10),
                   ),
@@ -160,8 +160,8 @@ class BookingSuccessEnhanced extends StatelessWidget {
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              Colors.white.withOpacity(0.05),
-                              Colors.white.withOpacity(0.1),
+                              Colors.white.withValues(alpha: 0.05),
+                              Colors.white.withValues(alpha: 0.1),
                             ],
                           ),
                           borderRadius: BorderRadius.circular(15),
@@ -214,7 +214,7 @@ class BookingSuccessEnhanced extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 18),
       decoration: BoxDecoration(
-        color: primary ? const Color(0xFF00E5FF) : Colors.white.withOpacity(0.05),
+        color: primary ? const Color(0xFF00E5FF) : Colors.white.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: Colors.white10),
       ),

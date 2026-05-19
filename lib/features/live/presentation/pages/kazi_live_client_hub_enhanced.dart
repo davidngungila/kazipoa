@@ -71,7 +71,7 @@ class _KaziLiveClientHubEnhancedState extends State<KaziLiveClientHubEnhanced>
               width: 300,
               height: 300,
               decoration: BoxDecoration(
-                color: const Color(0xFF00F0FF).withOpacity(0.1),
+                color: const Color(0xFF00F0FF).withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
             ),
@@ -123,10 +123,10 @@ class _KaziLiveClientHubEnhancedState extends State<KaziLiveClientHubEnhanced>
       height: 64,
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.6),
+        color: Colors.black.withValues(alpha: 0.6),
         border: Border(
           bottom: BorderSide(
-            color: Colors.white.withOpacity(0.05),
+            color: Colors.white.withValues(alpha: 0.05),
           ),
         ),
       ),
@@ -143,7 +143,7 @@ class _KaziLiveClientHubEnhancedState extends State<KaziLiveClientHubEnhanced>
                   color: Colors.black,
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: Colors.white.withOpacity(0.1),
+                    color: Colors.white.withValues(alpha: 0.1),
                   ),
                 ),
                 child: const Center(
@@ -189,7 +189,7 @@ class _KaziLiveClientHubEnhancedState extends State<KaziLiveClientHubEnhanced>
                   ),
                   child: Icon(
                     Icons.notifications,
-                    color: Colors.white.withOpacity(0.7),
+                    color: Colors.white.withValues(alpha: 0.7),
                     size: 24,
                   ),
                 ),
@@ -210,7 +210,7 @@ class _KaziLiveClientHubEnhancedState extends State<KaziLiveClientHubEnhanced>
                   ),
                   child: Icon(
                     Icons.search,
-                    color: Colors.white.withOpacity(0.7),
+                    color: Colors.white.withValues(alpha: 0.7),
                     size: 24,
                   ),
                 ),
@@ -304,10 +304,10 @@ class _KaziLiveClientHubEnhancedState extends State<KaziLiveClientHubEnhanced>
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.03),
+        color: Colors.white.withValues(alpha: 0.03),
         borderRadius: BorderRadius.circular(40),
         border: Border.all(
-          color: Colors.white.withOpacity(0.08),
+          color: Colors.white.withValues(alpha: 0.08),
         ),
       ),
       child: Stack(
@@ -319,10 +319,10 @@ class _KaziLiveClientHubEnhancedState extends State<KaziLiveClientHubEnhanced>
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
               decoration: BoxDecoration(
-                color: Colors.red.withOpacity(0.2),
+                color: Colors.red.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: Colors.red.withOpacity(0.3),
+                  color: Colors.red.withValues(alpha: 0.3),
                 ),
               ),
               child: Row(
@@ -371,7 +371,7 @@ class _KaziLiveClientHubEnhancedState extends State<KaziLiveClientHubEnhanced>
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(0xFF00F0FF).withOpacity(0.3),
+                              color: const Color(0xFF00F0FF).withValues(alpha: 0.3),
                               blurRadius: 20,
                               spreadRadius: 0,
                             ),
@@ -380,7 +380,7 @@ class _KaziLiveClientHubEnhancedState extends State<KaziLiveClientHubEnhanced>
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(22),
                           child: Container(
-                            color: Colors.grey.withOpacity(0.3),
+                            color: Colors.grey.withValues(alpha: 0.3),
                             child: const Icon(
                               Icons.person,
                               color: Colors.white,
@@ -485,7 +485,7 @@ class _KaziLiveClientHubEnhancedState extends State<KaziLiveClientHubEnhanced>
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF00F0FF).withOpacity(0.25),
+                      color: const Color(0xFF00F0FF).withValues(alpha: 0.25),
                       blurRadius: 20,
                       spreadRadius: 0,
                       offset: const Offset(0, 8),
@@ -540,10 +540,10 @@ class _KaziLiveClientHubEnhancedState extends State<KaziLiveClientHubEnhanced>
       child: Container(
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.03),
+          color: Colors.white.withValues(alpha: 0.03),
           borderRadius: BorderRadius.circular(40),
           border: Border.all(
-            color: Colors.white.withOpacity(0.08),
+            color: Colors.white.withValues(alpha: 0.08),
           ),
         ),
         child: Column(
@@ -558,13 +558,13 @@ class _KaziLiveClientHubEnhancedState extends State<KaziLiveClientHubEnhanced>
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(24),
                   border: Border.all(
-                    color: Colors.white.withOpacity(0.1),
+                    color: Colors.white.withValues(alpha: 0.1),
                   ),
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(22),
                   child: Container(
-                    color: Colors.grey.withOpacity(0.3),
+                    color: Colors.grey.withValues(alpha: 0.3),
                     child: const Icon(
                       Icons.person,
                       color: Colors.white,
@@ -620,8 +620,8 @@ class _KaziLiveClientHubEnhancedState extends State<KaziLiveClientHubEnhanced>
                       service,
                       style: TextStyle(
                         color: isActive 
-                            ? Colors.white.withOpacity(0.5)
-                            : Colors.white.withOpacity(0.5),
+                            ? Colors.white.withValues(alpha: 0.5)
+                            : Colors.white.withValues(alpha: 0.5),
                         fontSize: 14,
                         fontStyle: isActive ? FontStyle.normal : FontStyle.italic,
                         fontWeight: FontWeight.w400,
@@ -646,8 +646,8 @@ class _KaziLiveClientHubEnhancedState extends State<KaziLiveClientHubEnhanced>
                     'Inaanza baada ya',
                     style: TextStyle(
                       color: isActive 
-                          ? const Color(0xFF00F0FF).withOpacity(0.7)
-                          : Colors.white.withOpacity(0.4),
+                          ? const Color(0xFF00F0FF).withValues(alpha: 0.7)
+                          : Colors.white.withValues(alpha: 0.4),
                       fontSize: 10,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 2,
@@ -679,8 +679,8 @@ class _KaziLiveClientHubEnhancedState extends State<KaziLiveClientHubEnhanced>
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
                       color: isActive 
-                          ? buttonColor.withOpacity(0.3)
-                          : Colors.white.withOpacity(0.1),
+                          ? buttonColor.withValues(alpha: 0.3)
+                          : Colors.white.withValues(alpha: 0.1),
                     ),
                   ),
                   child: ElevatedButton(
@@ -724,10 +724,10 @@ class _KaziLiveClientHubEnhancedState extends State<KaziLiveClientHubEnhanced>
         height: 96,
         padding: const EdgeInsets.only(bottom: 24),
         decoration: BoxDecoration(
-          color: const Color(0xFF0F172A).withOpacity(0.8),
+          color: const Color(0xFF0F172A).withValues(alpha: 0.8),
           border: Border(
             top: BorderSide(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
             ),
           ),
           borderRadius: const BorderRadius.only(
@@ -791,14 +791,14 @@ class _KaziLiveClientHubEnhancedState extends State<KaziLiveClientHubEnhanced>
         children: [
           Icon(
             icon,
-            color: Colors.white.withOpacity(0.4),
+            color: Colors.white.withValues(alpha: 0.4),
             size: 28,
           ),
           const SizedBox(height: 4),
           Text(
             label,
             style: TextStyle(
-              color: Colors.white.withOpacity(0.4),
+              color: Colors.white.withValues(alpha: 0.4),
               fontSize: 10,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.2,
@@ -821,7 +821,7 @@ class _KaziLiveClientHubEnhancedState extends State<KaziLiveClientHubEnhanced>
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF00F0FF).withOpacity(0.4),
+                color: const Color(0xFF00F0FF).withValues(alpha: 0.4),
                 blurRadius: 25,
                 spreadRadius: 0,
                 offset: const Offset(0, 8),
@@ -891,9 +891,9 @@ class _KaziLiveClientHubEnhancedState extends State<KaziLiveClientHubEnhanced>
       badgeColor: const Color(0xFF94A3B8),
       badgeTextColor: Colors.black,
       time: dateTimeStr,
-      timeColor: Colors.white.withOpacity(0.8),
-      buttonColor: Colors.white.withOpacity(0.1),
-      buttonTextColor: Colors.white.withOpacity(0.5),
+      timeColor: Colors.white.withValues(alpha: 0.8),
+      buttonColor: Colors.white.withValues(alpha: 0.1),
+      buttonTextColor: Colors.white.withValues(alpha: 0.5),
       isActive: false,
     );
   }

@@ -83,10 +83,10 @@ class _ProChatsOverviewEnhancedState extends State<ProChatsOverviewEnhanced>
     return Container(
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04, vertical: 16),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.7),
+        color: Colors.black.withValues(alpha: 0.7),
         border: Border(
           bottom: BorderSide(
-            color: const Color(0xFF334155).withOpacity(0.3),
+            color: const Color(0xFF334155).withValues(alpha: 0.3),
           ),
         ),
       ),
@@ -227,7 +227,7 @@ class _ProChatsOverviewEnhancedState extends State<ProChatsOverviewEnhanced>
             size: 24,
           ),
           filled: true,
-          fillColor: Colors.white.withOpacity(0.05),
+          fillColor: Colors.white.withValues(alpha: 0.05),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
             borderSide: BorderSide(
@@ -305,15 +305,15 @@ class _ProChatsOverviewEnhancedState extends State<ProChatsOverviewEnhanced>
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.03),
+        color: Colors.white.withValues(alpha: 0.03),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Colors.white.withOpacity(0.08),
+          color: Colors.white.withValues(alpha: 0.08),
         ),
         boxShadow: isActive
             ? [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
+                  color: Colors.black.withValues(alpha: 0.3),
                   blurRadius: 24,
                   spreadRadius: 0,
                 ),
@@ -337,7 +337,7 @@ class _ProChatsOverviewEnhancedState extends State<ProChatsOverviewEnhanced>
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(14),
                   child: Container(
-                    color: Colors.grey.withOpacity(0.3),
+                    color: Colors.grey.withValues(alpha: 0.3),
                     child: const Icon(
                       Icons.person,
                       color: Colors.white,

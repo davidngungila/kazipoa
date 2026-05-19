@@ -246,9 +246,9 @@ class _MyOfficeEnhancedState extends State<MyOfficeEnhanced> {
 
   BoxDecoration _glassDecoration() {
     return BoxDecoration(
-      color: Colors.white.withOpacity(0.06),
+      color: Colors.white.withValues(alpha: 0.06),
       borderRadius: BorderRadius.circular(20),
-      border: Border.all(color: Colors.white.withOpacity(0.1)),
+      border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
     );
   }
 
@@ -275,7 +275,7 @@ class _MyOfficeEnhancedState extends State<MyOfficeEnhanced> {
         shape: BoxShape.circle,
         gradient: RadialGradient(
           colors: [
-            Colors.cyan.withOpacity(0.25),
+            Colors.cyan.withValues(alpha: 0.25),
             Colors.transparent,
           ],
         ),

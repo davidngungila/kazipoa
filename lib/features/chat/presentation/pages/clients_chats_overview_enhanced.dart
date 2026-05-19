@@ -217,7 +217,7 @@ class _ClientsChatsOverviewEnhancedState extends State<ClientsChatsOverviewEnhan
                     color: Colors.white,
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: ClientsChatsOverviewEnhanced.primary.withOpacity(0.3),
+                      color: ClientsChatsOverviewEnhanced.primary.withValues(alpha: 0.3),
                     ),
                   ),
                   child: ClipOval(
@@ -334,7 +334,7 @@ class _ClientsChatsOverviewEnhancedState extends State<ClientsChatsOverviewEnhan
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.04),
+              color: Colors.white.withValues(alpha: 0.04),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(color: Colors.white10),
             ),
@@ -366,7 +366,7 @@ class _ClientsChatsOverviewEnhancedState extends State<ClientsChatsOverviewEnhan
             width: 50,
             height: 50,
             decoration: BoxDecoration(
-              color: _showFilterMenu ? ClientsChatsOverviewEnhanced.primary.withOpacity(0.2) : Colors.white.withOpacity(0.04),
+              color: _showFilterMenu ? ClientsChatsOverviewEnhanced.primary.withValues(alpha: 0.2) : Colors.white.withValues(alpha: 0.04),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
                 color: _showFilterMenu ? ClientsChatsOverviewEnhanced.primary : Colors.white10,
@@ -391,9 +391,9 @@ class _ClientsChatsOverviewEnhancedState extends State<ClientsChatsOverviewEnhan
       margin: EdgeInsets.only(top: 8),
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: Colors.white.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withOpacity(0.1)),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -465,13 +465,13 @@ class _ClientsChatsOverviewEnhancedState extends State<ClientsChatsOverviewEnhan
         margin: EdgeInsets.only(bottom: 8),
         decoration: BoxDecoration(
           color: isSelected 
-            ? ClientsChatsOverviewEnhanced.primary.withOpacity(0.2)
+            ? ClientsChatsOverviewEnhanced.primary.withValues(alpha: 0.2)
             : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: isSelected 
-              ? ClientsChatsOverviewEnhanced.primary.withOpacity(0.5)
-              : Colors.white.withOpacity(0.1),
+              ? ClientsChatsOverviewEnhanced.primary.withValues(alpha: 0.5)
+              : Colors.white.withValues(alpha: 0.1),
           ),
         ),
         child: Row(
@@ -480,7 +480,7 @@ class _ClientsChatsOverviewEnhancedState extends State<ClientsChatsOverviewEnhan
               icon,
               color: isSelected 
                 ? ClientsChatsOverviewEnhanced.primary
-                : Colors.white.withOpacity(0.7),
+                : Colors.white.withValues(alpha: 0.7),
               size: 20,
             ),
             SizedBox(width: 12),
@@ -489,7 +489,7 @@ class _ClientsChatsOverviewEnhancedState extends State<ClientsChatsOverviewEnhan
               style: TextStyle(
                 color: isSelected 
                   ? ClientsChatsOverviewEnhanced.primary
-                  : Colors.white.withOpacity(0.9),
+                  : Colors.white.withValues(alpha: 0.9),
                 fontSize: 14,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
               ),
@@ -649,7 +649,7 @@ class _ClientsChatsOverviewEnhancedState extends State<ClientsChatsOverviewEnhan
             });
           },
           backgroundColor: _showFabMenu 
-            ? ClientsChatsOverviewEnhanced.primary.withOpacity(0.8)
+            ? ClientsChatsOverviewEnhanced.primary.withValues(alpha: 0.8)
             : ClientsChatsOverviewEnhanced.primary,
           child: Icon(
             _showFabMenu ? Icons.close : Icons.add,
@@ -673,11 +673,11 @@ class _ClientsChatsOverviewEnhancedState extends State<ClientsChatsOverviewEnhan
           Container(
             padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.9),
+              color: Colors.white.withValues(alpha: 0.9),
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
+                  color: Colors.black.withValues(alpha: 0.3),
                   blurRadius: 8,
                   offset: Offset(0, 2),
                 ),
@@ -769,12 +769,12 @@ class _ClientsChatsOverviewEnhancedState extends State<ClientsChatsOverviewEnhan
       child: Container(
         width: 280,
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.05),
+          color: Colors.white.withValues(alpha: 0.05),
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.white.withOpacity(0.1)),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.3),
+              color: Colors.black.withValues(alpha: 0.3),
               blurRadius: 20,
               offset: Offset(0, 10),
             ),
@@ -786,7 +786,7 @@ class _ClientsChatsOverviewEnhancedState extends State<ClientsChatsOverviewEnhan
             Container(
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: ClientsChatsOverviewEnhanced.primary.withOpacity(0.1),
+                color: ClientsChatsOverviewEnhanced.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(16),
                   topRight: Radius.circular(16),
@@ -881,7 +881,7 @@ class _ClientsChatsOverviewEnhancedState extends State<ClientsChatsOverviewEnhan
           child: Text(
             title,
             style: TextStyle(
-              color: Colors.white.withOpacity(0.6),
+              color: Colors.white.withValues(alpha: 0.6),
               fontSize: 12,
               fontWeight: FontWeight.bold,
               letterSpacing: 1,
@@ -899,15 +899,15 @@ class _ClientsChatsOverviewEnhancedState extends State<ClientsChatsOverviewEnhan
     required VoidCallback onTap,
   }) {
     return ListTile(
-      leading: Icon(icon, color: Colors.white.withOpacity(0.7), size: 20),
+      leading: Icon(icon, color: Colors.white.withValues(alpha: 0.7), size: 20),
       title: Text(
         label,
         style: TextStyle(
-          color: Colors.white.withOpacity(0.9),
+          color: Colors.white.withValues(alpha: 0.9),
           fontSize: 14,
         ),
       ),
-      trailing: Icon(Icons.chevron_right, color: Colors.white.withOpacity(0.3), size: 16),
+      trailing: Icon(Icons.chevron_right, color: Colors.white.withValues(alpha: 0.3), size: 16),
       onTap: () {
         setState(() {
           _showSettingsMenu = false;
@@ -1023,14 +1023,14 @@ class _ClientsChatsOverviewEnhancedState extends State<ClientsChatsOverviewEnhan
         children: [
           Icon(
             Icons.chat_bubble_outline,
-            color: Colors.white.withOpacity(0.3),
+            color: Colors.white.withValues(alpha: 0.3),
             size: 64,
           ),
           SizedBox(height: 16),
           Text(
             'Hakuna matata',
             style: TextStyle(
-              color: Colors.white.withOpacity(0.5),
+              color: Colors.white.withValues(alpha: 0.5),
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
@@ -1039,7 +1039,7 @@ class _ClientsChatsOverviewEnhancedState extends State<ClientsChatsOverviewEnhan
           Text(
             'Hakuna mazungumzo yanayolingana na vichungi vyako',
             style: TextStyle(
-              color: Colors.white.withOpacity(0.3),
+              color: Colors.white.withValues(alpha: 0.3),
               fontSize: 14,
             ),
             textAlign: TextAlign.center,
@@ -1069,7 +1069,7 @@ class _ClientsChatsOverviewEnhancedState extends State<ClientsChatsOverviewEnhan
         margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.04),
+          color: Colors.white.withValues(alpha: 0.04),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: Colors.white10),
         ),
@@ -1128,9 +1128,9 @@ class _ClientsChatsOverviewEnhancedState extends State<ClientsChatsOverviewEnhan
                       padding:
                           const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
-                        color: ClientsChatsOverviewEnhanced.primary.withOpacity(0.15),
+                        color: ClientsChatsOverviewEnhanced.primary.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(6),
-                        border: Border.all(color: ClientsChatsOverviewEnhanced.primary.withOpacity(0.3)),
+                        border: Border.all(color: ClientsChatsOverviewEnhanced.primary.withValues(alpha: 0.3)),
                       ),
                       child: const Text(
                         "PLATINUM",
@@ -1206,7 +1206,7 @@ class _ClientsChatsOverviewEnhancedState extends State<ClientsChatsOverviewEnhan
       width: 220,
       height: 220,
       decoration: BoxDecoration(
-        color: ClientsChatsOverviewEnhanced.primary.withOpacity(0.08),
+        color: ClientsChatsOverviewEnhanced.primary.withValues(alpha: 0.08),
         shape: BoxShape.circle,
       ),
     );

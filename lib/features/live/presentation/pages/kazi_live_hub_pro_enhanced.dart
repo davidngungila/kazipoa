@@ -148,10 +148,10 @@ class _KaziLiveHubProEnhancedState extends State<KaziLiveHubProEnhanced>
       height: 64,
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.7),
+        color: Colors.black.withValues(alpha: 0.7),
         border: Border(
           bottom: BorderSide(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha: 0.1),
           ),
         ),
       ),
@@ -213,10 +213,10 @@ class _KaziLiveHubProEnhancedState extends State<KaziLiveHubProEnhanced>
           child: Container(
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              color: const Color(0xFF1E293B).withOpacity(0.6),
+              color: const Color(0xFF1E293B).withValues(alpha: 0.6),
               borderRadius: BorderRadius.circular(24),
               border: Border.all(
-                color: Colors.white.withOpacity(0.1),
+                color: Colors.white.withValues(alpha: 0.1),
               ),
             ),
             child: Column(
@@ -261,7 +261,7 @@ class _KaziLiveHubProEnhancedState extends State<KaziLiveHubProEnhanced>
               ),
               borderRadius: BorderRadius.circular(24),
               border: Border.all(
-                color: const Color(0xFF38BDF8).withOpacity(0.2),
+                color: const Color(0xFF38BDF8).withValues(alpha: 0.2),
               ),
             ),
             child: Column(
@@ -326,7 +326,7 @@ class _KaziLiveHubProEnhancedState extends State<KaziLiveHubProEnhanced>
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
           decoration: BoxDecoration(
-            color: const Color(0xFF38BDF8).withOpacity(0.1),
+            color: const Color(0xFF38BDF8).withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(20),
           ),
           child: const Text(
@@ -419,10 +419,10 @@ class _KaziLiveHubProEnhancedState extends State<KaziLiveHubProEnhanced>
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: const Color(0xFF1E293B).withOpacity(0.6),
+          color: const Color(0xFF1E293B).withValues(alpha: 0.6),
           borderRadius: BorderRadius.circular(32),
           border: Border.all(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha: 0.1),
           ),
         ),
         child: Row(
@@ -439,7 +439,7 @@ class _KaziLiveHubProEnhancedState extends State<KaziLiveHubProEnhanced>
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(14),
                   child: Container(
-                    color: Colors.grey.withOpacity(0.3),
+                    color: Colors.grey.withValues(alpha: 0.3),
                     child: Icon(
                       getServiceIcon(service),
                       color: Colors.white,

@@ -87,8 +87,8 @@ class _ProAccountRegistrationEnhancedState extends ConsumerState<ProAccountRegis
                         decoration: BoxDecoration(
                           gradient: RadialGradient(
                             colors: [
-                              const Color(0xFF00D4FF).withOpacity(0.12),
-                              const Color(0xFF00D4FF).withOpacity(0.0),
+                              const Color(0xFF00D4FF).withValues(alpha: 0.12),
+                              const Color(0xFF00D4FF).withValues(alpha: 0.0),
                             ],
                           ),
                           shape: BoxShape.circle,
@@ -112,8 +112,8 @@ class _ProAccountRegistrationEnhancedState extends ConsumerState<ProAccountRegis
                         decoration: BoxDecoration(
                           gradient: RadialGradient(
                             colors: [
-                              const Color(0xFF00D4FF).withOpacity(0.08),
-                              const Color(0xFF00D4FF).withOpacity(0.0),
+                              const Color(0xFF00D4FF).withValues(alpha: 0.08),
+                              const Color(0xFF00D4FF).withValues(alpha: 0.0),
                             ],
                           ),
                           shape: BoxShape.circle,
@@ -165,10 +165,10 @@ class _ProAccountRegistrationEnhancedState extends ConsumerState<ProAccountRegis
       height: 56,
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.4),
+        color: Colors.black.withValues(alpha: 0.4),
         border: Border(
           bottom: BorderSide(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha: 0.1),
           ),
         ),
       ),
@@ -266,7 +266,7 @@ class _ProAccountRegistrationEnhancedState extends ConsumerState<ProAccountRegis
         Text(
           'HATUA YA 1 KATI YA 3',
           style: TextStyle(
-            color: const Color(0xFF00D4FF).withOpacity(0.8),
+            color: const Color(0xFF00D4FF).withValues(alpha: 0.8),
             fontSize: 9,
             fontWeight: FontWeight.bold,
             letterSpacing: 2,
@@ -281,14 +281,14 @@ class _ProAccountRegistrationEnhancedState extends ConsumerState<ProAccountRegis
       width: cardWidth,
       padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.08),
+        color: Colors.white.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(40),
         border: Border.all(
-          color: Colors.white.withOpacity(0.15),
+          color: Colors.white.withValues(alpha: 0.15),
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF00D4FF).withOpacity(0.05),
+            color: const Color(0xFF00D4FF).withValues(alpha: 0.05),
             blurRadius: 40,
             spreadRadius: 0,
           ),
@@ -415,10 +415,10 @@ class _ProAccountRegistrationEnhancedState extends ConsumerState<ProAccountRegis
         
         Container(
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.05),
+            color: Colors.white.withValues(alpha: 0.05),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
             ),
           ),
           child: TextFormField(
@@ -477,7 +477,7 @@ class _ProAccountRegistrationEnhancedState extends ConsumerState<ProAccountRegis
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF00D4FF).withOpacity(0.2),
+            color: const Color(0xFF00D4FF).withValues(alpha: 0.2),
             blurRadius: 20,
             spreadRadius: 0,
           ),

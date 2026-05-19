@@ -35,9 +35,9 @@ class ServiceImageWidget extends StatelessWidget {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      const Color(0xFF38BDF8).withOpacity(0.3),
-                      const Color(0xFF1E40AF).withOpacity(0.2),
-                      Colors.grey.withOpacity(0.4),
+                      const Color(0xFF38BDF8).withValues(alpha: 0.3),
+                      const Color(0xFF1E40AF).withValues(alpha: 0.2),
+                      Colors.grey.withValues(alpha: 0.4),
                     ],
                   ),
                 ),
@@ -48,16 +48,16 @@ class ServiceImageWidget extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(50),
                           border: Border.all(
-                            color: Colors.white.withOpacity(0.4),
+                            color: Colors.white.withValues(alpha: 0.4),
                             width: 2,
                           ),
                         ),
                         child: Icon(
                           _getServiceIcon(imagePath),
-                          color: Colors.white.withOpacity(0.9),
+                          color: Colors.white.withValues(alpha: 0.9),
                           size: 28,
                         ),
                       ),
@@ -70,7 +70,7 @@ class ServiceImageWidget extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           shadows: [
                             Shadow(
-                              color: Colors.black.withOpacity(0.5),
+                              color: Colors.black.withValues(alpha: 0.5),
                               offset: Offset(1, 1),
                               blurRadius: 2,
                             ),
@@ -94,7 +94,7 @@ class ServiceImageWidget extends StatelessWidget {
                 end: Alignment.bottomCenter,
                 colors: [
                   Colors.transparent,
-                  Colors.black.withOpacity(0.1),
+                  Colors.black.withValues(alpha: 0.1),
                 ],
               ),
             ),

@@ -119,8 +119,8 @@ class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              const Color(0xFF00F0FF).withOpacity(0.15),
-                              const Color(0xFF00F0FF).withOpacity(0.05),
+                              const Color(0xFF00F0FF).withValues(alpha: 0.15),
+                              const Color(0xFF00F0FF).withValues(alpha: 0.05),
                             ],
                           ),
                           shape: BoxShape.circle,
@@ -142,7 +142,7 @@ class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
                         width: 400,
                         height: 400,
                         decoration: BoxDecoration(
-                          color: const Color(0xFF00F0FF).withOpacity(0.1),
+                          color: const Color(0xFF00F0FF).withValues(alpha: 0.1),
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -195,10 +195,10 @@ class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
     return Container(
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04, vertical: 16),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.6),
+        color: Colors.black.withValues(alpha: 0.6),
         border: Border(
           bottom: BorderSide(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha: 0.1),
           ),
         ),
       ),
@@ -260,7 +260,7 @@ class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
                   borderRadius: BorderRadius.circular(3),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF00F0FF).withOpacity(0.3),
+                      color: const Color(0xFF00F0FF).withValues(alpha: 0.3),
                       blurRadius: 4,
                       spreadRadius: 0,
                     ),
@@ -276,7 +276,7 @@ class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
                   borderRadius: BorderRadius.circular(3),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF00F0FF).withOpacity(0.3),
+                      color: const Color(0xFF00F0FF).withValues(alpha: 0.3),
                       blurRadius: 4,
                       spreadRadius: 0,
                     ),
@@ -292,7 +292,7 @@ class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
                   borderRadius: BorderRadius.circular(3),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF00F0FF).withOpacity(0.3),
+                      color: const Color(0xFF00F0FF).withValues(alpha: 0.3),
                       blurRadius: 4,
                       spreadRadius: 0,
                     ),
@@ -324,14 +324,14 @@ class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
       width: cardWidth,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: Colors.white.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: Colors.white.withOpacity(0.1),
+          color: Colors.white.withValues(alpha: 0.1),
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF00F0FF).withOpacity(0.05),
+            color: const Color(0xFF00F0FF).withValues(alpha: 0.05),
             blurRadius: 40,
             spreadRadius: 0,
           ),
@@ -418,14 +418,14 @@ class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
         
         Container(
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
             ),
           ),
           child: DropdownButtonFormField<String>(
-            value: _selectedService,
+            initialValue: _selectedService,
             decoration: InputDecoration(
               hintText: 'Chagua utaalamu wako',
               hintStyle: const TextStyle(
@@ -479,10 +479,10 @@ class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
         
         Container(
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
             ),
           ),
           child: TextFormField(
@@ -541,10 +541,10 @@ class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
         
         Container(
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
             ),
           ),
           child: TextFormField(
@@ -581,10 +581,10 @@ class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
         // Phone Number Field
         Container(
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
             ),
           ),
           child: TextFormField(
@@ -623,10 +623,10 @@ class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
             ),
           ),
           child: Column(
@@ -644,7 +644,7 @@ class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF00F0FF).withOpacity(0.1),
+                  color: const Color(0xFF00F0FF).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Column(
@@ -709,10 +709,10 @@ class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
         Container(
           height: 128,
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.05),
+            color: Colors.white.withValues(alpha: 0.05),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
             ),
           ),
           child: Stack(
@@ -722,7 +722,7 @@ class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
                 width: double.infinity,
                 height: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.3),
+                  color: Colors.grey.withValues(alpha: 0.3),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: const Icon(
@@ -737,7 +737,7 @@ class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
                 child: Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF00F0FF).withOpacity(0.2),
+                    color: const Color(0xFF00F0FF).withValues(alpha: 0.2),
                     shape: BoxShape.circle,
                     border: Border.all(
                       color: const Color(0xFF00F0FF),
@@ -779,7 +779,7 @@ class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
         Text(
           'Pakia picha za kazi zako za awali (Zisizozidi 5)',
           style: TextStyle(
-            color: const Color(0xFF94A3B8).withOpacity(0.7),
+            color: const Color(0xFF94A3B8).withValues(alpha: 0.7),
             fontSize: 10,
           ),
         ),
@@ -797,10 +797,10 @@ class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
                   aspectRatio: 1,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.05),
+                      color: Colors.white.withValues(alpha: 0.05),
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: Colors.white.withOpacity(0.2),
+                        color: Colors.white.withValues(alpha: 0.2),
                         style: BorderStyle.solid,
                         width: 2,
                       ),
@@ -838,10 +838,10 @@ class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
                 aspectRatio: 1,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.05),
+                    color: Colors.white.withValues(alpha: 0.05),
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: Colors.white.withOpacity(0.1),
+                      color: Colors.white.withValues(alpha: 0.1),
                     ),
                   ),
                   child: const Icon(
@@ -860,10 +860,10 @@ class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
                 aspectRatio: 1,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.05),
+                    color: Colors.white.withValues(alpha: 0.05),
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: Colors.white.withOpacity(0.1),
+                      color: Colors.white.withValues(alpha: 0.1),
                     ),
                   ),
                   child: const Icon(
@@ -892,7 +892,7 @@ class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF00F0FF).withOpacity(0.2),
+                color: const Color(0xFF00F0FF).withValues(alpha: 0.2),
                 blurRadius: 20,
                 spreadRadius: 0,
               ),
@@ -948,7 +948,7 @@ class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
             color: Colors.transparent,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
             ),
           ),
           child: ElevatedButton(

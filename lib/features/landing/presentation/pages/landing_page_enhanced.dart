@@ -466,10 +466,10 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
       height: context.h(56),
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04, vertical: 0),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.6),
+        color: Colors.black.withValues(alpha: 0.6),
         border: Border(
           bottom: BorderSide(
-            color: const Color(0xFF38BDF8).withOpacity(0.2),
+            color: const Color(0xFF38BDF8).withValues(alpha: 0.2),
           ),
         ),
       ),
@@ -496,10 +496,10 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
                 width: screenWidth * 0.08,
                 height: screenWidth * 0.08,
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                   ),
                 ),
                 child: Stack(
@@ -533,10 +533,10 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
                 width: screenWidth * 0.08,
                 height: screenWidth * 0.08,
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                   ),
                 ),
                 child: Center(
@@ -567,7 +567,7 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
         decoration: InputDecoration(
           hintText: _currentPlaceholder.isEmpty ? 'Tafuta huduma...' : _currentPlaceholder,
           hintStyle: TextStyle(
-            color: const Color(0xFF38BDF8).withOpacity(0.4),
+            color: const Color(0xFF38BDF8).withValues(alpha: 0.4),
             fontSize: context.fs(14),
             fontWeight: FontWeight.w500,
           ),
@@ -577,23 +577,23 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
             size: context.icon(24),
           ),
           filled: true,
-          fillColor: const Color(0xFF38BDF8).withOpacity(0.1),
+          fillColor: const Color(0xFF38BDF8).withValues(alpha: 0.1),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(context.br(16)),
             borderSide: BorderSide(
-              color: const Color(0xFF38BDF8).withOpacity(0.2),
+              color: const Color(0xFF38BDF8).withValues(alpha: 0.2),
             ),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(context.br(16)),
             borderSide: BorderSide(
-              color: const Color(0xFF38BDF8).withOpacity(0.2),
+              color: const Color(0xFF38BDF8).withValues(alpha: 0.2),
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(context.br(16)),
             borderSide: BorderSide(
-              color: const Color(0xFF38BDF8).withOpacity(0.4),
+              color: const Color(0xFF38BDF8).withValues(alpha: 0.4),
               width: context.br(2),
             ),
           ),
@@ -648,7 +648,7 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
           borderRadius: BorderRadius.circular(context.br(24)),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF38BDF8).withOpacity(0.2),
+              color: const Color(0xFF38BDF8).withValues(alpha: 0.2),
               blurRadius: context.br(20),
               spreadRadius: 0,
             ),
@@ -664,7 +664,7 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
               angle: 0.2,
               child: Icon(
                 Icons.bolt,
-                color: Colors.white.withOpacity(0.3),
+                color: Colors.white.withValues(alpha: 0.3),
                 size: context.icon(60),
               ),
             ),
@@ -677,10 +677,10 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
               Container(
                 padding: context.p(h: 10, v: 4),
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.2),
+                  color: Colors.black.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(context.br(12)),
                   border: Border.all(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                   ),
                 ),
                 child: Text(
@@ -708,7 +708,7 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
                 child: Text(
                   'Tuma ombi kwa wataalamu wote karibu nawe kwa mbofyo mmoja.',
                   style: TextStyle(
-                    color: Colors.black.withOpacity(0.8),
+                    color: Colors.black.withValues(alpha: 0.8),
                     fontSize: context.fs(10),
                   ),
                 ),
@@ -724,10 +724,10 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
               width: context.w(32),
               height: context.h(32),
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(context.br(20)),
                 border: Border.all(
-                  color: Colors.black.withOpacity(0.1),
+                  color: Colors.black.withValues(alpha: 0.1),
                 ),
               ),
               child: Icon(
@@ -752,10 +752,10 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         decoration: BoxDecoration(
-          color: const Color(0xFF38BDF8).withOpacity(0.1),
+          color: const Color(0xFF38BDF8).withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: const Color(0xFF38BDF8).withOpacity(0.2),
+            color: const Color(0xFF38BDF8).withValues(alpha: 0.2),
           ),
         ),
         child: Row(
@@ -859,10 +859,10 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
                   height: context.h(200),
                   margin: EdgeInsets.only(right: context.sp(12)),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.1),
+                    color: Colors.white.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(context.br(24)),
                     border: Border.all(
-                      color: const Color(0xFF38BDF8).withOpacity(0.2),
+                      color: const Color(0xFF38BDF8).withValues(alpha: 0.2),
                     ),
                   ),
                   child: Padding(
@@ -876,7 +876,7 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
                             width: double.infinity,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(context.br(16)),
-                              color: Colors.grey.withOpacity(0.3),
+                              color: Colors.grey.withValues(alpha: 0.3),
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(context.br(16)),
@@ -908,7 +908,7 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
                                 Text(
                                   '${category['count']} Wataalamu',
                                   style: TextStyle(
-                                    color: const Color(0xFF38BDF8).withOpacity(0.7),
+                                    color: const Color(0xFF38BDF8).withValues(alpha: 0.7),
                                     fontSize: 9,
                                     fontWeight: FontWeight.w900,
                                     letterSpacing: 1.2,
@@ -1072,10 +1072,10 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
       margin: const EdgeInsets.only(bottom: 24),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.1),
+        color: Colors.white.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: const Color(0xFF38BDF8).withOpacity(0.2),
+          color: const Color(0xFF38BDF8).withValues(alpha: 0.2),
         ),
       ),
       child: Column(
@@ -1094,9 +1094,9 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
                       height: 56,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
-                        color: Colors.grey.withOpacity(0.3),
+                        color: Colors.grey.withValues(alpha: 0.3),
                         border: Border.all(
-                          color: const Color(0xFF38BDF8).withOpacity(0.2),
+                          color: const Color(0xFF38BDF8).withValues(alpha: 0.2),
                         ),
                       ),
                       child: const Icon(
@@ -1118,10 +1118,10 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                             decoration: BoxDecoration(
-                              color: (pro['tierColor'] as Color).withOpacity(0.2),
+                              color: (pro['tierColor'] as Color).withValues(alpha: 0.2),
                               borderRadius: BorderRadius.circular(4),
                               border: Border.all(
-                                color: (pro['tierColor'] as Color).withOpacity(0.3),
+                                color: (pro['tierColor'] as Color).withValues(alpha: 0.3),
                               ),
                             ),
                             child: Text(
@@ -1236,7 +1236,7 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
                         Text(
                           'Simu: ${pro['phone'] ?? '+255 000 000'}',
                           style: TextStyle(
-                            color: const Color(0xFF38BDF8).withOpacity(0.7),
+                            color: const Color(0xFF38BDF8).withValues(alpha: 0.7),
                             fontSize: 10,
                             fontWeight: FontWeight.w500,
                           ),
@@ -1255,7 +1255,7 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
                       // Bookmark
                       Icon(
                         Icons.bookmark,
-                        color: const Color(0xFF38BDF8).withOpacity(0.5),
+                        color: const Color(0xFF38BDF8).withValues(alpha: 0.5),
                         size: 16,
                       ),
                 ],
@@ -1278,8 +1278,8 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
                 padding: const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
                 decoration: BoxDecoration(
                   color: isPrimary 
-                      ? const Color(0xFF38BDF8).withOpacity(0.1)
-                      : const Color(0xFF0C4A6E).withOpacity(0.3),
+                      ? const Color(0xFF38BDF8).withValues(alpha: 0.1)
+                      : const Color(0xFF0C4A6E).withValues(alpha: 0.3),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
@@ -1348,7 +1348,7 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     elevation: 0,
-                    shadowColor: const Color(0xFF38BDF8).withOpacity(0.2),
+                    shadowColor: const Color(0xFF38BDF8).withValues(alpha: 0.2),
                   ),
                   child: const Text(
                     'Fanya booking',
@@ -1529,10 +1529,10 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
                         margin: const EdgeInsets.only(bottom: 12),
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.05),
+                          color: Colors.white.withValues(alpha: 0.05),
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(
-                            color: Colors.white.withOpacity(0.1),
+                            color: Colors.white.withValues(alpha: 0.1),
                           ),
                         ),
                         child: Column(

@@ -121,16 +121,16 @@ class ThemeManager {
       ),
       scaffoldBackgroundColor: const Color(0xFFF8FAFC),
       cardTheme: CardThemeData(
-        color: Colors.white.withOpacity(0.7),
+        color: Colors.white.withValues(alpha: 0.7),
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
           side: BorderSide(
-            color: Colors.white.withOpacity(0.3),
+            color: Colors.white.withValues(alpha: 0.3),
             width: 1,
           ),
         ),
-        shadowColor: Colors.black.withOpacity(0.05),
+        shadowColor: Colors.black.withValues(alpha: 0.05),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -141,7 +141,7 @@ class ThemeManager {
             borderRadius: BorderRadius.circular(16),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          shadowColor: const Color(0xFF0F00E7).withOpacity(0.2),
+          shadowColor: const Color(0xFF0F00E7).withValues(alpha: 0.2),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
@@ -165,18 +165,18 @@ class ThemeManager {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: Colors.white.withOpacity(0.7),
+        fillColor: Colors.white.withValues(alpha: 0.7),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(
-            color: Colors.white.withOpacity(0.3),
+            color: Colors.white.withValues(alpha: 0.3),
             width: 1,
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(
-            color: Colors.white.withOpacity(0.3),
+            color: Colors.white.withValues(alpha: 0.3),
             width: 1,
           ),
         ),
@@ -199,7 +199,7 @@ class ThemeManager {
           fontSize: 14,
         ),
         hintStyle: TextStyle(
-          color: const Color(0xFF475569).withOpacity(0.6),
+          color: const Color(0xFF475569).withValues(alpha: 0.6),
           fontSize: 14,
         ),
       ),
@@ -354,7 +354,7 @@ class ThemeManager {
             width: 1,
           ),
         ),
-        shadowColor: Colors.black.withOpacity(0.2),
+        shadowColor: Colors.black.withValues(alpha: 0.2),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -365,7 +365,7 @@ class ThemeManager {
             borderRadius: BorderRadius.circular(16),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          shadowColor: const Color(0xFF0F00E7).withOpacity(0.2),
+          shadowColor: const Color(0xFF0F00E7).withValues(alpha: 0.2),
         ),
       ),
       textButtonTheme: TextButtonThemeData(

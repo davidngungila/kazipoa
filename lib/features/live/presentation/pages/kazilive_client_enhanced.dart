@@ -20,7 +20,7 @@ class KaziliveClientEnhanced extends StatelessWidget {
 
           // dark overlay
           Positioned.fill(
-            child: Container(color: Colors.black.withOpacity(0.4)),
+            child: Container(color: Colors.black.withValues(alpha: 0.4)),
           ),
 
           // ================= PRO MARKER =================
@@ -117,7 +117,7 @@ class _ProMarker extends StatelessWidget {
               height: 60,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.cyan.withOpacity(0.2),
+                color: Colors.cyan.withValues(alpha: 0.2),
               ),
             ),
             Container(
@@ -274,7 +274,7 @@ Widget _glass({required Widget child}) {
   return Container(
     padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
-      color: Colors.white.withOpacity(0.05),
+      color: Colors.white.withValues(alpha: 0.05),
       borderRadius: BorderRadius.circular(20),
       border: Border.all(color: Colors.white12),
     ),

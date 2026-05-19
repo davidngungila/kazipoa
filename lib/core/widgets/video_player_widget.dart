@@ -193,9 +193,9 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> with WidgetsBindi
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              const Color(0xFF38BDF8).withOpacity(0.3),
-              const Color(0xFF1E40AF).withOpacity(0.2),
-              Colors.grey.withOpacity(0.4),
+              const Color(0xFF38BDF8).withValues(alpha: 0.3),
+              const Color(0xFF1E40AF).withValues(alpha: 0.2),
+              Colors.grey.withValues(alpha: 0.4),
             ],
           ),
         ),
@@ -224,16 +224,16 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> with WidgetsBindi
                     child: Container(
                       padding: EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
+                        color: Colors.white.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(50),
                         border: Border.all(
-                          color: Colors.white.withOpacity(0.4),
+                          color: Colors.white.withValues(alpha: 0.4),
                           width: 2,
                         ),
                       ),
                       child: Icon(
                         _getServiceIcon(widget.videoPath),
-                        color: Colors.white.withOpacity(0.9),
+                        color: Colors.white.withValues(alpha: 0.9),
                         size: 28,
                       ),
                     ),
@@ -247,7 +247,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> with WidgetsBindi
                       fontWeight: FontWeight.bold,
                       shadows: [
                         Shadow(
-                          color: Colors.black.withOpacity(0.5),
+                          color: Colors.black.withValues(alpha: 0.5),
                           offset: Offset(1, 1),
                           blurRadius: 2,
                         ),
@@ -261,13 +261,13 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> with WidgetsBindi
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.5),
+                      color: Colors.black.withValues(alpha: 0.5),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
                       'Preview Available',
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.8),
+                        color: Colors.white.withValues(alpha: 0.8),
                         fontSize: 7,
                         fontWeight: FontWeight.w500,
                       ),
@@ -336,7 +336,7 @@ class _DottedPatternPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white.withOpacity(0.1)
+      ..color = Colors.white.withValues(alpha: 0.1)
       ..strokeWidth = 1;
 
     const dotSize = 2.0;

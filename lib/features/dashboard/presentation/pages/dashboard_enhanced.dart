@@ -92,10 +92,10 @@ class _DashboardEnhancedState extends State<DashboardEnhanced>
       height: 64,
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.4),
+        color: Colors.black.withValues(alpha: 0.4),
         border: Border(
           bottom: BorderSide(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha: 0.1),
           ),
         ),
       ),
@@ -200,13 +200,13 @@ class _DashboardEnhancedState extends State<DashboardEnhanced>
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withValues(alpha: 0.1),
                   width: 4,
                 ),
               ),
               child: ClipOval(
                 child: Container(
-                  color: Colors.grey.withOpacity(0.3),
+                  color: Colors.grey.withValues(alpha: 0.3),
                   child: const Icon(
                     Icons.person,
                     color: Colors.white,
@@ -282,7 +282,7 @@ class _DashboardEnhancedState extends State<DashboardEnhanced>
                 ),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: Colors.white.withOpacity(0.2),
+                  color: Colors.white.withValues(alpha: 0.2),
                 ),
               ),
               child: const Text(
@@ -318,14 +318,14 @@ class _DashboardEnhancedState extends State<DashboardEnhanced>
       width: cardWidth,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.06),
+        color: Colors.white.withValues(alpha: 0.06),
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: Colors.white.withOpacity(0.12),
+          color: Colors.white.withValues(alpha: 0.12),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.3),
+            color: Colors.black.withValues(alpha: 0.3),
             blurRadius: 32,
             spreadRadius: 0,
           ),
@@ -342,7 +342,7 @@ class _DashboardEnhancedState extends State<DashboardEnhanced>
               padding: const EdgeInsets.all(32),
               child: Icon(
                 Icons.payments,
-                color: const Color(0xFF00D4FF).withOpacity(0.07),
+                color: const Color(0xFF00D4FF).withValues(alpha: 0.07),
                 size: 72,
               ),
             ),
@@ -381,7 +381,7 @@ class _DashboardEnhancedState extends State<DashboardEnhanced>
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
-                  color: const Color(0xFF00D4FF).withOpacity(0.7),
+                  color: const Color(0xFF00D4FF).withValues(alpha: 0.7),
                 ),
               ),
             ],
@@ -393,10 +393,10 @@ class _DashboardEnhancedState extends State<DashboardEnhanced>
           Container(
             height: 8,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.05),
+              color: Colors.white.withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(4),
               border: Border.all(
-                color: Colors.white.withOpacity(0.1),
+                color: Colors.white.withValues(alpha: 0.1),
               ),
             ),
             child: Container(
@@ -406,7 +406,7 @@ class _DashboardEnhancedState extends State<DashboardEnhanced>
                 borderRadius: BorderRadius.circular(4),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF00D4FF).withOpacity(0.6),
+                    color: const Color(0xFF00D4FF).withValues(alpha: 0.6),
                     blurRadius: 20,
                     spreadRadius: 0,
                   ),
@@ -522,7 +522,7 @@ class _DashboardEnhancedState extends State<DashboardEnhanced>
             child: Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.06),
+                color: Colors.white.withValues(alpha: 0.06),
                 borderRadius: BorderRadius.circular(24),
                 border: action['hasBorder'] as bool
                     ? const Border(
@@ -534,7 +534,7 @@ class _DashboardEnhancedState extends State<DashboardEnhanced>
                     : null,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
+                    color: Colors.black.withValues(alpha: 0.3),
                     blurRadius: 32,
                     spreadRadius: 0,
                   ),
@@ -547,8 +547,8 @@ class _DashboardEnhancedState extends State<DashboardEnhanced>
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
                       color: action['isActive'] as bool
-                          ? const Color(0xFF00D4FF).withOpacity(0.15)
-                          : const Color(0xFF00D4FF).withOpacity(0.1),
+                          ? const Color(0xFF00D4FF).withValues(alpha: 0.15)
+                          : const Color(0xFF00D4FF).withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Icon(
@@ -607,14 +607,14 @@ class _DashboardEnhancedState extends State<DashboardEnhanced>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.06),
+        color: Colors.white.withValues(alpha: 0.06),
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: Colors.white.withOpacity(0.12),
+          color: Colors.white.withValues(alpha: 0.12),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.3),
+            color: Colors.black.withValues(alpha: 0.3),
             blurRadius: 32,
             spreadRadius: 0,
           ),
@@ -651,7 +651,7 @@ class _DashboardEnhancedState extends State<DashboardEnhanced>
           Container(
             width: 1,
             height: 32,
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha: 0.1),
           ),
           
           // Jobs
@@ -682,7 +682,7 @@ class _DashboardEnhancedState extends State<DashboardEnhanced>
           Container(
             width: 1,
             height: 32,
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha: 0.1),
           ),
           
           // Trust
@@ -718,10 +718,10 @@ class _DashboardEnhancedState extends State<DashboardEnhanced>
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 16),
       decoration: BoxDecoration(
-        color: const Color(0xFFEF4444).withOpacity(0.1),
+        color: const Color(0xFFEF4444).withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: const Color(0xFFEF4444).withOpacity(0.2),
+          color: const Color(0xFFEF4444).withValues(alpha: 0.2),
         ),
       ),
       child: ElevatedButton(

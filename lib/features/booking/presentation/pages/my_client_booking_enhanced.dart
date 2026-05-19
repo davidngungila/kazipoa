@@ -236,11 +236,11 @@ class _OfisiYanguScreenState extends State<OfisiYanguScreen> {
                                 padding: const EdgeInsets.symmetric(vertical: 60),
                                 child: Column(
                                   children: [
-                                    Icon(Icons.assignment_turned_in, size: 64, color: Colors.white.withOpacity(0.3)),
+                                    Icon(Icons.assignment_turned_in, size: 64, color: Colors.white.withValues(alpha: 0.3)),
                                     const SizedBox(height: 16),
                                     Text(
                                       "Hakuna maombi katika kundi hili",
-                                      style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 14),
+                                      style: TextStyle(color: Colors.white.withValues(alpha: 0.5), fontSize: 14),
                                     ),
                                   ],
                                 ),
@@ -414,7 +414,7 @@ class _OfisiYanguScreenState extends State<OfisiYanguScreen> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(
-                    color: active ? Colors.black.withOpacity(0.1) : Colors.white24,
+                    color: active ? Colors.black.withValues(alpha: 0.1) : Colors.white24,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
@@ -473,7 +473,7 @@ class _OfisiYanguScreenState extends State<OfisiYanguScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: Colors.white.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(24),
         border: Border.all(color: Colors.white12),
       ),
@@ -573,8 +573,8 @@ class _OfisiYanguScreenState extends State<OfisiYanguScreen> {
               padding: const EdgeInsets.symmetric(vertical: 8),
               decoration: BoxDecoration(
                 color: status == 'accepted' 
-                    ? Colors.green.withOpacity(0.1)
-                    : Colors.red.withOpacity(0.1),
+                    ? Colors.green.withValues(alpha: 0.1)
+                    : Colors.red.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Center(

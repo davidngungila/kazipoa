@@ -117,7 +117,7 @@ class _ClientIdRegistrationEnhancedState extends ConsumerState<ClientIdRegistrat
               width: 320,
               height: 320,
               decoration: BoxDecoration(
-                color: const Color(0xFF0EA5E9).withOpacity(0.1),
+                color: const Color(0xFF0EA5E9).withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
             ),
@@ -129,7 +129,7 @@ class _ClientIdRegistrationEnhancedState extends ConsumerState<ClientIdRegistrat
               width: 320,
               height: 320,
               decoration: BoxDecoration(
-                color: const Color(0xFF6366F1).withOpacity(0.1),
+                color: const Color(0xFF6366F1).withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
             ),
@@ -176,10 +176,10 @@ class _ClientIdRegistrationEnhancedState extends ConsumerState<ClientIdRegistrat
       height: 64,
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.4),
+        color: Colors.black.withValues(alpha: 0.4),
         border: Border(
           bottom: BorderSide(
-            color: Colors.white.withOpacity(0.05),
+            color: Colors.white.withValues(alpha: 0.05),
           ),
         ),
       ),
@@ -231,14 +231,14 @@ class _ClientIdRegistrationEnhancedState extends ConsumerState<ClientIdRegistrat
       width: cardWidth,
       padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: Colors.white.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(32),
         border: Border.all(
-          color: Colors.white.withOpacity(0.1),
+          color: Colors.white.withValues(alpha: 0.1),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.3),
+            color: Colors.black.withValues(alpha: 0.3),
             blurRadius: 20,
             spreadRadius: 0,
           ),
@@ -350,11 +350,11 @@ class _ClientIdRegistrationEnhancedState extends ConsumerState<ClientIdRegistrat
                 ),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withValues(alpha: 0.1),
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
+                    color: Colors.black.withValues(alpha: 0.2),
                     blurRadius: 10,
                     spreadRadius: 0,
                   ),
@@ -412,10 +412,10 @@ class _ClientIdRegistrationEnhancedState extends ConsumerState<ClientIdRegistrat
         
         Container(
           decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.4),
+            color: Colors.black.withValues(alpha: 0.4),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
             ),
           ),
           child: TextFormField(
@@ -475,7 +475,7 @@ class _ClientIdRegistrationEnhancedState extends ConsumerState<ClientIdRegistrat
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF0EA5E9).withOpacity(0.3),
+            color: const Color(0xFF0EA5E9).withValues(alpha: 0.3),
             blurRadius: 12,
             spreadRadius: 0,
           ),

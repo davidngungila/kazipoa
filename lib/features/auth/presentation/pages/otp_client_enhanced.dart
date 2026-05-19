@@ -69,10 +69,10 @@ class _OtpClientEnhancedState extends State<OtpClientEnhanced>
       height: 64,
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.7),
+        color: Colors.black.withValues(alpha: 0.7),
         border: Border(
           bottom: BorderSide(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha: 0.1),
           ),
         ),
       ),
@@ -152,14 +152,14 @@ class _OtpClientEnhancedState extends State<OtpClientEnhanced>
       ),
       padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: Colors.white.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(32),
         border: Border.all(
-          color: Colors.white.withOpacity(0.1),
+          color: Colors.white.withValues(alpha: 0.1),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.3),
+            color: Colors.black.withValues(alpha: 0.3),
             blurRadius: 64,
             spreadRadius: 0,
           ),
@@ -175,7 +175,7 @@ class _OtpClientEnhancedState extends State<OtpClientEnhanced>
               width: 192,
               height: 192,
               decoration: BoxDecoration(
-                color: const Color(0xFF3B82F6).withOpacity(0.2),
+                color: const Color(0xFF3B82F6).withValues(alpha: 0.2),
                 shape: BoxShape.circle,
               ),
             ),
@@ -190,10 +190,10 @@ class _OtpClientEnhancedState extends State<OtpClientEnhanced>
                 width: 80,
                 height: 80,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF3B82F6).withOpacity(0.1),
+                  color: const Color(0xFF3B82F6).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: Colors.white.withOpacity(0.1),
+                    color: Colors.white.withValues(alpha: 0.1),
                   ),
                 ),
                 child: const Icon(
@@ -296,13 +296,13 @@ class _OtpClientEnhancedState extends State<OtpClientEnhanced>
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withValues(alpha: 0.1),
                 ),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withValues(alpha: 0.1),
                 ),
               ),
               focusedBorder: OutlineInputBorder(
@@ -313,7 +313,7 @@ class _OtpClientEnhancedState extends State<OtpClientEnhanced>
                 ),
               ),
               filled: true,
-              fillColor: Colors.white.withOpacity(0.05),
+              fillColor: Colors.white.withValues(alpha: 0.05),
               contentPadding: EdgeInsets.zero,
             ),
             onChanged: (value) {
@@ -338,7 +338,7 @@ class _OtpClientEnhancedState extends State<OtpClientEnhanced>
         borderRadius: BorderRadius.circular(28),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF3B82F6).withOpacity(0.2),
+            color: const Color(0xFF3B82F6).withValues(alpha: 0.2),
             blurRadius: 24,
             spreadRadius: 0,
           ),
@@ -404,7 +404,7 @@ class _OtpClientEnhancedState extends State<OtpClientEnhanced>
         Container(
           width: 48,
           height: 1,
-          color: Colors.white.withOpacity(0.1),
+          color: Colors.white.withValues(alpha: 0.1),
         ),
         
         const SizedBox(height: 16),

@@ -42,7 +42,7 @@ class _BookingSetupEnhancedState extends ConsumerState<BookingSetupEnhanced> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.black.withOpacity(0.6),
+        backgroundColor: Colors.black.withValues(alpha: 0.6),
         elevation: 0,
         title: const Text("Weka Maombi ya Kazi"),
         centerTitle: true,
@@ -61,7 +61,7 @@ class _BookingSetupEnhancedState extends ConsumerState<BookingSetupEnhanced> {
                   glassCard(
                     child: DropdownButtonFormField<String>(
                       dropdownColor: Colors.black,
-                      value: service,
+                      initialValue: service,
                       style: const TextStyle(color: Colors.white, fontSize: 16),
                       items: [
                         "Fundi Umeme",
@@ -179,13 +179,13 @@ class _BookingSetupEnhancedState extends ConsumerState<BookingSetupEnhanced> {
                                     padding: const EdgeInsets.all(15),
                                     decoration: BoxDecoration(
                                       color: recurringType == "Daily" 
-                                          ? const Color(0xFF00D2FF).withOpacity(0.2)
-                                          : Colors.grey.withOpacity(0.1),
+                                          ? const Color(0xFF00D2FF).withValues(alpha: 0.2)
+                                          : Colors.grey.withValues(alpha: 0.1),
                                       borderRadius: BorderRadius.circular(12),
                                       border: Border.all(
                                         color: recurringType == "Daily" 
                                             ? const Color(0xFF00D2FF)
-                                            : Colors.grey.withOpacity(0.3),
+                                            : Colors.grey.withValues(alpha: 0.3),
                                       ),
                                     ),
                                     child: Column(
@@ -218,13 +218,13 @@ class _BookingSetupEnhancedState extends ConsumerState<BookingSetupEnhanced> {
                                     padding: const EdgeInsets.all(15),
                                     decoration: BoxDecoration(
                                       color: recurringType == "Weekly" 
-                                          ? const Color(0xFF00D2FF).withOpacity(0.2)
-                                          : Colors.grey.withOpacity(0.1),
+                                          ? const Color(0xFF00D2FF).withValues(alpha: 0.2)
+                                          : Colors.grey.withValues(alpha: 0.1),
                                       borderRadius: BorderRadius.circular(12),
                                       border: Border.all(
                                         color: recurringType == "Weekly" 
                                             ? const Color(0xFF00D2FF)
-                                            : Colors.grey.withOpacity(0.3),
+                                            : Colors.grey.withValues(alpha: 0.3),
                                       ),
                                     ),
                                     child: Column(
@@ -278,13 +278,13 @@ class _BookingSetupEnhancedState extends ConsumerState<BookingSetupEnhanced> {
                                     child: Container(
                                       decoration: BoxDecoration(
                                         color: isSelected 
-                                            ? const Color(0xFF00D2FF).withOpacity(0.3)
-                                            : Colors.grey.withOpacity(0.1),
+                                            ? const Color(0xFF00D2FF).withValues(alpha: 0.3)
+                                            : Colors.grey.withValues(alpha: 0.1),
                                         borderRadius: BorderRadius.circular(8),
                                         border: Border.all(
                                           color: isSelected 
                                               ? const Color(0xFF00D2FF)
-                                              : Colors.grey.withOpacity(0.3),
+                                              : Colors.grey.withValues(alpha: 0.3),
                                         ),
                                       ),
                                       child: Center(
@@ -310,9 +310,9 @@ class _BookingSetupEnhancedState extends ConsumerState<BookingSetupEnhanced> {
                           Container(
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: const Color(0xFF00D2FF).withOpacity(0.1),
+                              color: const Color(0xFF00D2FF).withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: const Color(0xFF00D2FF).withOpacity(0.3)),
+                              border: Border.all(color: const Color(0xFF00D2FF).withValues(alpha: 0.3)),
                             ),
                             child: Row(
                               children: [
@@ -339,9 +339,9 @@ class _BookingSetupEnhancedState extends ConsumerState<BookingSetupEnhanced> {
                           Container(
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: Colors.orange.withOpacity(0.1),
+                              color: Colors.orange.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: Colors.orange.withOpacity(0.3)),
+                              border: Border.all(color: Colors.orange.withValues(alpha: 0.3)),
                             ),
                             child: Row(
                               children: [
@@ -402,7 +402,7 @@ class _BookingSetupEnhancedState extends ConsumerState<BookingSetupEnhanced> {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: Colors.white.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: Colors.white10),
       ),

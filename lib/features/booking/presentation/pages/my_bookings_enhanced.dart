@@ -166,11 +166,11 @@ class _MyBookingsEnhancedState extends State<MyBookingsEnhanced> {
                         padding: const EdgeInsets.symmetric(vertical: 60),
                         child: Column(
                           children: [
-                            Icon(Icons.event_note, size: 64, color: Colors.white.withOpacity(0.3)),
+                            Icon(Icons.event_note, size: 64, color: Colors.white.withValues(alpha: 0.3)),
                             const SizedBox(height: 16),
                             Text(
                               "Hakuna miadi katika kundi hili",
-                              style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 14),
+                              style: TextStyle(color: Colors.white.withValues(alpha: 0.5), fontSize: 14),
                             ),
                           ],
                         ),
@@ -273,12 +273,12 @@ class _MyBookingsEnhancedState extends State<MyBookingsEnhanced> {
                 decoration: BoxDecoration(
                   color: isSelected 
                     ? category['color'].withOpacity(0.2)
-                    : Colors.white.withOpacity(0.05),
+                    : Colors.white.withValues(alpha: 0.05),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
                     color: isSelected 
                       ? category['color'].withOpacity(0.5)
-                      : Colors.white.withOpacity(0.1),
+                      : Colors.white.withValues(alpha: 0.1),
                     width: isSelected ? 2 : 1,
                   ),
                 ),
@@ -290,14 +290,14 @@ class _MyBookingsEnhancedState extends State<MyBookingsEnhanced> {
                       decoration: BoxDecoration(
                         color: isSelected 
                           ? category['color'].withOpacity(0.3)
-                          : Colors.white.withOpacity(0.1),
+                          : Colors.white.withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
                         category['icon'],
                         color: isSelected 
                           ? category['color']
-                          : Colors.white.withOpacity(0.7),
+                          : Colors.white.withValues(alpha: 0.7),
                         size: 24,
                       ),
                     ),
@@ -307,7 +307,7 @@ class _MyBookingsEnhancedState extends State<MyBookingsEnhanced> {
                       style: TextStyle(
                         color: isSelected 
                           ? category['color']
-                          : Colors.white.withOpacity(0.9),
+                          : Colors.white.withValues(alpha: 0.9),
                         fontSize: 10,
                         fontWeight: isSelected 
                           ? FontWeight.bold 
@@ -321,7 +321,7 @@ class _MyBookingsEnhancedState extends State<MyBookingsEnhanced> {
                       decoration: BoxDecoration(
                         color: isSelected 
                           ? category['color'].withOpacity(0.2)
-                          : Colors.white.withOpacity(0.1),
+                          : Colors.white.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
@@ -329,7 +329,7 @@ class _MyBookingsEnhancedState extends State<MyBookingsEnhanced> {
                         style: TextStyle(
                           color: isSelected 
                             ? category['color']
-                            : Colors.white.withOpacity(0.7),
+                            : Colors.white.withValues(alpha: 0.7),
                           fontSize: 10,
                           fontWeight: FontWeight.bold,
                         ),
@@ -365,9 +365,9 @@ class _MyBookingsEnhancedState extends State<MyBookingsEnhanced> {
       Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.05),
+          color: Colors.white.withValues(alpha: 0.05),
           borderRadius: BorderRadius.circular(25),
-          border: Border.all(color: Colors.white.withOpacity(0.08)),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -384,7 +384,7 @@ class _MyBookingsEnhancedState extends State<MyBookingsEnhanced> {
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, color: Colors.white, fontSize: 16)),
                       const SizedBox(height: 2),
-                      Text(role, style: TextStyle(color: Colors.blueAccent.withOpacity(0.8), fontSize: 13)),
+                      Text(role, style: TextStyle(color: Colors.blueAccent.withValues(alpha: 0.8), fontSize: 13)),
                     ],
                   ),
                 )

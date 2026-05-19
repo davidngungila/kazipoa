@@ -22,10 +22,10 @@ class CustomBottomNavigation extends StatelessWidget {
       child: Container(
         height: 80,
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.8),
+          color: Colors.black.withValues(alpha: 0.8),
           border: Border(
             top: BorderSide(
-              color: const Color(0xFF38BDF8).withOpacity(0.2),
+              color: const Color(0xFF38BDF8).withValues(alpha: 0.2),
             ),
           ),
         ),
@@ -85,14 +85,14 @@ class CustomBottomNavigation extends StatelessWidget {
         children: [
           Icon(
             icon,
-            color: isActive ? const Color(0xFF38BDF8) : const Color(0xFF38BDF8).withOpacity(0.5),
+            color: isActive ? const Color(0xFF38BDF8) : const Color(0xFF38BDF8).withValues(alpha: 0.5),
             size: 24,
           ),
           const SizedBox(height: 4),
           Text(
             label,
             style: TextStyle(
-              color: isActive ? const Color(0xFF38BDF8) : const Color(0xFF38BDF8).withOpacity(0.7),
+              color: isActive ? const Color(0xFF38BDF8) : const Color(0xFF38BDF8).withValues(alpha: 0.7),
               fontSize: 9,
               fontWeight: isActive ? FontWeight.bold : FontWeight.w500,
               letterSpacing: 0.8,
@@ -116,7 +116,7 @@ class CustomBottomNavigation extends StatelessWidget {
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF00E5FF).withOpacity(0.4),
+                  color: const Color(0xFF00E5FF).withValues(alpha: 0.4),
                   blurRadius: 20,
                   spreadRadius: 2,
                 ),

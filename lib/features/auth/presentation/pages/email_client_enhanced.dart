@@ -90,10 +90,10 @@ class _EmailClientEnhancedState extends State<EmailClientEnhanced>
       height: 64,
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.4),
+        color: Colors.black.withValues(alpha: 0.4),
         border: Border(
           bottom: BorderSide(
-            color: Colors.white.withOpacity(0.05),
+            color: Colors.white.withValues(alpha: 0.05),
           ),
         ),
       ),
@@ -139,14 +139,14 @@ class _EmailClientEnhancedState extends State<EmailClientEnhanced>
       ),
       padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.03),
+        color: Colors.white.withValues(alpha: 0.03),
         borderRadius: BorderRadius.circular(40),
         border: Border.all(
-          color: Colors.white.withOpacity(0.08),
+          color: Colors.white.withValues(alpha: 0.08),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.5),
+            color: Colors.black.withValues(alpha: 0.5),
             blurRadius: 50,
             spreadRadius: -12,
             offset: const Offset(0, 25),
@@ -163,7 +163,7 @@ class _EmailClientEnhancedState extends State<EmailClientEnhanced>
               width: 128,
               height: 128,
               decoration: BoxDecoration(
-                color: const Color(0xFF3B82F6).withOpacity(0.1),
+                color: const Color(0xFF3B82F6).withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
             ),
@@ -179,10 +179,10 @@ class _EmailClientEnhancedState extends State<EmailClientEnhanced>
                 height: 80,
                 margin: const EdgeInsets.only(bottom: 32),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF3B82F6).withOpacity(0.1),
+                  color: const Color(0xFF3B82F6).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(24),
                   border: Border.all(
-                    color: const Color(0xFF3B82F6).withOpacity(0.2),
+                    color: const Color(0xFF3B82F6).withValues(alpha: 0.2),
                   ),
                 ),
                 child: const Icon(
@@ -283,13 +283,13 @@ class _EmailClientEnhancedState extends State<EmailClientEnhanced>
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(16),
                 borderSide: BorderSide(
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withValues(alpha: 0.1),
                 ),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(16),
                 borderSide: BorderSide(
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withValues(alpha: 0.1),
                 ),
               ),
               focusedBorder: OutlineInputBorder(
@@ -300,7 +300,7 @@ class _EmailClientEnhancedState extends State<EmailClientEnhanced>
                 ),
               ),
               filled: true,
-              fillColor: Colors.white.withOpacity(0.05),
+              fillColor: Colors.white.withValues(alpha: 0.05),
               contentPadding: EdgeInsets.zero,
             ),
             onChanged: (value) {
@@ -327,7 +327,7 @@ class _EmailClientEnhancedState extends State<EmailClientEnhanced>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF1E3A8A).withOpacity(0.4),
+            color: const Color(0xFF1E3A8A).withValues(alpha: 0.4),
             blurRadius: 32,
             spreadRadius: 0,
           ),

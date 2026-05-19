@@ -158,16 +158,16 @@ class _ProAccountLoginEnhancedState extends ConsumerState<ProAccountLoginEnhance
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              const Color(0xFF00D1FF).withOpacity(0.1),
+              const Color(0xFF00D1FF).withValues(alpha: 0.1),
               Colors.transparent,
             ],
           ),
           border: Border.all(
-            color: Colors.white.withOpacity(0.15),
+            color: Colors.white.withValues(alpha: 0.15),
           ),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF00D1FF).withOpacity(0.1),
+              color: const Color(0xFF00D1FF).withValues(alpha: 0.1),
               blurRadius: 32,
               spreadRadius: 0,
             ),
@@ -198,22 +198,22 @@ class _ProAccountLoginEnhancedState extends ConsumerState<ProAccountLoginEnhance
                 width: 120,
                 height: 120,
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF00D1FF).withOpacity(0.2),
+                      color: const Color(0xFF00D1FF).withValues(alpha: 0.2),
                       blurRadius: 40,
                       spreadRadius: 0,
                     ),
                   ],
                   border: Border.all(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                   ),
                 ),
                 child: ClipOval(
                   child: Container(
-                    color: Colors.grey.withOpacity(0.3),
+                    color: Colors.grey.withValues(alpha: 0.3),
                     child: const Icon(
                       Icons.engineering,
                       color: Color(0xFF00D1FF),
@@ -265,14 +265,14 @@ class _ProAccountLoginEnhancedState extends ConsumerState<ProAccountLoginEnhance
       margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.08),
+        color: Colors.white.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(32),
         border: Border.all(
-          color: Colors.white.withOpacity(0.15),
+          color: Colors.white.withValues(alpha: 0.15),
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF00D1FF).withOpacity(0.1),
+            color: const Color(0xFF00D1FF).withValues(alpha: 0.1),
             blurRadius: 32,
             spreadRadius: 0,
           ),
@@ -315,10 +315,10 @@ class _ProAccountLoginEnhancedState extends ConsumerState<ProAccountLoginEnhance
                         width: 20,
                         height: 20,
                         decoration: BoxDecoration(
-                          color: _rememberMe ? const Color(0xFF00D1FF) : Colors.white.withOpacity(0.05),
+                          color: _rememberMe ? const Color(0xFF00D1FF) : Colors.white.withValues(alpha: 0.05),
                           borderRadius: BorderRadius.circular(4),
                           border: Border.all(
-                            color: Colors.white.withOpacity(0.2),
+                            color: Colors.white.withValues(alpha: 0.2),
                           ),
                         ),
                         child: _rememberMe
@@ -421,10 +421,10 @@ class _ProAccountLoginEnhancedState extends ConsumerState<ProAccountLoginEnhance
         
         Container(
           decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.4),
+            color: Colors.black.withValues(alpha: 0.4),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
             ),
           ),
           child: TextFormField(
@@ -486,10 +486,10 @@ class _ProAccountLoginEnhancedState extends ConsumerState<ProAccountLoginEnhance
         
         Container(
           decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.4),
+            color: Colors.black.withValues(alpha: 0.4),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: Colors.white.withOpacity(0.1),
+              color: Colors.white.withValues(alpha: 0.1),
             ),
           ),
           child: TextFormField(
@@ -557,7 +557,7 @@ class _ProAccountLoginEnhancedState extends ConsumerState<ProAccountLoginEnhance
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF00D1FF).withOpacity(0.2),
+            color: const Color(0xFF00D1FF).withValues(alpha: 0.2),
             blurRadius: 20,
             spreadRadius: 0,
           ),

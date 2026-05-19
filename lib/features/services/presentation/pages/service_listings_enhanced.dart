@@ -78,10 +78,10 @@ class _ServiceListingsEnhancedState extends State<ServiceListingsEnhanced>
       height: screenWidth * 0.12,
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04, vertical: screenWidth * 0.02),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.8),
+        color: Colors.black.withValues(alpha: 0.8),
         border: Border(
           bottom: BorderSide(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha: 0.1),
           ),
         ),
       ),
@@ -121,11 +121,11 @@ class _ServiceListingsEnhancedState extends State<ServiceListingsEnhanced>
                       color: Colors.black,
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: Colors.white.withOpacity(0.1),
+                        color: Colors.white.withValues(alpha: 0.1),
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
+                          color: Colors.black.withValues(alpha: 0.3),
                           blurRadius: screenWidth * 0.02,
                           spreadRadius: 0,
                         ),
@@ -144,7 +144,7 @@ class _ServiceListingsEnhancedState extends State<ServiceListingsEnhanced>
                               color: Colors.black,
                               shape: BoxShape.circle,
                               border: Border.all(
-                                color: const Color(0xFF38BDF8).withOpacity(0.3),
+                                color: const Color(0xFF38BDF8).withValues(alpha: 0.3),
                               ),
                             ),
                             child: Center(
@@ -188,7 +188,7 @@ class _ServiceListingsEnhancedState extends State<ServiceListingsEnhanced>
               color: const Color(0xFF334155),
               shape: BoxShape.circle,
               border: Border.all(
-                color: Colors.white.withOpacity(0.3),
+                color: Colors.white.withValues(alpha: 0.3),
               ),
             ),
             child: Icon(
@@ -206,14 +206,14 @@ class _ServiceListingsEnhancedState extends State<ServiceListingsEnhanced>
     return Container(
       padding: EdgeInsets.all(screenWidth * 0.03),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: Colors.white.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(screenWidth * 0.04),
         border: Border.all(
-          color: Colors.white.withOpacity(0.1),
+          color: Colors.white.withValues(alpha: 0.1),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
+            color: Colors.black.withValues(alpha: 0.2),
             blurRadius: screenWidth * 0.04,
             spreadRadius: 0,
           ),
@@ -364,7 +364,7 @@ class _ServiceListingsEnhancedState extends State<ServiceListingsEnhanced>
             borderRadius: BorderRadius.circular(screenWidth * 0.04),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.3),
+                color: Colors.black.withValues(alpha: 0.3),
                 blurRadius: screenWidth * 0.06,
                 spreadRadius: 0,
               ),
@@ -400,8 +400,8 @@ class _ServiceListingsEnhancedState extends State<ServiceListingsEnhanced>
                       colors: [
                         Colors.transparent,
                         Colors.transparent,
-                        Colors.black.withOpacity(0.3),
-                        Colors.black.withOpacity(0.9),
+                        Colors.black.withValues(alpha: 0.3),
+                        Colors.black.withValues(alpha: 0.9),
                       ],
                       stops: const [0.0, 0.3, 0.7, 1.0],
                     ),
@@ -427,7 +427,7 @@ class _ServiceListingsEnhancedState extends State<ServiceListingsEnhanced>
                       Text(
                         service['subtitle'] as String,
                         style: TextStyle(
-                          color: Colors.white.withOpacity(0.7),
+                          color: Colors.white.withValues(alpha: 0.7),
                           fontSize: screenWidth * 0.02,
                           fontWeight: FontWeight.w500,
                         ),
@@ -443,9 +443,9 @@ class _ServiceListingsEnhancedState extends State<ServiceListingsEnhanced>
                   child: Container(
                     padding: EdgeInsets.all(screenWidth * 0.02),
                     decoration: BoxDecoration(
-                      color: (service['color'] as Color).withOpacity(0.2),
+                      color: (service['color'] as Color).withValues(alpha: 0.2),
                       border: Border.all(
-                        color: (service['color'] as Color).withOpacity(0.3),
+                        color: (service['color'] as Color).withValues(alpha: 0.3),
                       ),
                       shape: BoxShape.circle,
                     ),

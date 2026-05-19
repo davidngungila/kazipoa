@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kazipoa/core/services/auth_service.dart';
+import 'package:kazipoa/core/services/enhanced_auth_service.dart';
 import 'package:kazipoa/core/services/auth_manager.dart';
 
 class AuthState {

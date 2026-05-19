@@ -104,10 +104,10 @@ class _EmailVerificationEnhancedState extends State<EmailVerificationEnhanced>
       height: 64,
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.6),
+        color: Colors.black.withValues(alpha: 0.6),
         border: Border(
           bottom: BorderSide(
-            color: Colors.white.withOpacity(0.1),
+            color: Colors.white.withValues(alpha: 0.1),
           ),
         ),
       ),
@@ -164,7 +164,7 @@ class _EmailVerificationEnhancedState extends State<EmailVerificationEnhanced>
               width: 40,
               height: 6,
               decoration: BoxDecoration(
-                color: const Color(0xFF00D2FF).withOpacity(0.2),
+                color: const Color(0xFF00D2FF).withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(3),
               ),
             ),
@@ -177,7 +177,7 @@ class _EmailVerificationEnhancedState extends State<EmailVerificationEnhanced>
                 borderRadius: BorderRadius.circular(3),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF00D2FF).withOpacity(0.5),
+                    color: const Color(0xFF00D2FF).withValues(alpha: 0.5),
                     blurRadius: 10,
                     spreadRadius: 0,
                   ),
@@ -189,7 +189,7 @@ class _EmailVerificationEnhancedState extends State<EmailVerificationEnhanced>
               width: 12,
               height: 6,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.1),
+                color: Colors.white.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(3),
               ),
             ),
@@ -202,7 +202,7 @@ class _EmailVerificationEnhancedState extends State<EmailVerificationEnhanced>
         Text(
           'Hatua ya 2 kati ya 3',
           style: TextStyle(
-            color: const Color(0xFF00D2FF).withOpacity(0.6),
+            color: const Color(0xFF00D2FF).withValues(alpha: 0.6),
             fontSize: 10,
             fontWeight: FontWeight.bold,
             letterSpacing: 2,
@@ -217,14 +217,14 @@ class _EmailVerificationEnhancedState extends State<EmailVerificationEnhanced>
       width: cardWidth,
       padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: Colors.white.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(40),
         border: Border.all(
-          color: Colors.white.withOpacity(0.1),
+          color: Colors.white.withValues(alpha: 0.1),
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF00D2FF).withOpacity(0.05),
+            color: const Color(0xFF00D2FF).withValues(alpha: 0.05),
             blurRadius: 40,
             spreadRadius: 0,
           ),
@@ -243,7 +243,7 @@ class _EmailVerificationEnhancedState extends State<EmailVerificationEnhanced>
               ),
               shape: BoxShape.circle,
               border: Border.all(
-                color: Colors.white.withOpacity(0.1),
+                color: Colors.white.withValues(alpha: 0.1),
               ),
             ),
             child: const Icon(
@@ -346,7 +346,7 @@ class _EmailVerificationEnhancedState extends State<EmailVerificationEnhanced>
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withValues(alpha: 0.1),
                 ),
               ),
               focusedBorder: OutlineInputBorder(
@@ -357,7 +357,7 @@ class _EmailVerificationEnhancedState extends State<EmailVerificationEnhanced>
                 ),
               ),
               filled: true,
-              fillColor: Colors.white.withOpacity(0.05),
+              fillColor: Colors.white.withValues(alpha: 0.05),
               contentPadding: const EdgeInsets.symmetric(vertical: 12),
             ),
             onChanged: (value) {
@@ -383,7 +383,7 @@ class _EmailVerificationEnhancedState extends State<EmailVerificationEnhanced>
         borderRadius: BorderRadius.circular(28),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF00D2FF).withOpacity(0.2),
+            color: const Color(0xFF00D2FF).withValues(alpha: 0.2),
             blurRadius: 20,
             spreadRadius: 0,
           ),
@@ -432,7 +432,7 @@ class _EmailVerificationEnhancedState extends State<EmailVerificationEnhanced>
             width: 32,
             height: 32,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha: 0.2),
               shape: BoxShape.circle,
             ),
             child: const Icon(
@@ -449,7 +449,7 @@ class _EmailVerificationEnhancedState extends State<EmailVerificationEnhanced>
             width: 32,
             height: 32,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha: 0.2),
               shape: BoxShape.circle,
             ),
             child: const Icon(
