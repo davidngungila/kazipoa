@@ -5,6 +5,7 @@ import 'package:video_player/video_player.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:async';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../core/utils/responsive_utils.dart';
 import '../../../../core/widgets/custom_bottom_navigation.dart';
 import '../../../../core/widgets/service_image_widget.dart';
@@ -32,9 +33,19 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
   bool _isDeleting = false;
   String _currentPlaceholder = '';
 
+  List<Map<String, dynamic>> _categories = [];
+  List<Map<String, dynamic>> _professionals = [];
+  bool _isLoadingCategories = true;
+  bool _isLoadingPros = true;
+
   @override
   void initState() {
     super.initState();
+    _useFallbackCategories();
+    _useFallbackProfessionals();
+    _loadCategories();
+    _loadProfessionals();
+
     _fadeController = AnimationController(
       duration: const Duration(milliseconds: 800),
       vsync: this,
@@ -71,6 +82,244 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
     });
     
     _startTypingAnimation();
+  }
+
+  void _useFallbackCategories() {
+    _categories = const [
+      {
+        'name': 'Kazi za Ndani', 
+        'count': '200+', 
+        'image': 'assets/service category images/kazi za ndani.jpg'
+      },
+      {
+        'name': 'Car Wash', 
+        'count': '150+', 
+        'image': 'assets/service category images/carwash.jpg'
+      },
+      {
+        'name': 'Laundry', 
+        'count': '250+', 
+        'image': 'assets/service category images/laundry.jpg'
+      },
+      {
+        'name': 'Fundi Umeme', 
+        'count': '120+', 
+        'image': 'assets/service category images/fundiumeme.jpg'
+      },
+      {
+        'name': 'Makeup Artist', 
+        'count': '90+', 
+        'image': 'assets/service category images/makeup artist.jpg'
+      },
+      {
+        'name': 'Fundi Cherehani', 
+        'count': '75+', 
+        'image': 'assets/service category images/fundi chereani.jpg'
+      },
+      {
+        'name': 'Tattoo Artist', 
+        'count': '60+', 
+        'image': 'assets/service category images/tattoo artist.jpg'
+      },
+      {
+        'name': 'Hair Stylist', 
+        'count': '110+', 
+        'image': 'assets/service category images/hair stylist.jpg'
+      },
+      {
+        'name': 'Barber', 
+        'count': '85+', 
+        'image': 'assets/service category images/barber.jpg'
+      },
+      {
+        'name': 'Babysitting', 
+        'count': '95+', 
+        'image': 'assets/service category images/babysitting.jpg'
+      },
+      {
+        'name': 'Event Planning', 
+        'count': '45+', 
+        'image': 'assets/service category images/event planning.jpg'
+      },
+      {
+        'name': 'Photography', 
+        'count': '65+', 
+        'image': 'assets/service category images/photography.jpg'
+      },
+    ];
+  }
+
+  void _useFallbackProfessionals() {
+    _professionals = [
+      {
+        'id': 'pro_001',
+        'name': 'Bakari Said',
+        'service': 'Mtaalamu wa Mabomba',
+        'location': 'Mikocheni',
+        'rating': 4.9,
+        'reviewCount': 127,
+        'isVerified': true,
+        'tier': 'Platinum',
+        'tierColor': const Color(0xFF38BDF8),
+        'tags': ['Muda Mfupi', 'Vifaa Vipo'],
+        'serviceCost': '15000',
+        'phone': '+255 712 3456',
+        'reviews': [
+          {'rating': 5, 'comment': 'Mtaalamu mzuri sana! Alifanya kazi kwa ufasaha.', 'date': '2024-01-15'},
+          {'rating': 5, 'comment': 'Ninampenda Bakari, anajua kazi yake.', 'date': '2024-01-10'},
+          {'rating': 4, 'comment': 'Kazi nzuri, ila alichelewa kidogo.', 'date': '2024-01-05'},
+        ],
+      },
+      {
+        'id': 'pro_002',
+        'name': 'Anna Komba',
+        'service': 'Usafi wa Ndani',
+        'location': 'Masaki',
+        'rating': 2.8,
+        'reviewCount': 23,
+        'isVerified': false,
+        'tier': 'Bronze',
+        'tierColor': const Color(0xFFFB923C),
+        'tags': ['Maalum', 'Zana Zipo'],
+        'serviceCost': '12000',
+        'phone': '+255 789 0123',
+        'reviews': [
+          {'rating': 3, 'comment': 'Kazi ya kawaida, haina kitu cha kipekee.', 'date': '2024-01-12'},
+          {'rating': 2, 'comment': 'Alifanya kazi vibaya, nililazimika kumwambia afanye tena.', 'date': '2024-01-08'},
+          {'rating': 3, 'comment': 'Bei ni nzuri lakini quality siyo ya juu.', 'date': '2024-01-03'},
+        ],
+      },
+      {
+        'id': 'pro_003',
+        'name': 'John Mwangi',
+        'service': 'Umeme na Viyoyozi',
+        'location': 'Kinondoni',
+        'rating': 4.5,
+        'reviewCount': 45,
+        'isVerified': false,
+        'tier': 'Gold',
+        'tierColor': const Color(0xFFF59E0B),
+        'tags': ['Muda Mfupi', 'Zana Zipo'],
+        'serviceCost': '18000',
+        'phone': '+255 754 3210',
+        'reviews': [
+          {'rating': 5, 'comment': 'Anajua umeme sana, alisuluhisha tatizo langu.', 'date': '2024-01-14'},
+          {'rating': 4, 'comment': 'Kazi nzima, bei ni sawa.', 'date': '2024-01-09'},
+          {'rating': 4, 'comment': 'Mtaalamu, anapenda kazi yake.', 'date': '2024-01-04'},
+        ],
+      },
+      {
+        'id': 'pro_004',
+        'name': 'Grace Kimono',
+        'service': 'Upishi na Sherehe',
+        'location': 'Msasani',
+        'rating': 3.2,
+        'reviewCount': 8,
+        'isVerified': false,
+        'tier': 'Silver',
+        'tierColor': const Color(0xFF94A3B8),
+        'tags': ['Muda Mfupi'],
+        'serviceCost': '10000',
+        'phone': '+255 765 4321',
+        'reviews': [
+          {'rating': 3, 'comment': 'Mpya lakini ana uwezo.', 'date': '2024-01-11'},
+          {'rating': 3, 'comment': 'Kazi nzuri kwa muanza.', 'date': '2024-01-07'},
+        ],
+      },
+    ];
+  }
+
+  Future<void> _loadCategories() async {
+    try {
+      final client = Supabase.instance.client;
+      final data = await client.from('service_categories').select();
+      if (data.isNotEmpty) {
+        if (mounted) {
+          setState(() {
+            _categories = (data as List).map((item) {
+              return {
+                'name': item['name'] ?? '',
+                'count': item['count']?.toString() ?? '100+',
+                'image': item['image_url'] ?? item['image'] ?? 'assets/service category images/kazi za ndani.jpg',
+              };
+            }).toList();
+            _isLoadingCategories = false;
+          });
+        }
+      } else {
+        if (mounted) {
+          setState(() {
+            _isLoadingCategories = false;
+          });
+        }
+      }
+    } catch (e) {
+      debugPrint('Error loading categories from Supabase: $e');
+      if (mounted) {
+        setState(() {
+          _isLoadingCategories = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _loadProfessionals() async {
+    try {
+      final client = Supabase.instance.client;
+      final data = await client.from('pros').select('*, profiles:id(*)');
+      if (data.isNotEmpty) {
+        if (mounted) {
+          setState(() {
+            _professionals = (data as List).map((item) {
+              final profile = item['profiles'] as Map<dynamic, dynamic>? ?? {};
+              final hourlyRate = item['hourly_rate'] ?? item['service_cost'] ?? '15000';
+              final tier = item['tier'] ?? 'Silver';
+              
+              Color tierColor = const Color(0xFF94A3B8);
+              if (tier == 'Platinum') {
+                tierColor = const Color(0xFF38BDF8);
+              } else if (tier == 'Gold') {
+                tierColor = const Color(0xFFF59E0B);
+              } else if (tier == 'Bronze') {
+                tierColor = const Color(0xFFFB923C);
+              }
+
+              return {
+                'id': item['id'] ?? '',
+                'name': profile['name'] ?? 'Mtaalamu',
+                'service': item['category'] ?? item['service'] ?? 'Mtaalamu',
+                'location': profile['location'] ?? 'Dar es Salaam',
+                'rating': double.tryParse(item['rating']?.toString() ?? '') ?? 4.5,
+                'reviewCount': int.tryParse(item['review_count']?.toString() ?? '') ?? 12,
+                'isVerified': item['is_verified'] ?? true,
+                'tier': tier,
+                'tierColor': tierColor,
+                'tags': (item['tags'] as List?)?.map((e) => e.toString()).toList() ?? ['Muda Mfupi'],
+                'serviceCost': hourlyRate.toString(),
+                'phone': profile['phone'] ?? '+255 712 3456',
+                'reviews': [
+                  {'rating': 5, 'comment': 'Mtaalamu mzuri sana! Alifanya kazi kwa ufasaha.', 'date': '2024-01-15'},
+                ],
+              };
+            }).toList();
+            _isLoadingPros = false;
+          });
+        }
+      } else {
+        if (mounted) {
+          setState(() {
+            _isLoadingPros = false;
+          });
+        }
+      }
+    } catch (e) {
+      debugPrint('Error loading professionals from Supabase: $e');
+      if (mounted) {
+        setState(() {
+          _isLoadingPros = false;
+        });
+      }
+    }
   }
 
   void _checkForSelectedService() {
@@ -534,68 +783,7 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
   }
 
   Widget _buildServiceCategories(double fontSize, double screenWidth) {
-    final categories = [
-      {
-        'name': 'Kazi za Ndani', 
-        'count': '200+', 
-        'image': 'assets/service category images/kazi za ndani.jpg'
-      },
-      {
-        'name': 'Car Wash', 
-        'count': '150+', 
-        'image': 'assets/service category images/carwash.jpg'
-      },
-      {
-        'name': 'Laundry', 
-        'count': '250+', 
-        'image': 'assets/service category images/laundry.jpg'
-      },
-      {
-        'name': 'Fundi Umeme', 
-        'count': '120+', 
-        'image': 'assets/service category images/fundiumeme.jpg'
-      },
-      {
-        'name': 'Makeup Artist', 
-        'count': '90+', 
-        'image': 'assets/service category images/makeup artist.jpg'
-      },
-      {
-        'name': 'Fundi Cherehani', 
-        'count': '75+', 
-        'image': 'assets/service category images/fundi chereani.jpg'
-      },
-      {
-        'name': 'Tattoo Artist', 
-        'count': '60+', 
-        'image': 'assets/service category images/tattoo artist.jpg'
-      },
-      {
-        'name': 'Hair Stylist', 
-        'count': '110+', 
-        'image': 'assets/service category images/hair stylist.jpg'
-      },
-      {
-        'name': 'Barber', 
-        'count': '85+', 
-        'image': 'assets/service category images/barber.jpg'
-      },
-      {
-        'name': 'Babysitting', 
-        'count': '95+', 
-        'image': 'assets/service category images/babysitting.jpg'
-      },
-      {
-        'name': 'Event Planning', 
-        'count': '45+', 
-        'image': 'assets/service category images/event planning.jpg'
-      },
-      {
-        'name': 'Photography', 
-        'count': '65+', 
-        'image': 'assets/service category images/photography.jpg'
-      },
-    ];
+    final categories = _categories;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -742,7 +930,8 @@ class _LandingPageEnhancedState extends State<LandingPageEnhanced>
   }
 
   Widget _buildFeaturedProfessionals(double fontSize, double screenWidth) {
-    final professionals = [
+    final professionals = _professionals;
+    final _ = [
       {
         'id': 'pro_001',
         'name': 'Bakari Said',

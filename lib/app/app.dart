@@ -21,6 +21,7 @@ import '../features/auth/presentation/pages/otp_verification_enhanced.dart';
 // Main Navigation Pages
 import '../features/landing/presentation/pages/landing_page_enhanced.dart';
 import '../features/booking/presentation/pages/my_bookings_enhanced.dart';
+import '../features/booking/presentation/pages/my_client_booking_enhanced.dart';
 import '../features/live/presentation/pages/kazi_live_client_hub_enhanced.dart';
 import '../features/live/presentation/pages/kazi_live_hub_pro_enhanced.dart';
 import '../features/chat/presentation/pages/clients_chats_overview_enhanced.dart';
@@ -59,6 +60,39 @@ class KazipoaApp extends StatelessWidget {
 
   static final _router = GoRouter(
     initialLocation: '/index',
+    redirect: (context, state) {
+      final authManager = AuthManager();
+      final loggedIn = authManager.isAuthenticated;
+      final role = authManager.currentRole;
+      final isGuest = authManager.isGuest;
+      
+      final isLoggingIn = state.matchedLocation == '/index' ||
+          state.matchedLocation == '/login' ||
+          state.matchedLocation == '/register' ||
+          state.matchedLocation == '/pro_login' ||
+          state.matchedLocation == '/pro_registration';
+
+      if (!loggedIn && !isGuest) {
+        // Not logged in and not guest: only allow access to auth paths and guest entry
+        if (!isLoggingIn && state.matchedLocation != '/guest' && !state.matchedLocation.startsWith('/register')) {
+          return '/index';
+        }
+        return null;
+      }
+
+      if (loggedIn) {
+        // User is logged in. If they try to go to landing/auth pages, redirect to dashboard/home
+        if (isLoggingIn) {
+          if (role == 'pro') {
+            return '/wasifu/pro_dashboard';
+          } else {
+            return '/home';
+          }
+        }
+      }
+
+      return null;
+    },
     routes: [
       // ========== ENTRY FLOW ==========
 
@@ -193,7 +227,14 @@ class KazipoaApp extends StatelessWidget {
           // Miadi (Bookings) - Client booking management
           GoRoute(
             path: '/miadi',
-            builder: (context, state) => const MyBookingsEnhanced(),
+            builder: (context, state) {
+              final authManager = AuthManager();
+              if (authManager.currentRole == 'pro') {
+                return const OfisiYanguScreen();
+              } else {
+                return const MyBookingsEnhanced();
+              }
+            },
             routes: [
               // Booking Setup - Create new booking
               GoRoute(
@@ -291,12 +332,7 @@ class KazipoaApp extends StatelessWidget {
                   final chatId = state.pathParameters['chatId'];
                   if (chatId == null) return const SizedBox.shrink();
                   
-                  final authManager = AuthManager();
-                  if (authManager.currentRole == 'pro') {
-                    return const ProChatsOverviewEnhanced();
-                  } else {
-                    return const ClientsChatEnhanced();
-                  }
+                  return ClientsChatEnhanced(chatId: chatId);
                 },
               ),
             ],
@@ -335,7 +371,14 @@ class KazipoaApp extends StatelessWidget {
               // My Bookings - Pro booking management
               GoRoute(
                 path: '/my_bookings',
-                builder: (context, state) => const MyBookingsEnhanced(),
+                builder: (context, state) {
+                  final authManager = AuthManager();
+                  if (authManager.currentRole == 'pro') {
+                    return const OfisiYanguScreen();
+                  } else {
+                    return const MyBookingsEnhanced();
+                  }
+                },
               ),
               
               // Pro Profile - Professional profile

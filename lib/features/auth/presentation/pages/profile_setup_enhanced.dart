@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../core/widgets/custom_bottom_navigation.dart';
+import '../providers/auth_provider.dart';
+import '../../../../core/services/auth_manager.dart';
 
-class ProfileSetupEnhanced extends StatefulWidget {
+class ProfileSetupEnhanced extends ConsumerStatefulWidget {
   const ProfileSetupEnhanced({super.key});
 
   @override
-  State<ProfileSetupEnhanced> createState() => _ProfileSetupEnhancedState();
+  ConsumerState<ProfileSetupEnhanced> createState() => _ProfileSetupEnhancedState();
 }
 
-class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
+class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
     with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final _serviceCategoryController = TextEditingController();
   final _rateController = TextEditingController();
   final _locationController = TextEditingController();
   final _phoneController = TextEditingController();
+  bool _isLoading = false;
   
   late AnimationController _blobController;
   late Animation<Offset> _blobAnimation;
@@ -63,9 +68,9 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
     HapticFeedback.lightImpact();
     // Handle subscription logic - 5,000 TSH/month with 2-month trial
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text('Usajili wako umeanzishwa! Mwezi 2 ya majaribio bure.'),
-        backgroundColor: const Color(0xFF00F0FF),
+      const SnackBar(
+        content: Text('Usajili wako umeanzishwa! Mwezi 2 ya majaribio bure.'),
+        backgroundColor: Color(0xFF00F0FF),
       ),
     );
     
@@ -114,8 +119,8 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              Color(0xFF00F0FF).withValues(alpha: 0.15),
-                              Color(0xFF00F0FF).withValues(alpha: 0.05),
+                              const Color(0xFF00F0FF).withOpacity(0.15),
+                              const Color(0xFF00F0FF).withOpacity(0.05),
                             ],
                           ),
                           shape: BoxShape.circle,
@@ -206,7 +211,7 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
             child: Container(
               width: 40,
               height: 40,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.transparent,
                 shape: BoxShape.circle,
               ),
@@ -219,11 +224,11 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
           ),
           
           // Title
-          Expanded(
+          const Expanded(
             child: Text(
               'Usajili wa Akaunti ya Pro',
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -300,9 +305,9 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
           const SizedBox(height: 4),
           
           // Step Text
-          Text(
+          const Text(
             'HATUA YA 3 KATI YA 3',
-            style: const TextStyle(
+            style: TextStyle(
               color: Color(0xFF00F0FF),
               fontSize: 10,
               fontWeight: FontWeight.bold,
@@ -400,9 +405,9 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'KATEGORIA YA HUDUMA',
-          style: const TextStyle(
+          style: TextStyle(
             color: Color(0xFFCBD5E1),
             fontSize: 12,
             fontWeight: FontWeight.bold,
@@ -420,7 +425,7 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
             ),
           ),
           child: DropdownButtonFormField<String>(
-            initialValue: _selectedService,
+            value: _selectedService,
             decoration: InputDecoration(
               hintText: 'Chagua utaalamu wako',
               hintStyle: const TextStyle(
@@ -461,9 +466,9 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'GHARAMA za huduma (TZS)',
-          style: const TextStyle(
+          style: TextStyle(
             color: Color(0xFFCBD5E1),
             fontSize: 12,
             fontWeight: FontWeight.bold,
@@ -523,9 +528,9 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'MAHALI PA KAZI',
-          style: const TextStyle(
+          style: TextStyle(
             color: Color(0xFFCBD5E1),
             fontSize: 12,
             fontWeight: FontWeight.bold,
@@ -644,8 +649,8 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
+                  children: const [
+                    Text(
                       'Bei ya Mwezi: TSH 5,000/kwa mwezi',
                       style: TextStyle(
                         color: Colors.white,
@@ -653,16 +658,16 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    const Text(
+                    SizedBox(height: 4),
+                    Text(
                       'Jaribio la majaribio: Miezi 2 ya majaribio',
                       style: TextStyle(
                         color: Color(0xFF94A3B8),
                         fontSize: 12,
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    const Text(
+                    SizedBox(height: 4),
+                    Text(
                       'Mwezi wa tatu utarekodiwa kama kawaida',
                       style: TextStyle(
                         color: Color(0xFF94A3B8),
@@ -760,9 +765,9 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'KAZI ULIZOFANYA',
-          style: const TextStyle(
+          style: TextStyle(
             color: Color(0xFFCBD5E1),
             fontSize: 12,
             fontWeight: FontWeight.bold,
@@ -792,34 +797,34 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
                   aspectRatio: 1,
                   child: Container(
                     decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.05),
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: Colors.white.withOpacity(0.2),
-                      style: BorderStyle.solid,
-                      width: 2,
+                      color: Colors.white.withOpacity(0.05),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: Colors.white.withOpacity(0.2),
+                        style: BorderStyle.solid,
+                        width: 2,
+                      ),
                     ),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.add_a_photo,
-                        color: Color(0xFF00F0FF),
-                        size: 24,
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'WEKA PICHA',
-                        style: TextStyle(
-                          color: const Color(0xFF94A3B8),
-                          fontSize: 9,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1.2,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.add_a_photo,
+                          color: Color(0xFF00F0FF),
+                          size: 24,
                         ),
-                      ),
-                    ],
-                  ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'WEKA PICHA',
+                          style: TextStyle(
+                            color: const Color(0xFF94A3B8),
+                            fontSize: 9,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1.2,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -894,7 +899,7 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
             ],
           ),
           child: ElevatedButton(
-            onPressed: _submitProfile,
+            onPressed: _isLoading ? null : _submitProfile,
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,
               foregroundColor: Colors.black,
@@ -903,24 +908,33 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
                 borderRadius: BorderRadius.circular(16),
               ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'Endelea kwenye Vyeti',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: -0.5,
+            child: _isLoading
+                ? const SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(
+                      color: Colors.black,
+                      strokeWidth: 2.5,
+                    ),
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        'Endelea kwenye Vyeti',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: -0.5,
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Icon(
+                        Icons.arrow_forward,
+                        size: 20,
+                      ),
+                    ],
                   ),
-                ),
-                const SizedBox(width: 8),
-                const Icon(
-                  Icons.arrow_forward,
-                  size: 20,
-                ),
-              ],
-            ),
           ),
         ),
         
@@ -965,11 +979,86 @@ class _ProfileSetupEnhancedState extends State<ProfileSetupEnhanced>
     // TODO: Implement photo upload
   }
 
-  void _submitProfile() {
+  void _submitProfile() async {
     if (_formKey.currentState!.validate()) {
       HapticFeedback.heavyImpact();
-      // Navigate to pro dashboard
-      context.go('/wasifu/pro_dashboard');
+      
+      final client = Supabase.instance.client;
+      final userId = client.auth.currentUser?.id;
+      if (userId == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Tafadhali ingia kwenye akaunti yako kwanza.'),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+        return;
+      }
+      
+      setState(() {
+        _isLoading = true;
+      });
+      
+      try {
+        final rate = double.tryParse(_rateController.text.trim()) ?? 0.0;
+        final location = _locationController.text.trim();
+        final phone = _phoneController.text.trim();
+        final category = _selectedService ?? 'Unspecified';
+        
+        // 1. Update profiles table
+        await client.from('profiles').update({
+          'phone': phone,
+          'profile_completed': true,
+        }).eq('id', userId);
+        
+        // 2. Upsert pros table
+        await client.from('pros').upsert({
+          'id': userId,
+          'hourly_rate': rate,
+          'category': category,
+          'rating': 4.5,
+          'verified': false,
+        });
+        
+        // 3. Upsert pro_locations table
+        await client.from('pro_locations').upsert({
+          'pro_id': userId,
+          'address': location,
+          'latitude': -6.7924,
+          'longitude': 39.2083,
+        });
+        
+        // Update local auth provider state if needed
+        ref.read(authProvider.notifier).updateProfile({
+          'phone': phone,
+          'profile_completed': true,
+        });
+        
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Wasifu wako umekamilika kikamilifu!'),
+              backgroundColor: Colors.green,
+            ),
+          );
+          context.go('/wasifu/pro_dashboard');
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Kosa: ${e.toString()}'),
+              backgroundColor: Colors.redAccent,
+            ),
+          );
+        }
+      } finally {
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
+      }
     }
   }
 

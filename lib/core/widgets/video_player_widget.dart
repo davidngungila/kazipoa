@@ -131,9 +131,11 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> with WidgetsBindi
     }
     
     // Show fallback UI if all videos fail
-    setState(() {
-      _isInitialized = false;
-    });
+    if (mounted) {
+      setState(() {
+        _isInitialized = false;
+      });
+    }
   }
 
   void _setupVideoController() {
@@ -142,9 +144,11 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> with WidgetsBindi
       _controller.setLooping(true);
     }
     
-    setState(() {
-      _isInitialized = true;
-    });
+    if (mounted) {
+      setState(() {
+        _isInitialized = true;
+      });
+    }
     
     _attemptAutoPlay();
     _controller.addListener(_videoListener);

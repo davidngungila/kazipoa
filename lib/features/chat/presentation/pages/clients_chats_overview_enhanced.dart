@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../core/widgets/custom_bottom_navigation.dart';
 
 class ClientsChatsOverviewEnhanced extends StatefulWidget {
@@ -26,39 +27,92 @@ class _ClientsChatsOverviewEnhancedState extends State<ClientsChatsOverviewEnhan
   bool _showFabMenu = false;
   bool _showSettingsMenu = false;
 
-  // Sample data
-  final List<Map<String, dynamic>> _allChats = [
-    {
-      'name': "Juma Hamisi",
-      'message': "Vipi kaka, ile kazi ya plumbing tayari?",
-      'time': "10:42 AM",
-      'unread': 2,
-      'active': true,
-      'serviceCategory': 'Plumbing',
-      'date': DateTime.now(),
-    },
-    {
-      'name': "Sarah Mpole", 
-      'message': "Asante sana kwa huduma nzuri jana!",
-      'time': "09:15 AM",
-      'unread': 0,
-      'active': false,
-      'serviceCategory': 'Cleaning',
-      'date': DateTime.now().subtract(Duration(hours: 3)),
-    },
-    {
-      'name': "Kikosi Kazi Dar",
-      'message': "Beka: Nimefika tayari hapa site.",
-      'time': "Jana",
-      'unread': 0,
-      'active': true,
-      'serviceCategory': 'Construction',
-      'date': DateTime.now().subtract(Duration(days: 1)),
-    },
-  ];
+  List<Map<String, dynamic>> _conversations = [];
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadConversations();
+  }
+
+  Future<void> _loadConversations() async {
+    if (!mounted) return;
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final client = Supabase.instance.client;
+      final userId = client.auth.currentUser?.id;
+      if (userId == null) return;
+
+      // Query conversations involving this user, along with messages and partner details
+      final response = await client
+          .from('conversations')
+          .select('*, clients:client_id(name), pros:pro_id(*, profiles:id(name)), messages(*)')
+          .or('client_id.eq.$userId,pro_id.eq.$userId')
+          .order('created_at', ascending: false);
+
+      final List<dynamic> raw = response as List<dynamic>;
+      _conversations = raw.map((e) {
+        final conv = Map<String, dynamic>.from(e);
+        
+        final isProUser = userId == conv['pro_id'];
+        final clientObj = conv['clients'] as Map<dynamic, dynamic>?;
+        final proObj = conv['pros'] as Map<dynamic, dynamic>?;
+        final proProfileObj = proObj != null ? proObj['profiles'] as Map<dynamic, dynamic>? : null;
+
+        final partnerName = isProUser
+            ? (clientObj != null ? clientObj['name']?.toString() ?? 'Mteja' : 'Mteja')
+            : (proProfileObj != null ? proProfileObj['name']?.toString() ?? 'Mtaalamu' : 'Mtaalamu');
+
+        final serviceCategory = proObj != null ? proObj['category']?.toString() ?? 'Huduma' : 'Huduma';
+
+        final msgList = conv['messages'] as List<dynamic>? ?? [];
+        String lastMsgText = 'Hakuna ujumbe bado';
+        String lastMsgTime = '';
+        int unreadCount = 0;
+
+        if (msgList.isNotEmpty) {
+          msgList.sort((a, b) => a['created_at'].toString().compareTo(b['created_at'].toString()));
+          final lastMsg = msgList.last;
+          lastMsgText = lastMsg['text'] ?? '';
+          
+          try {
+            final parsed = DateTime.parse(lastMsg['created_at']).toLocal();
+            final minuteStr = parsed.minute.toString().padLeft(2, '0');
+            final hourStr = parsed.hour.toString().padLeft(2, '0');
+            lastMsgTime = '$hourStr:$minuteStr';
+          } catch (_) {
+            lastMsgTime = '';
+          }
+        }
+
+        return {
+          'id': conv['id'],
+          'name': partnerName,
+          'message': lastMsgText,
+          'time': lastMsgTime,
+          'unread': unreadCount,
+          'active': true,
+          'serviceCategory': serviceCategory,
+          'date': conv['created_at'] != null ? DateTime.parse(conv['created_at']) : DateTime.now(),
+        };
+      }).toList();
+    } catch (e) {
+      debugPrint('Error loading conversations: $e');
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
 
   List<Map<String, dynamic>> get _filteredChats {
-    var filtered = List<Map<String, dynamic>>.from(_allChats);
+    var filtered = List<Map<String, dynamic>>.from(_conversations);
     
     if (_showUnreadOnly) {
       filtered = filtered.where((chat) => (chat['unread'] as int) > 0).toList();
@@ -70,6 +124,15 @@ class _ClientsChatsOverviewEnhancedState extends State<ClientsChatsOverviewEnhan
     
     if (_selectedServiceCategory != null) {
       filtered = filtered.where((chat) => chat['serviceCategory'] == _selectedServiceCategory).toList();
+    }
+
+    final query = _searchController.text.trim().toLowerCase();
+    if (query.isNotEmpty) {
+      filtered = filtered.where((chat) {
+        final name = chat['name']?.toString().toLowerCase() ?? '';
+        final msg = chat['message']?.toString().toLowerCase() ?? '';
+        return name.contains(query) || msg.contains(query);
+      }).toList();
     }
     
     return filtered;
@@ -107,6 +170,7 @@ class _ClientsChatsOverviewEnhancedState extends State<ClientsChatsOverviewEnhan
                             time: chat['time'],
                             unread: chat['unread'] ?? 0,
                             active: chat['active'] ?? false,
+                            chatId: chat['id']?.toString() ?? '',
                           )).toList()
                       ),
                     ],
@@ -994,119 +1058,126 @@ class _ClientsChatsOverviewEnhancedState extends State<ClientsChatsOverviewEnhan
     bool active = false,
     bool isGroup = false,
     bool isPlatinum = false,
+    required String chatId,
   }) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.04),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white10),
-      ),
-      child: Row(
-        children: [
-          Stack(
-            children: [
-              CircleAvatar(
-                radius: 26,
-                backgroundColor: Colors.grey.shade900,
-                child: Icon(
-                  isGroup ? Icons.groups : Icons.person,
-                  color: Colors.white54,
-                ),
-              ),
-              if (active)
-                Positioned(
-                  bottom: 2,
-                  right: 2,
-                  child: Container(
-                    width: 10,
-                    height: 10,
-                    decoration: const BoxDecoration(
-                      color: Colors.green,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                )
-            ],
-          ),
-          const SizedBox(width: 12),
-
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return GestureDetector(
+      onTap: () {
+        HapticFeedback.lightImpact();
+        context.go('/chat/detail/$chatId');
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.04),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Colors.white10),
+        ),
+        child: Row(
+          children: [
+            Stack(
               children: [
-                Text(
-                  name,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                CircleAvatar(
+                  radius: 26,
+                  backgroundColor: Colors.grey.shade900,
+                  child: Icon(
+                    isGroup ? Icons.groups : Icons.person,
+                    color: Colors.white54,
                   ),
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  message,
-                  style: TextStyle(
-                    color: Colors.grey.shade400,
-                    fontSize: 13,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-                if (isPlatinum)
-                  Container(
-                    margin: const EdgeInsets.only(top: 6),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: ClientsChatsOverviewEnhanced.primary.withOpacity(0.15),
-                      borderRadius: BorderRadius.circular(6),
-                      border: Border.all(color: ClientsChatsOverviewEnhanced.primary.withOpacity(0.3)),
-                    ),
-                    child: const Text(
-                      "PLATINUM",
-                      style: TextStyle(
-                        color: ClientsChatsOverviewEnhanced.primary,
-                        fontSize: 8,
-                        fontWeight: FontWeight.bold,
+                if (active)
+                  Positioned(
+                    bottom: 2,
+                    right: 2,
+                    child: Container(
+                      width: 10,
+                      height: 10,
+                      decoration: const BoxDecoration(
+                        color: Colors.green,
+                        shape: BoxShape.circle,
                       ),
                     ),
-                  ),
+                  )
               ],
             ),
-          ),
+            const SizedBox(width: 12),
 
-          Column(
-            children: [
-              Text(
-                time,
-                style: TextStyle(
-                  color: Colors.grey.shade500,
-                  fontSize: 10,
-                ),
-              ),
-              const SizedBox(height: 6),
-              if (unread > 0)
-                Container(
-                  width: 20,
-                  height: 20,
-                  decoration: const BoxDecoration(
-                    color: ClientsChatsOverviewEnhanced.primary,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Center(
-                    child: Text(
-                      "$unread",
-                      style: const TextStyle(
-                        fontSize: 10,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                )
-            ],
-          ),
-        ],
+                  const SizedBox(height: 4),
+                  Text(
+                    message,
+                    style: TextStyle(
+                      color: Colors.grey.shade400,
+                      fontSize: 13,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  if (isPlatinum)
+                    Container(
+                      margin: const EdgeInsets.only(top: 6),
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: ClientsChatsOverviewEnhanced.primary.withOpacity(0.15),
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(color: ClientsChatsOverviewEnhanced.primary.withOpacity(0.3)),
+                      ),
+                      child: const Text(
+                        "PLATINUM",
+                        style: TextStyle(
+                          color: ClientsChatsOverviewEnhanced.primary,
+                          fontSize: 8,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+
+            Column(
+              children: [
+                Text(
+                  time,
+                  style: TextStyle(
+                    color: Colors.grey.shade500,
+                    fontSize: 10,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                if (unread > 0)
+                  Container(
+                    width: 20,
+                    height: 20,
+                    decoration: const BoxDecoration(
+                      color: ClientsChatsOverviewEnhanced.primary,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: Text(
+                        "$unread",
+                        style: const TextStyle(
+                          fontSize: 10,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

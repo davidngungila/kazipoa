@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../utils/storage_manager.dart';
 import '../utils/validator_util.dart';
+import 'supabase_service.dart';
 
 /// Enhanced Auth Service - Equivalent to JavaScript AuthManager
 /// Handles authentication, session management, and user data with enhanced features
@@ -29,15 +29,17 @@ class EnhancedAuthService {
         print('Session restored for user: ${_currentUser!['id']}');
       }
 
-      // Listen to Firebase auth state changes
-      FirebaseAuth.instance.authStateChanges().listen(_handleFirebaseAuthChange);
+      // Listen to Supabase auth state changes
+      SupabaseService.authStateChanges().listen((data) {
+        _handleSupabaseAuthChange(data.session?.user);
+      });
     } catch (e) {
       print('Error initializing auth service: $e');
     }
   }
 
-  /// Handle Firebase auth state changes
-  void _handleFirebaseAuthChange(User? user) {
+  /// Handle Supabase auth state changes
+  void _handleSupabaseAuthChange(User? user) {
     if (user == null && _isAuthenticated) {
       // User signed out, clear local session
       _clearSession();
@@ -55,30 +57,22 @@ class EnhancedAuthService {
       ValidatorUtil.validateEmail(email);
       ValidatorUtil.validatePassword(password);
 
-      // Attempt Firebase login
-      final result = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      // Attempt Supabase login
+      final result = await SupabaseService.signInWithEmail(email, password);
 
       if (result.user != null) {
-        // Get additional user data from Firestore
-        final userDoc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(result.user!.uid)
-            .get();
-
-        final userData = userDoc.data() ?? {};
+        // Get additional user data from Supabase
+        final userData = await SupabaseService.getUserProfile(result.user!.id) ?? {};
         
         // Create user object matching JavaScript structure
         final user = {
-          'id': result.user!.uid,
+          'id': result.user!.id,
           'email': result.user!.email,
-          'name': userData['name'] ?? result.user!.displayName ?? 'User',
+          'name': userData['name'] ?? result.user!.userMetadata?['name'] ?? 'User',
           'phone': userData['phone'] ?? '',
           'userType': userData['userType'] ?? userType,
-          'isEmailVerified': result.user!.emailVerified,
-          'createdAt': userData['createdAt'] ?? DateTime.now().toIso8601String(),
+          'isEmailVerified': result.user!.emailConfirmedAt != null,
+          'createdAt': userData['created_at'] ?? DateTime.now().toIso8601String(),
           'lastLoginAt': DateTime.now().toIso8601String(),
           'isVerified': userData['isVerified'] ?? false,
           'profileImage': userData['profileImage'] ?? '',
@@ -95,12 +89,6 @@ class EnhancedAuthService {
         // Start session timer
         _startSessionTimer();
 
-        // Update last login in Firestore
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(result.user!.uid)
-            .update({'lastLoginAt': DateTime.now().toIso8601String()});
-
         print('User logged in: ${user['id']}');
         return {
           'success': true,
@@ -113,8 +101,8 @@ class EnhancedAuthService {
           'error': 'Login failed: No user returned',
         };
       }
-    } on FirebaseAuthException catch (e) {
-      String errorMessage = _getFirebaseErrorMessage(e);
+    } on AuthException catch (e) {
+      String errorMessage = _getSupabaseErrorMessage(e);
       return {
         'success': false,
         'error': errorMessage,
@@ -135,21 +123,22 @@ class EnhancedAuthService {
       ValidatorUtil.validatePassword(userData['password']);
       ValidatorUtil.validateName(userData['name']);
 
-      // Create Firebase user
-      final result = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: userData['email'],
-        password: userData['password'],
+      // Create Supabase user
+      final result = await SupabaseService.registerWithEmail(
+        userData['email'],
+        userData['password'],
+        userData['name'],
       );
 
       if (result.user != null) {
-        // Create user profile in Firestore
+        // User profile is already created in SupabaseService.registerWithEmail
         final user = {
-          'id': result.user!.uid,
+          'id': result.user!.id,
           'email': result.user!.email,
           'name': userData['name'],
           'phone': userData['phone'] ?? '',
           'userType': userData['userType'] ?? 'client',
-          'isEmailVerified': result.user!.emailVerified,
+          'isEmailVerified': result.user!.emailConfirmedAt != null,
           'createdAt': DateTime.now().toIso8601String(),
           'lastLoginAt': DateTime.now().toIso8601String(),
           'isVerified': false,
@@ -162,11 +151,6 @@ class EnhancedAuthService {
           'totalBookings': 0,
         };
 
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(result.user!.uid)
-            .set(user);
-
         // Update session state
         _currentUser = user;
         _isAuthenticated = true;
@@ -177,9 +161,6 @@ class EnhancedAuthService {
 
         // Start session timer
         _startSessionTimer();
-
-        // Send email verification
-        await result.user!.sendEmailVerification();
 
         print('User registered: ${user['id']}');
         return {
@@ -193,8 +174,8 @@ class EnhancedAuthService {
           'error': 'Registration failed: No user returned',
         };
       }
-    } on FirebaseAuthException catch (e) {
-      String errorMessage = _getFirebaseErrorMessage(e);
+    } on AuthException catch (e) {
+      String errorMessage = _getSupabaseErrorMessage(e);
       return {
         'success': false,
         'error': errorMessage,
@@ -210,7 +191,7 @@ class EnhancedAuthService {
   /// Logout with session cleanup
   Future<Map<String, dynamic>> logout() async {
     try {
-      await FirebaseAuth.instance.signOut();
+      await SupabaseService.signOut();
       _clearSession();
       
       return {
@@ -235,11 +216,15 @@ class EnhancedAuthService {
         };
       }
 
-      // Update in Firestore
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(_currentUser!['id'])
-          .update(updates);
+      // Update in Supabase
+      await SupabaseService.updateUserProfile(
+        name: updates['name'],
+        phone: updates['phone'],
+        bio: updates['bio'],
+        location: updates['location'],
+        isPro: updates['isPro'],
+        services: updates['services'],
+      );
 
       // Update local user data
       _currentUser!.addAll(updates);
@@ -265,9 +250,9 @@ class EnhancedAuthService {
     }
 
     try {
-      // Check Firebase auth state
-      final firebaseUser = FirebaseAuth.instance.currentUser;
-      if (firebaseUser == null) {
+      // Check Supabase auth state
+      final supabaseUser = SupabaseService.currentUser;
+      if (supabaseUser == null) {
         _clearSession();
         return false;
       }
@@ -287,7 +272,7 @@ class EnhancedAuthService {
     try {
       ValidatorUtil.validateEmail(email);
       
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      await SupabaseService.resetPassword(email);
       
       return {
         'success': true,
@@ -306,13 +291,9 @@ class EnhancedAuthService {
     if (!_isAuthenticated || _currentUser == null) return;
 
     try {
-      final userDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(_currentUser!['id'])
-          .get();
+      final userData = await SupabaseService.getUserProfile(_currentUser!['id']);
 
-      if (userDoc.exists) {
-        final userData = userDoc.data()!;
+      if (userData != null) {
         _currentUser!.addAll(userData);
         await StorageManager.setCurrentUser(_currentUser!);
       }
@@ -359,24 +340,24 @@ class EnhancedAuthService {
     StorageManager.remove('lastLoginTime');
   }
 
-  /// Convert Firebase auth exceptions to user-friendly messages
-  String _getFirebaseErrorMessage(FirebaseAuthException e) {
+  /// Convert Supabase auth exceptions to user-friendly messages
+  String _getSupabaseErrorMessage(AuthException e) {
     switch (e.code) {
-      case 'user-not-found':
+      case 'user_not_found':
         return 'Mtumiaji hajasajiliwa';
-      case 'wrong-password':
+      case 'wrong_password':
         return 'Nenosiri sio sahihi';
-      case 'email-already-in-use':
+      case 'email_already_in_use':
         return 'Barua pepe tayari inatumika';
-      case 'weak-password':
+      case 'weak_password':
         return 'Nenosiri ni dhaifu sana';
-      case 'invalid-email':
+      case 'invalid_email':
         return 'Barua pepe sio sahihi';
-      case 'user-disabled':
+      case 'user_disabled':
         return 'Akaunti yako imezuiwa';
-      case 'too-many-requests':
+      case 'too_many_requests':
         return 'Ombi nyingi sana. Tafadhali jaribu baadaye';
-      case 'network-request-failed':
+      case 'network_request_failed':
         return 'Hitilafu ya mtandao. Tafadhali angalia muunganisho wako';
       default:
         return 'Hitilafu: ${e.message}';
@@ -385,8 +366,8 @@ class EnhancedAuthService {
 
   /// Stream for auth state changes
   Stream<Map<String, dynamic>?> get authStateChanges {
-    return FirebaseAuth.instance.authStateChanges().asyncMap((user) async {
-      if (user != null) {
+    return SupabaseService.authStateChanges().asyncMap((data) async {
+      if (data.session?.user != null) {
         await refreshUserData();
         return _currentUser;
       }

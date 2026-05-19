@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../providers/auth_provider.dart';
+import '../../../../core/services/auth_manager.dart';
 
-class ClientIdLoginEnhanced extends StatefulWidget {
+class ClientIdLoginEnhanced extends ConsumerStatefulWidget {
   const ClientIdLoginEnhanced({super.key});
 
   @override
-  State<ClientIdLoginEnhanced> createState() => _ClientIdLoginEnhancedState();
+  ConsumerState<ClientIdLoginEnhanced> createState() => _ClientIdLoginEnhancedState();
 }
 
-class _ClientIdLoginEnhancedState extends State<ClientIdLoginEnhanced>
+class _ClientIdLoginEnhancedState extends ConsumerState<ClientIdLoginEnhanced>
     with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
@@ -87,7 +90,7 @@ class _ClientIdLoginEnhancedState extends State<ClientIdLoginEnhanced>
             child: Container(
               width: 48,
               height: 48,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.transparent,
                 shape: BoxShape.circle,
               ),
@@ -102,11 +105,11 @@ class _ClientIdLoginEnhancedState extends State<ClientIdLoginEnhanced>
           const SizedBox(width: 16),
           
           // Title
-          Expanded(
+          const Expanded(
             child: Text(
               'Kitambulisho cha Mteja',
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -134,7 +137,7 @@ class _ClientIdLoginEnhancedState extends State<ClientIdLoginEnhanced>
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color(0xFF00D1FF).withOpacity(0.1),
+              const Color(0xFF00D1FF).withOpacity(0.1),
               Colors.transparent,
             ],
           ),
@@ -143,7 +146,7 @@ class _ClientIdLoginEnhancedState extends State<ClientIdLoginEnhanced>
           ),
           boxShadow: [
             BoxShadow(
-              color: Color(0xFF00D1FF).withOpacity(0.1),
+              color: const Color(0xFF00D1FF).withOpacity(0.1),
               blurRadius: 32,
               spreadRadius: 0,
             ),
@@ -160,7 +163,7 @@ class _ClientIdLoginEnhancedState extends State<ClientIdLoginEnhanced>
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      Color(0xFF00D1FF).withOpacity(0.1),
+                      const Color(0xFF00D1FF).withOpacity(0.1),
                       Colors.transparent,
                     ],
                   ),
@@ -178,7 +181,7 @@ class _ClientIdLoginEnhancedState extends State<ClientIdLoginEnhanced>
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0xFF00D1FF).withOpacity(0.2),
+                      color: const Color(0xFF00D1FF).withOpacity(0.2),
                       blurRadius: 40,
                       spreadRadius: 0,
                     ),
@@ -248,7 +251,7 @@ class _ClientIdLoginEnhancedState extends State<ClientIdLoginEnhanced>
         ),
         boxShadow: [
           BoxShadow(
-            color: Color(0xFF00D1FF).withOpacity(0.1),
+            color: const Color(0xFF00D1FF).withOpacity(0.1),
             blurRadius: 32,
             spreadRadius: 0,
           ),
@@ -261,8 +264,8 @@ class _ClientIdLoginEnhancedState extends State<ClientIdLoginEnhanced>
             // Username Field
             _buildFormField(
               controller: _usernameController,
-              label: 'Jina la mtumiaji',
-              hintText: 'Weka jina la mtumiaji',
+              label: 'Jina la mtumiaji / Barua pepe',
+              hintText: 'Weka barua pepe au jina la mtumiaji',
               icon: Icons.alternate_email,
             ),
             
@@ -290,7 +293,7 @@ class _ClientIdLoginEnhancedState extends State<ClientIdLoginEnhanced>
                         width: 20,
                         height: 20,
                         decoration: BoxDecoration(
-                          color: _rememberMe ? Color(0xFF00D1FF) : Colors.white.withOpacity(0.05),
+                          color: _rememberMe ? const Color(0xFF00D1FF) : Colors.white.withOpacity(0.05),
                           borderRadius: BorderRadius.circular(4),
                           border: Border.all(
                             color: Colors.white.withOpacity(0.2),
@@ -305,10 +308,10 @@ class _ClientIdLoginEnhancedState extends State<ClientIdLoginEnhanced>
                             : null,
                       ),
                       const SizedBox(width: 8),
-                      Text(
+                      const Text(
                         'Nikumbuke',
                         style: TextStyle(
-                          color: const Color(0xFF94A3B8),
+                          color: Color(0xFF94A3B8),
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                         ),
@@ -345,18 +348,18 @@ class _ClientIdLoginEnhancedState extends State<ClientIdLoginEnhanced>
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Huna akaunti? ',
                   style: TextStyle(
-                    color: const Color(0xFF94A3B8),
+                    color: Color(0xFF94A3B8),
                     fontSize: 14,
                   ),
                 ),
                 GestureDetector(
                   onTap: () {
                     HapticFeedback.lightImpact();
-                    // Navigate to pro registration
-                    context.go('/pro_registration');
+                    // Navigate to register
+                    context.go('/register');
                   },
                   child: const Text(
                     'Jisajili',
@@ -409,6 +412,12 @@ class _ClientIdLoginEnhancedState extends State<ClientIdLoginEnhanced>
               fontSize: 16,
               fontWeight: FontWeight.normal,
             ),
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Tafadhali weka jina la mtumiaji au barua pepe';
+              }
+              return null;
+            },
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: TextStyle(
@@ -465,6 +474,15 @@ class _ClientIdLoginEnhancedState extends State<ClientIdLoginEnhanced>
               fontSize: 16,
               fontWeight: FontWeight.normal,
             ),
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Tafadhali weka nenosiri lako';
+              }
+              if (value.trim().length < 6) {
+                return 'Nenosiri linapaswa kuwa na herufi zisizopungua 6';
+              }
+              return null;
+            },
             decoration: InputDecoration(
               hintText: 'Weka nenosiri lako',
               hintStyle: TextStyle(
@@ -504,8 +522,9 @@ class _ClientIdLoginEnhancedState extends State<ClientIdLoginEnhanced>
   }
 
   Widget _buildRippleButton(double screenWidth) {
+    final isLoading = ref.watch(authProvider).isLoading;
     return GestureDetector(
-      onTap: _submitLogin,
+      onTap: isLoading ? null : _submitLogin,
       child: Container(
         width: double.infinity,
         height: 56,
@@ -514,7 +533,7 @@ class _ClientIdLoginEnhancedState extends State<ClientIdLoginEnhanced>
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Color(0xFF00D1FF).withOpacity(0.2),
+              color: const Color(0xFF00D1FF).withOpacity(0.2),
               blurRadius: 20,
               spreadRadius: 0,
             ),
@@ -523,15 +542,24 @@ class _ClientIdLoginEnhancedState extends State<ClientIdLoginEnhanced>
         child: Stack(
           children: [
             Center(
-              child: Text(
-                'Ingia',
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: -0.5,
-                ),
-              ),
+              child: isLoading
+                  ? const SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(
+                        color: Colors.black,
+                        strokeWidth: 2.5,
+                      ),
+                    )
+                  : const Text(
+                      'Ingia',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: -0.5,
+                      ),
+                    ),
             ),
           ],
         ),
@@ -555,11 +583,31 @@ class _ClientIdLoginEnhancedState extends State<ClientIdLoginEnhanced>
     );
   }
 
-  void _submitLogin() {
+  void _submitLogin() async {
     if (_formKey.currentState!.validate()) {
       HapticFeedback.heavyImpact();
-      // Navigate to landing page after successful login
-      context.go('/home');
+      final email = _usernameController.text.trim();
+      final password = _passwordController.text.trim();
+      
+      await ref.read(authProvider.notifier).login(email, password);
+      
+      final authState = ref.read(authProvider);
+      if (authState.error != null) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(authState.error!),
+              backgroundColor: Colors.redAccent,
+            ),
+          );
+        }
+      } else if (authState.isAuthenticated) {
+        // Set state in manager
+        AuthManager().login(authState.currentUser?['uid'] ?? '', 'client');
+        if (mounted) {
+          context.go('/home');
+        }
+      }
     }
   }
 }

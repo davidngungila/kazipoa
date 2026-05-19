@@ -1,11 +1,10 @@
 import 'dart:io';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../utils/storage_manager.dart';
 import '../utils/validator_util.dart';
+import 'supabase_service.dart';
 
 /// Profile Manager - Equivalent to JavaScript ProfileManager
 /// Handles user profiles, profile updates, and profile data management
@@ -30,14 +29,14 @@ class ProfileManager {
   /// Load current user profile
   Future<void> _loadCurrentUserProfile() async {
     try {
-      final user = FirebaseAuth.instance.currentUser;
+      final user = SupabaseService.currentUser;
       if (user != null) {
         // Try to get from storage first
         _currentUserProfile = await StorageManager.getCurrentUser();
         
         if (_currentUserProfile == null) {
-          // If not in storage, fetch from Firestore
-          await _fetchUserProfileFromFirestore(user.uid);
+          // If not in storage, fetch from Supabase
+          await _fetchUserProfileFromSupabase(user.id);
         }
       }
     } catch (e) {
@@ -45,27 +44,24 @@ class ProfileManager {
     }
   }
 
-  /// Fetch user profile from Firestore
-  Future<void> _fetchUserProfileFromFirestore(String userId) async {
+  /// Fetch user profile from Supabase
+  Future<void> _fetchUserProfileFromSupabase(String userId) async {
     try {
-      final doc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId)
-          .get();
+      final profile = await SupabaseService.getUserProfile(userId);
 
-      if (doc.exists) {
-        _currentUserProfile = doc.data();
+      if (profile != null) {
+        _currentUserProfile = profile;
         await StorageManager.setCurrentUser(_currentUserProfile!);
       }
     } catch (e) {
-      print('Error fetching profile from Firestore: $e');
+      print('Error fetching profile from Supabase: $e');
     }
   }
 
   /// Update user profile
   Future<Map<String, dynamic>> updateProfile(Map<String, dynamic> updates) async {
     try {
-      final user = FirebaseAuth.instance.currentUser;
+      final user = SupabaseService.currentUser;
       if (user == null) {
         return {
           'success': false,
@@ -82,14 +78,15 @@ class ProfileManager {
         };
       }
 
-      // Update in Firestore
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .update({
-            ...updates,
-            'updatedAt': FieldValue.serverTimestamp(),
-          });
+      // Update in Supabase
+      await SupabaseService.updateUserProfile(
+        name: updates['name'],
+        phone: updates['phone'],
+        bio: updates['bio'],
+        location: updates['location'],
+        isPro: updates['isPro'],
+        services: updates['services'],
+      );
 
       // Update local profile
       if (_currentUserProfile != null) {
@@ -118,7 +115,7 @@ class ProfileManager {
   /// Update profile image
   Future<Map<String, dynamic>> updateProfileImage(File imageFile) async {
     try {
-      final user = FirebaseAuth.instance.currentUser;
+      final user = SupabaseService.currentUser;
       if (user == null) {
         return {
           'success': false,
@@ -134,15 +131,8 @@ class ProfileManager {
         };
       }
 
-      // Upload to Firebase Storage
-      final storageRef = FirebaseStorage.instance
-          .ref()
-          .child('profile_images')
-          .child('${user.uid}_${DateTime.now().millisecondsSinceEpoch}.jpg');
-
-      final uploadTask = storageRef.putFile(imageFile);
-      final snapshot = await uploadTask;
-      final downloadUrl = await snapshot.ref.getDownloadURL();
+      // Upload to Supabase Storage
+      final downloadUrl = await SupabaseService.uploadFile(imageFile, 'profile_images');
 
       // Update profile with new image URL
       final result = await updateProfile({
@@ -452,7 +442,7 @@ class ProfileManager {
   /// Delete user account
   Future<Map<String, dynamic>> deleteAccount(String password) async {
     try {
-      final user = FirebaseAuth.instance.currentUser;
+      final user = SupabaseService.currentUser;
       if (user == null) {
         return {
           'success': false,
@@ -460,35 +450,25 @@ class ProfileManager {
         };
       }
 
-      // Re-authenticate user for security
-      final credential = EmailAuthProvider.credential(
-        email: user.email!,
-        password: password,
-      );
-
-      await user.reauthenticateWithCredential(credential);
-
-      // Delete user data from Firestore
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .delete();
+      // Delete user data from Supabase
+      await Supabase.instance.client
+          .from('users')
+          .delete()
+          .eq('id', user.id);
 
       // Delete profile image from Storage if exists
       if (_currentUserProfile != null && 
           _currentUserProfile!['profileImage'] != null &&
           _currentUserProfile!['profileImage'].toString().isNotEmpty) {
         try {
-          final storageRef = FirebaseStorage.instance
-              .refFromURL(_currentUserProfile!['profileImage']);
-          await storageRef.delete();
+          await SupabaseService.deleteFile(_currentUserProfile!['profileImage']);
         } catch (e) {
           print('Error deleting profile image: $e');
         }
       }
 
       // Delete user account
-      await user.delete();
+      await Supabase.instance.client.auth.admin.deleteUser(user.id);
 
       // Clear local data
       _currentUserProfile = null;
@@ -499,12 +479,6 @@ class ProfileManager {
         'success': true,
         'message': 'Akaunti yako imefutwa kwa mafanikio',
       };
-    } on FirebaseAuthException catch (e) {
-      String errorMessage = _getFirebaseErrorMessage(e);
-      return {
-        'success': false,
-        'error': errorMessage,
-      };
     } catch (e) {
       return {
         'success': false,
@@ -513,21 +487,6 @@ class ProfileManager {
     }
   }
 
-  /// Convert Firebase auth exceptions to user-friendly messages
-  String _getFirebaseErrorMessage(FirebaseAuthException e) {
-    switch (e.code) {
-      case 'wrong-password':
-        return 'Nenosiri sio sahihi';
-      case 'user-not-found':
-        return 'Mtumiaji hapatikani';
-      case 'too-many-requests':
-        return 'Ombi nyingi sana. Tafadhali jaribu baadaye';
-      case 'network-request-failed':
-        return 'Hitilafu ya mtandao. Tafadhali angalia muunganisho wako';
-      default:
-        return 'Hitilafu: ${e.message}';
-    }
-  }
 
   /// Add profile listener
   void addProfileListener(void Function() listener) {
@@ -552,9 +511,9 @@ class ProfileManager {
 
   /// Refresh current user profile
   Future<void> refreshProfile() async {
-    final user = FirebaseAuth.instance.currentUser;
+    final user = SupabaseService.currentUser;
     if (user != null) {
-      await _fetchUserProfileFromFirestore(user.uid);
+      await _fetchUserProfileFromSupabase(user.id);
       _notifyProfileListeners();
     }
   }

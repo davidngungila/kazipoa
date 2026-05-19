@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/widgets/custom_bottom_navigation.dart';
+import '../providers/auth_provider.dart';
+import '../../../../core/services/auth_manager.dart';
 
-class ProAccountLoginEnhanced extends StatefulWidget {
+class ProAccountLoginEnhanced extends ConsumerStatefulWidget {
   const ProAccountLoginEnhanced({super.key});
 
   @override
-  State<ProAccountLoginEnhanced> createState() => _ProAccountLoginEnhancedState();
+  ConsumerState<ProAccountLoginEnhanced> createState() => _ProAccountLoginEnhancedState();
 }
 
-class _ProAccountLoginEnhancedState extends State<ProAccountLoginEnhanced>
+class _ProAccountLoginEnhancedState extends ConsumerState<ProAccountLoginEnhanced>
     with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
@@ -108,7 +111,7 @@ class _ProAccountLoginEnhancedState extends State<ProAccountLoginEnhanced>
             child: Container(
               width: 48,
               height: 48,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.transparent,
                 shape: BoxShape.circle,
               ),
@@ -123,11 +126,11 @@ class _ProAccountLoginEnhancedState extends State<ProAccountLoginEnhanced>
           const SizedBox(width: 16),
           
           // Title
-          Expanded(
+          const Expanded(
             child: Text(
               'Kuingia kama Mtaalamu',
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF00D1FF),
@@ -155,7 +158,7 @@ class _ProAccountLoginEnhancedState extends State<ProAccountLoginEnhanced>
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color(0xFF00D1FF).withOpacity(0.1),
+              const Color(0xFF00D1FF).withOpacity(0.1),
               Colors.transparent,
             ],
           ),
@@ -164,7 +167,7 @@ class _ProAccountLoginEnhancedState extends State<ProAccountLoginEnhanced>
           ),
           boxShadow: [
             BoxShadow(
-              color: Color(0xFF00D1FF).withOpacity(0.1),
+              color: const Color(0xFF00D1FF).withOpacity(0.1),
               blurRadius: 32,
               spreadRadius: 0,
             ),
@@ -327,10 +330,10 @@ class _ProAccountLoginEnhancedState extends State<ProAccountLoginEnhanced>
                             : null,
                       ),
                       const SizedBox(width: 8),
-                      Text(
+                      const Text(
                         'Nikumbuke',
                         style: TextStyle(
-                          color: const Color(0xFF94A3B8),
+                          color: Color(0xFF94A3B8),
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                         ),
@@ -367,10 +370,10 @@ class _ProAccountLoginEnhancedState extends State<ProAccountLoginEnhanced>
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Huna akaunti? ',
                   style: TextStyle(
-                    color: const Color(0xFF94A3B8),
+                    color: Color(0xFF94A3B8),
                     fontSize: 14,
                   ),
                 ),
@@ -432,6 +435,15 @@ class _ProAccountLoginEnhancedState extends State<ProAccountLoginEnhanced>
               fontSize: 16,
               fontWeight: FontWeight.normal,
             ),
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Tafadhali weka barua pepe yako';
+              }
+              if (!value.contains('@')) {
+                return 'Tafadhali weka barua pepe halali';
+              }
+              return null;
+            },
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: TextStyle(
@@ -488,6 +500,15 @@ class _ProAccountLoginEnhancedState extends State<ProAccountLoginEnhanced>
               fontSize: 16,
               fontWeight: FontWeight.normal,
             ),
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Tafadhali weka nenosiri lako';
+              }
+              if (value.trim().length < 6) {
+                return 'Nenosiri linapaswa kuwa na herufi zisizopungua 6';
+              }
+              return null;
+            },
             decoration: InputDecoration(
               hintText: 'Weka nenosiri lako',
               hintStyle: TextStyle(
@@ -527,6 +548,7 @@ class _ProAccountLoginEnhancedState extends State<ProAccountLoginEnhanced>
   }
 
   Widget _buildLoginButton(double screenWidth) {
+    final isLoading = ref.watch(authProvider).isLoading;
     return Container(
       width: double.infinity,
       height: 56,
@@ -542,7 +564,7 @@ class _ProAccountLoginEnhancedState extends State<ProAccountLoginEnhanced>
         ],
       ),
       child: ElevatedButton(
-        onPressed: _submitLogin,
+        onPressed: isLoading ? null : _submitLogin,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
           foregroundColor: Colors.black,
@@ -551,14 +573,23 @@ class _ProAccountLoginEnhancedState extends State<ProAccountLoginEnhanced>
             borderRadius: BorderRadius.circular(16),
           ),
         ),
-        child: const Text(
-          'Ingia',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w900,
-            letterSpacing: -0.5,
-          ),
-        ),
+        child: isLoading
+            ? const SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(
+                  color: Colors.black,
+                  strokeWidth: 2.5,
+                ),
+              )
+            : const Text(
+                'Ingia',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: -0.5,
+                ),
+              ),
       ),
     );
   }
@@ -579,11 +610,31 @@ class _ProAccountLoginEnhancedState extends State<ProAccountLoginEnhanced>
     );
   }
 
-  void _submitLogin() {
+  void _submitLogin() async {
     if (_formKey.currentState!.validate()) {
       HapticFeedback.heavyImpact();
-      // Navigate to pro dashboard
-      context.go('/wasifu/pro_dashboard');
+      final email = _emailController.text.trim();
+      final password = _passwordController.text.trim();
+      
+      await ref.read(authProvider.notifier).login(email, password);
+      
+      final authState = ref.read(authProvider);
+      if (authState.error != null) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(authState.error!),
+              backgroundColor: Colors.redAccent,
+            ),
+          );
+        }
+      } else if (authState.isAuthenticated) {
+        // Set state in manager
+        AuthManager().login(authState.currentUser?['uid'] ?? '', 'pro');
+        if (mounted) {
+          context.go('/wasifu/pro_dashboard');
+        }
+      }
     }
   }
 }

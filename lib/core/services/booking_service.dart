@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter/foundation.dart';
+import 'package:kazipoa/core/services/supabase_service.dart';
 
 /// Booking service for managing appointments and service bookings
 class BookingService {
@@ -10,20 +10,20 @@ class BookingService {
   /// Create a new booking
   static Future<void> createBooking(Map<String, dynamic> bookingData) async {
     try {
-      final user = FirebaseAuth.instance.currentUser;
+      final user = SupabaseService.currentUser;
       if (user == null) throw Exception('User not authenticated');
 
       final bookingWithMetadata = {
         ...bookingData,
-        'userId': user.uid,
-        'createdAt': FieldValue.serverTimestamp(),
+        'userId': user.id,
+        'createdAt': DateTime.now().toIso8601String(),
         'status': 'pending',
-        'updatedAt': FieldValue.serverTimestamp(),
+        'updatedAt': DateTime.now().toIso8601String(),
       };
 
-      await FirebaseFirestore.instance
-          .collection(_bookingsCollection)
-          .add(bookingWithMetadata);
+      await Supabase.instance.client
+          .from(_bookingsCollection)
+          .insert(bookingWithMetadata);
 
       // Send notification to service provider
       await _sendBookingNotification(bookingWithMetadata);
@@ -37,13 +37,14 @@ class BookingService {
   }
 
   /// Get user's bookings
-  static Future<QuerySnapshot> getUserBookings(String userId) async {
+  static Future<List<Map<String, dynamic>>> getUserBookings(String userId) async {
     try {
-      return await FirebaseFirestore.instance
-          .collection(_bookingsCollection)
-          .where('userId', isEqualTo: userId)
-          .orderBy('createdAt', descending: true)
-          .get();
+      final response = await Supabase.instance.client
+          .from(_bookingsCollection)
+          .select()
+          .eq('userId', userId)
+          .order('createdAt', ascending: false);
+      return response;
     } catch (e) {
       if (kDebugMode) {
         print('Get bookings error: $e');
@@ -53,13 +54,14 @@ class BookingService {
   }
 
   /// Get service provider's bookings
-  static Future<QuerySnapshot> getServiceBookings(String serviceId) async {
+  static Future<List<Map<String, dynamic>>> getServiceBookings(String serviceId) async {
     try {
-      return await FirebaseFirestore.instance
-          .collection(_bookingsCollection)
-          .where('serviceId', isEqualTo: serviceId)
-          .orderBy('createdAt', descending: true)
-          .get();
+      final response = await Supabase.instance.client
+          .from(_bookingsCollection)
+          .select()
+          .eq('serviceId', serviceId)
+          .order('createdAt', ascending: false);
+      return response;
     } catch (e) {
       if (kDebugMode) {
         print('Get service bookings error: $e');
@@ -71,13 +73,13 @@ class BookingService {
   /// Update booking status
   static Future<void> updateBookingStatus(String bookingId, String status) async {
     try {
-      await FirebaseFirestore.instance
-          .collection(_bookingsCollection)
-          .doc(bookingId)
+      await Supabase.instance.client
+          .from(_bookingsCollection)
           .update({
             'status': status,
-            'updatedAt': FieldValue.serverTimestamp(),
-          });
+            'updatedAt': DateTime.now().toIso8601String(),
+          })
+          .eq('id', bookingId);
 
       // Send status update notification
       await _sendStatusUpdateNotification(bookingId, status);
@@ -93,15 +95,15 @@ class BookingService {
   /// Cancel booking
   static Future<void> cancelBooking(String bookingId, String reason) async {
     try {
-      await FirebaseFirestore.instance
-          .collection(_bookingsCollection)
-          .doc(bookingId)
+      await Supabase.instance.client
+          .from(_bookingsCollection)
           .update({
             'status': 'cancelled',
-            'cancelledAt': FieldValue.serverTimestamp(),
+            'cancelledAt': DateTime.now().toIso8601String(),
             'cancellationReason': reason,
-            'updatedAt': FieldValue.serverTimestamp(),
-          });
+            'updatedAt': DateTime.now().toIso8601String(),
+          })
+          .eq('id', bookingId);
 
       // Send cancellation notification
       await _sendCancellationNotification(bookingId, reason);
@@ -115,7 +117,7 @@ class BookingService {
   }
 
   /// Search bookings with filters
-  static Future<QuerySnapshot> searchBookings({
+  static Future<List<Map<String, dynamic>>> searchBookings({
     String? userId,
     String? serviceId,
     String? status,
@@ -126,34 +128,35 @@ class BookingService {
     double? maxPrice,
   }) async {
     try {
-      Query query = FirebaseFirestore.instance.collection(_bookingsCollection);
+      var query = Supabase.instance.client.from(_bookingsCollection).select();
 
       if (userId != null) {
-        query = query.where('userId', isEqualTo: userId);
+        query = query.eq('userId', userId);
       }
       if (serviceId != null) {
-        query = query.where('serviceId', isEqualTo: serviceId);
+        query = query.eq('serviceId', serviceId);
       }
       if (status != null) {
-        query = query.where('status', isEqualTo: status);
+        query = query.eq('status', status);
       }
       if (startDate != null) {
-        query = query.where('createdAt', isGreaterThanOrEqualTo: startDate);
+        query = query.gte('createdAt', startDate.toIso8601String());
       }
       if (endDate != null) {
-        query = query.where('createdAt', isLessThanOrEqualTo: endDate);
+        query = query.lte('createdAt', endDate.toIso8601String());
       }
       if (location != null) {
-        query = query.where('location', isEqualTo: location);
+        query = query.eq('location', location);
       }
       if (minPrice != null) {
-        query = query.where('price', isGreaterThanOrEqualTo: minPrice);
+        query = query.gte('price', minPrice);
       }
       if (maxPrice != null) {
-        query = query.where('price', isLessThanOrEqualTo: maxPrice);
+        query = query.lte('price', maxPrice);
       }
 
-      return await query.orderBy('createdAt', descending: true).get();
+      final response = await query.order('createdAt', ascending: false);
+      return response;
       
     } catch (e) {
       if (kDebugMode) {
@@ -166,8 +169,7 @@ class BookingService {
   /// Get booking analytics
   static Future<Map<String, dynamic>> getBookingAnalytics(String userId) async {
     try {
-      final bookingsSnapshot = await getUserBookings(userId);
-      final bookings = bookingsSnapshot.docs;
+      final bookings = await getUserBookings(userId);
 
       int totalBookings = bookings.length;
       int pendingBookings = bookings.where((doc) => doc['status'] == 'pending').length;
@@ -203,22 +205,18 @@ class BookingService {
   /// Send booking notification
   static Future<void> _sendBookingNotification(Map<String, dynamic> booking) async {
     try {
-      final user = FirebaseAuth.instance.currentUser;
+      final user = SupabaseService.currentUser;
       if (user == null) return;
 
-      final result = await FirebaseFirestore.instance
-          .collection(_bookingsCollection)
-          .add(booking);
-      
-      await FirebaseFirestore.instance
-          .collection(_notificationsCollection)
-          .add({
-            'userId': user.uid,
+      await Supabase.instance.client
+          .from(_notificationsCollection)
+          .insert({
+            'userId': user.id,
             'type': 'booking_created',
             'title': 'New Booking Created',
             'message': 'Your booking has been created successfully',
-            'bookingId': result.id,
-            'createdAt': FieldValue.serverTimestamp(),
+            'bookingId': booking['id'],
+            'createdAt': DateTime.now().toIso8601String(),
             'isRead': false,
           });
     } catch (e) {
@@ -231,18 +229,18 @@ class BookingService {
   /// Send status update notification
   static Future<void> _sendStatusUpdateNotification(String bookingId, String status) async {
     try {
-      final user = FirebaseAuth.instance.currentUser;
+      final user = SupabaseService.currentUser;
       if (user == null) return;
 
-      await FirebaseFirestore.instance
-          .collection(_notificationsCollection)
-          .add({
-            'userId': user.uid,
+      await Supabase.instance.client
+          .from(_notificationsCollection)
+          .insert({
+            'userId': user.id,
             'type': 'booking_status_updated',
             'title': 'Booking Status Updated',
             'message': 'Your booking status has been updated to $status',
             'bookingId': bookingId,
-            'createdAt': FieldValue.serverTimestamp(),
+            'createdAt': DateTime.now().toIso8601String(),
             'isRead': false,
           });
     } catch (e) {
@@ -255,18 +253,18 @@ class BookingService {
   /// Send cancellation notification
   static Future<void> _sendCancellationNotification(String bookingId, String reason) async {
     try {
-      final user = FirebaseAuth.instance.currentUser;
+      final user = SupabaseService.currentUser;
       if (user == null) return;
 
-      await FirebaseFirestore.instance
-          .collection(_notificationsCollection)
-          .add({
-            'userId': user.uid,
+      await Supabase.instance.client
+          .from(_notificationsCollection)
+          .insert({
+            'userId': user.id,
             'type': 'booking_cancelled',
             'title': 'Booking Cancelled',
             'message': 'Your booking has been cancelled. Reason: $reason',
             'bookingId': bookingId,
-            'createdAt': FieldValue.serverTimestamp(),
+            'createdAt': DateTime.now().toIso8601String(),
             'isRead': false,
           });
     } catch (e) {
@@ -277,14 +275,15 @@ class BookingService {
   }
 
   /// Get user notifications
-  static Future<QuerySnapshot> getUserNotifications(String userId) async {
+  static Future<List<Map<String, dynamic>>> getUserNotifications(String userId) async {
     try {
-      return await FirebaseFirestore.instance
-          .collection(_notificationsCollection)
-          .where('userId', isEqualTo: userId)
-          .where('isRead', isEqualTo: false)
-          .orderBy('createdAt', descending: true)
-          .get();
+      final response = await Supabase.instance.client
+          .from(_notificationsCollection)
+          .select()
+          .eq('userId', userId)
+          .eq('isRead', false)
+          .order('createdAt', ascending: false);
+      return response;
     } catch (e) {
       if (kDebugMode) {
         print('Get notifications error: $e');
@@ -296,13 +295,13 @@ class BookingService {
   /// Mark notification as read
   static Future<void> markNotificationAsRead(String notificationId) async {
     try {
-      await FirebaseFirestore.instance
-          .collection(_notificationsCollection)
-          .doc(notificationId)
+      await Supabase.instance.client
+          .from(_notificationsCollection)
           .update({
             'isRead': true,
-            'readAt': FieldValue.serverTimestamp(),
-          });
+            'readAt': DateTime.now().toIso8601String(),
+          })
+          .eq('id', notificationId);
     } catch (e) {
       if (kDebugMode) {
         print('Mark notification as read error: $e');
@@ -312,12 +311,14 @@ class BookingService {
   }
 
   /// Get booking details
-  static Future<DocumentSnapshot> getBookingDetails(String bookingId) async {
+  static Future<Map<String, dynamic>?> getBookingDetails(String bookingId) async {
     try {
-      return await FirebaseFirestore.instance
-          .collection(_bookingsCollection)
-          .doc(bookingId)
-          .get();
+      final response = await Supabase.instance.client
+          .from(_bookingsCollection)
+          .select()
+          .eq('id', bookingId)
+          .single();
+      return response;
     } catch (e) {
       if (kDebugMode) {
         print('Get booking details error: $e');
@@ -329,13 +330,13 @@ class BookingService {
   /// Update booking details
   static Future<void> updateBookingDetails(String bookingId, Map<String, dynamic> updates) async {
     try {
-      await FirebaseFirestore.instance
-          .collection(_bookingsCollection)
-          .doc(bookingId)
+      await Supabase.instance.client
+          .from(_bookingsCollection)
           .update({
             ...updates,
-            'updatedAt': FieldValue.serverTimestamp(),
-          });
+            'updatedAt': DateTime.now().toIso8601String(),
+          })
+          .eq('id', bookingId);
     } catch (e) {
       if (kDebugMode) {
         print('Update booking details error: $e');

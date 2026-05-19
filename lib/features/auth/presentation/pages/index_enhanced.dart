@@ -48,6 +48,7 @@ class _KazipoaHomeState extends State<KazipoaHome> with WidgetsBindingObserver {
   }
 
   void _restartVideo() {
+    if (!mounted) return;
     // Force rebuild of the video widget by changing its key
     setState(() {
       _videoKey++;

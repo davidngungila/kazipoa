@@ -1,23 +1,23 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter/foundation.dart';
-import '../services/firebase_service.dart';
+import '../services/supabase_service.dart';
 
 /// Authentication repository for user management
 class AuthRepository {
   /// Get current authenticated user
   User? getCurrentUser() {
-    return FirebaseAuth.instance.currentUser;
+    return SupabaseService.currentUser;
   }
 
   /// Stream of authentication state changes
-  Stream<User?> authStateChanges() {
-    return FirebaseAuth.instance.authStateChanges();
+  Stream<AuthState> authStateChanges() {
+    return SupabaseService.authStateChanges();
   }
 
   /// Sign in with email and password
-  Future<UserCredential> signInWithEmail(String email, String password) async {
+  Future<AuthResponse> signInWithEmail(String email, String password) async {
     try {
-      return await FirebaseService.signInWithEmail(email, password);
+      return await SupabaseService.signInWithEmail(email, password);
     } catch (e) {
       if (kDebugMode) {
         print('Sign in error: $e');
@@ -27,13 +27,13 @@ class AuthRepository {
   }
 
   /// Register new user with email and password
-  Future<UserCredential> registerWithEmail(
+  Future<AuthResponse> registerWithEmail(
     String email,
     String password,
     String name,
   ) async {
     try {
-      return await FirebaseService.registerWithEmail(email, password, name);
+      return await SupabaseService.registerWithEmail(email, password, name);
     } catch (e) {
       if (kDebugMode) {
         print('Registration error: $e');
@@ -45,7 +45,7 @@ class AuthRepository {
   /// Sign out current user
   Future<void> signOut() async {
     try {
-      await FirebaseService.signOut();
+      await SupabaseService.signOut();
     } catch (e) {
       if (kDebugMode) {
         print('Sign out error: $e');
@@ -57,7 +57,7 @@ class AuthRepository {
   /// Reset password
   Future<void> resetPassword(String email) async {
     try {
-      await FirebaseService.resetPassword(email);
+      await SupabaseService.resetPassword(email);
     } catch (e) {
       if (kDebugMode) {
         print('Password reset error: $e');
@@ -69,11 +69,7 @@ class AuthRepository {
   /// Get user profile data
   Future<Map<String, dynamic>?> getUserProfile(String userId) async {
     try {
-      final doc = await FirebaseService.getUserProfile(userId);
-      if (doc.exists) {
-        return doc.data() as Map<String, dynamic>;
-      }
-      return null;
+      return await SupabaseService.getUserProfile(userId);
     } catch (e) {
       if (kDebugMode) {
         print('Get profile error: $e');
@@ -92,7 +88,7 @@ class AuthRepository {
     Map<String, dynamic>? services,
   }) async {
     try {
-      await FirebaseService.updateUserProfile(
+      await SupabaseService.updateUserProfile(
         name: name,
         phone: phone,
         bio: bio,
@@ -124,7 +120,7 @@ class AuthRepository {
   /// Complete user profile setup
   Future<void> completeProfileSetup(String userId) async {
     try {
-      await FirebaseService.updateUserProfile();
+      await SupabaseService.updateUserProfile(profileCompleted: true);
     } catch (e) {
       if (kDebugMode) {
         print('Complete profile error: $e');

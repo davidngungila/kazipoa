@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kazipoa/core/services/auth_service.dart';
+import 'package:kazipoa/core/services/auth_manager.dart';
 
 class AuthState {
   final bool isLoading;
@@ -51,10 +52,13 @@ class AuthNotifier extends Notifier<AuthState> {
       final result = await _authService.login(email, password);
       
       if (result['success'] == true) {
+        final user = result['user'];
+        AuthManager().login(user['uid'], user['role'] ?? 'client');
+        
         state = state.copyWith(
           isLoading: false,
           isAuthenticated: true,
-          currentUser: result['user'],
+          currentUser: user,
           error: null,
         );
       } else {
@@ -80,6 +84,7 @@ class AuthNotifier extends Notifier<AuthState> {
     
     try {
       await _authService.logout();
+      AuthManager().logout();
       state = const AuthState(
         isLoading: false,
         error: null,
@@ -101,10 +106,13 @@ class AuthNotifier extends Notifier<AuthState> {
       final result = await _authService.register(userData);
       
       if (result['success'] == true) {
+        final user = result['user'];
+        AuthManager().login(user['uid'], user['userType'] ?? 'client');
+        
         state = state.copyWith(
           isLoading: false,
           isAuthenticated: true,
-          currentUser: result['user'],
+          currentUser: user,
           error: null,
         );
       } else {

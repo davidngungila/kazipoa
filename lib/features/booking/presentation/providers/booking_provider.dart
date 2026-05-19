@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kazipoa/core/services/booking_service.dart';
+import 'package:kazipoa/core/services/supabase_service.dart';
 
 class BookingState {
   final List<Map<String, dynamic>> bookings;
@@ -44,7 +44,7 @@ class BookingNotifier extends Notifier<BookingState> {
     state = const BookingState(bookings: [], isLoading: true, error: null);
     
     try {
-      final user = FirebaseAuth.instance.currentUser;
+      final user = SupabaseService.currentUser;
       if (user == null) {
         state = const BookingState(
           bookings: [],
@@ -54,11 +54,10 @@ class BookingNotifier extends Notifier<BookingState> {
         return;
       }
       
-      final bookingsSnapshot = await BookingService.getUserBookings(user.uid);
-      final bookings = bookingsSnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+      final bookingsList = await BookingService.getUserBookings(user.id);
       
       state = BookingState(
-        bookings: bookings,
+        bookings: bookingsList,
         isLoading: false,
         error: null,
       );

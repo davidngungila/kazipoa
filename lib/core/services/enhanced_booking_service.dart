@@ -1,16 +1,16 @@
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../utils/storage_manager.dart';
 import '../utils/date_util.dart';
+import 'supabase_service.dart';
 
 /// Enhanced Booking Service - Equivalent to JavaScript BookingManager
 /// Handles booking creation, management, tracking with offline support
 class EnhancedBookingService {
   List<Map<String, dynamic>> _bookings = [];
   List<Map<String, dynamic>> _pendingBookings = [];
-  StreamSubscription<QuerySnapshot>? _bookingsSubscription;
+  StreamSubscription<List<Map<String, dynamic>>>? _bookingsSubscription;
 
   // Getters
   List<Map<String, dynamic>> get bookings => _bookings;
@@ -42,20 +42,19 @@ class EnhancedBookingService {
     }
   }
 
-  /// Listen to real-time booking updates from Firebase
+  /// Listen to real-time booking updates from Supabase
   void _listenToBookingsUpdates() {
-    final user = FirebaseAuth.instance.currentUser;
+    final user = SupabaseService.currentUser;
     if (user == null) return;
 
-    _bookingsSubscription = FirebaseFirestore.instance
-        .collection('bookings')
-        .where('userId', isEqualTo: user.uid)
-        .orderBy('createdAt', descending: true)
-        .snapshots()
-        .listen((snapshot) {
-      _bookings = snapshot.docs.map((doc) {
-        final booking = doc.data();
-        booking['id'] = doc.id;
+    _bookingsSubscription = Supabase.instance.client
+        .from('bookings')
+        .stream(primaryKey: ['id'])
+        .eq('userId', user.id)
+        .order('createdAt', ascending: false)
+        .listen((data) {
+      _bookings = data.map((booking) {
+        booking['id'] = booking['id'];
         return booking;
       }).toList();
       
@@ -155,7 +154,7 @@ class EnhancedBookingService {
   /// Create a new booking
   Future<Map<String, dynamic>> createBooking(Map<String, dynamic> bookingData) async {
     try {
-      final user = FirebaseAuth.instance.currentUser;
+      final user = SupabaseService.currentUser;
       if (user == null) {
         throw Exception('User not authenticated');
       }
@@ -166,12 +165,12 @@ class EnhancedBookingService {
       // Create booking object with metadata
       final booking = {
         'id': bookingId,
-        'userId': user.uid,
+        'userId': user.id,
         'serviceType': bookingData['serviceType'] ?? '',
         'professionalId': bookingData['professionalId'] ?? '',
         'professionalName': bookingData['professionalName'] ?? '',
         'professionalImage': bookingData['professionalImage'] ?? '',
-        'clientId': bookingData['clientId'] ?? user.uid,
+        'clientId': bookingData['clientId'] ?? user.id,
         'clientName': bookingData['clientName'] ?? '',
         'clientPhone': bookingData['clientPhone'] ?? '',
         'bookingDate': bookingData['bookingDate'] ?? '',
@@ -233,12 +232,11 @@ class EnhancedBookingService {
     }
   }
 
-  /// Sync booking to Firebase
+  /// Sync booking to Supabase
   Future<void> _syncBookingToFirebase(Map<String, dynamic> booking) async {
-    await FirebaseFirestore.instance
-        .collection('bookings')
-        .doc(booking['id'])
-        .set(booking);
+    await Supabase.instance.client
+        .from('bookings')
+        .insert(booking);
 
     // Send notification to service provider
     await _sendBookingNotification(booking);
@@ -258,15 +256,15 @@ class EnhancedBookingService {
       
       await StorageManager.setBookings(_bookings);
 
-      // Update in Firebase
+      // Update in Supabase
       try {
-        await FirebaseFirestore.instance
-            .collection('bookings')
-            .doc(bookingId)
+        await Supabase.instance.client
+            .from('bookings')
             .update({
               'status': status,
-              'updatedAt': FieldValue.serverTimestamp(),
-            });
+              'updatedAt': DateTime.now().toIso8601String(),
+            })
+            .eq('id', bookingId);
 
         // Send status update notification
         await _sendStatusUpdateNotification(bookingId, status);
@@ -317,17 +315,17 @@ class EnhancedBookingService {
       
       await StorageManager.setBookings(_bookings);
 
-      // Update in Firebase
+      // Update in Supabase
       try {
-        await FirebaseFirestore.instance
-            .collection('bookings')
-            .doc(bookingId)
+        await Supabase.instance.client
+            .from('bookings')
             .update({
               'status': 'accepted',
-              'acceptedAt': FieldValue.serverTimestamp(),
-              'expiresAt': Timestamp.fromDate(expiresAt),
-              'updatedAt': FieldValue.serverTimestamp(),
-            });
+              'acceptedAt': DateTime.now().toIso8601String(),
+              'expiresAt': expiresAt.toIso8601String(),
+              'updatedAt': DateTime.now().toIso8601String(),
+            })
+            .eq('id', bookingId);
 
         // Send acceptance notification
         await _sendStatusUpdateNotification(bookingId, 'accepted');
@@ -365,16 +363,16 @@ class EnhancedBookingService {
       
       await StorageManager.setBookings(_bookings);
 
-      // Update in Firebase
+      // Update in Supabase
       try {
-        await FirebaseFirestore.instance
-            .collection('bookings')
-            .doc(bookingId)
+        await Supabase.instance.client
+            .from('bookings')
             .update({
               'status': 'accepted',
-              'acceptedAt': FieldValue.serverTimestamp(),
-              'updatedAt': FieldValue.serverTimestamp(),
-            });
+              'acceptedAt': DateTime.now().toIso8601String(),
+              'updatedAt': DateTime.now().toIso8601String(),
+            })
+            .eq('id', bookingId);
 
         await _sendStatusUpdateNotification(bookingId, 'accepted');
         print('Individual booking accepted: $bookingId');
@@ -421,19 +419,20 @@ class EnhancedBookingService {
     if (hasUpdates) {
       await StorageManager.setBookings(_bookings);
       
-      // Update in Firebase
+      // Update in Supabase
       try {
-        final batch = FirebaseFirestore.instance.batch();
+        final batch = Supabase.instance.client;
         for (final booking in _bookings) {
           if (booking['status'] == 'expired') {
-            final docRef = FirebaseFirestore.instance.collection('bookings').doc(booking['id']);
-            batch.update(docRef, {
-              'status': 'expired',
-              'updatedAt': FieldValue.serverTimestamp(),
-            });
+            await batch
+                .from('bookings')
+                .update({
+                  'status': 'expired',
+                  'updatedAt': DateTime.now().toIso8601String(),
+                })
+                .eq('id', booking['id']);
           }
         }
-        await batch.commit();
       } catch (e) {
         print('Firebase batch update failed: $e');
       }
@@ -473,17 +472,17 @@ class EnhancedBookingService {
       
       await StorageManager.setBookings(_bookings);
 
-      // Update in Firebase
+      // Update in Supabase
       try {
-        await FirebaseFirestore.instance
-            .collection('bookings')
-            .doc(bookingId)
+        await Supabase.instance.client
+            .from('bookings')
             .update({
               'status': 'cancelled',
-              'cancelledAt': FieldValue.serverTimestamp(),
+              'cancelledAt': DateTime.now().toIso8601String(),
               'cancellationReason': reason,
-              'updatedAt': FieldValue.serverTimestamp(),
-            });
+              'updatedAt': DateTime.now().toIso8601String(),
+            })
+            .eq('id', bookingId);
 
         // Send cancellation notification
         await _sendCancellationNotification(bookingId, reason);
@@ -521,17 +520,17 @@ class EnhancedBookingService {
       
       await StorageManager.setBookings(_bookings);
 
-      // Update in Firebase
+      // Update in Supabase
       try {
-        await FirebaseFirestore.instance
-            .collection('bookings')
-            .doc(bookingId)
+        await Supabase.instance.client
+            .from('bookings')
             .update({
               'rating': rating,
               'review': review,
-              'ratedAt': FieldValue.serverTimestamp(),
-              'updatedAt': FieldValue.serverTimestamp(),
-            });
+              'ratedAt': DateTime.now().toIso8601String(),
+              'updatedAt': DateTime.now().toIso8601String(),
+            })
+            .eq('id', bookingId);
         
         print('Booking rated: $bookingId');
       } catch (e) {
@@ -721,15 +720,15 @@ class EnhancedBookingService {
   /// Send booking notification
   Future<void> _sendBookingNotification(Map<String, dynamic> booking) async {
     try {
-      await FirebaseFirestore.instance
-          .collection('notifications')
-          .add({
+      await Supabase.instance.client
+          .from('notifications')
+          .insert({
             'userId': booking['professionalId'],
             'type': 'new_booking',
             'title': 'Ombi Jipya la Miadi',
             'message': '${booking['clientName']} ameweka ombi la ${booking['serviceType']}',
             'bookingId': booking['id'],
-            'createdAt': FieldValue.serverTimestamp(),
+            'createdAt': DateTime.now().toIso8601String(),
             'isRead': false,
           });
     } catch (e) {
@@ -743,15 +742,15 @@ class EnhancedBookingService {
       final booking = getBookingDetails(bookingId);
       if (booking == null) return;
 
-      await FirebaseFirestore.instance
-          .collection('notifications')
-          .add({
+      await Supabase.instance.client
+          .from('notifications')
+          .insert({
             'userId': booking['clientId'],
             'type': 'booking_status_update',
             'title': 'Hadhi ya Ombi Imebadilishwa',
             'message': 'Hadhi ya ombi lako imebadilishwa kuwa: $status',
             'bookingId': bookingId,
-            'createdAt': FieldValue.serverTimestamp(),
+            'createdAt': DateTime.now().toIso8601String(),
             'isRead': false,
           });
     } catch (e) {
@@ -765,15 +764,15 @@ class EnhancedBookingService {
       final booking = getBookingDetails(bookingId);
       if (booking == null) return;
 
-      await FirebaseFirestore.instance
-          .collection('notifications')
-          .add({
+      await Supabase.instance.client
+          .from('notifications')
+          .insert({
             'userId': booking['professionalId'],
             'type': 'booking_cancelled',
             'title': 'Ombi Limefutwa',
             'message': 'Ombi limefutwa. Sababu: $reason',
             'bookingId': bookingId,
-            'createdAt': FieldValue.serverTimestamp(),
+            'createdAt': DateTime.now().toIso8601String(),
             'isRead': false,
           });
     } catch (e) {

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ClientsChatEnhanced extends StatefulWidget {
-  const ClientsChatEnhanced({super.key});
+  final String chatId;
+  const ClientsChatEnhanced({super.key, required this.chatId});
 
   @override
   State<ClientsChatEnhanced> createState() => _ClientsChatEnhancedState();
@@ -10,66 +14,112 @@ class ClientsChatEnhanced extends StatefulWidget {
 class _ClientsChatEnhancedState extends State<ClientsChatEnhanced> {
   final _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  
-  final List<Map<String, dynamic>> _messages = [
-    {
-      'id': '1',
-      'text': 'Habari! Nimepokea ombi lako la kazi ya mabomba. Nina uhakika nitakufanikisha.',
-      'time': '10:30 AM',
-      'isSent': false,
-      'sender': 'Bakari Said',
-    },
-    {
-      'id': '2',
-      'text': 'Asante Bakari! Nina tatizo la bomba la maji jikoni. Unaweza kuja leo?',
-      'time': '10:35 AM',
-      'isSent': true,
-      'sender': 'Me',
-    },
-    {
-      'id': '3',
-      'text': 'Ndiyo, niko tayari kuanza kazi yako. Nitafika kwa dakika 15. Eneo lako wapi?',
-      'time': '10:40 AM',
-      'isSent': false,
-      'sender': 'Bakari Said',
-    },
-    {
-      'id': '4',
-      'text': 'Niko Masaki karibu na shule ya primary.',
-      'time': '10:42 AM',
-      'isSent': true,
-      'sender': 'Me',
-    },
-    {
-      'id': '5',
-      'text': 'Sawa nimepata eneo. Bei ni TZS 25,000 kwa ukarabati.',
-      'time': '10:45 AM',
-      'isSent': false,
-      'sender': 'Bakari Said',
-    },
-    {
-      'id': '6',
-      'text': 'Sawa, bei ni sawa. Tuonane kazi.',
-      'time': '10:46 AM',
-      'isSent': true,
-      'sender': 'Me',
-    },
-  ];
+  List<Map<String, dynamic>> _messages = [];
+  bool _isLoading = true;
+  String _partnerName = 'Mtumiaji';
+  String _partnerRole = 'Mtaalamu';
+  String? _currentUserId;
+  RealtimeChannel? _realtimeSubscription;
 
   @override
   void initState() {
     super.initState();
-    // Scroll to bottom when messages are added
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollToBottom();
-    });
+    _currentUserId = Supabase.instance.client.auth.currentUser?.id;
+    _loadChatDetails();
+    _subscribeToMessages();
   }
 
   @override
   void dispose() {
     _messageController.dispose();
     _scrollController.dispose();
+    if (_realtimeSubscription != null) {
+      Supabase.instance.client.removeChannel(_realtimeSubscription!);
+    }
     super.dispose();
+  }
+
+  Future<void> _loadChatDetails() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final client = Supabase.instance.client;
+
+      // 1. Fetch conversation details to find the partner name & role
+      final conv = await client
+          .from('conversations')
+          .select('*, clients:client_id(name), pros:pro_id(*, profiles:id(name))')
+          .eq('id', widget.chatId)
+          .single();
+
+      final clientObj = conv['clients'] as Map<dynamic, dynamic>?;
+      final proObj = conv['pros'] as Map<dynamic, dynamic>?;
+      final proProfile = proObj != null ? proObj['profiles'] as Map<dynamic, dynamic>? : null;
+
+      final isProUser = _currentUserId == conv['pro_id'];
+
+      if (isProUser) {
+        _partnerName = clientObj != null ? clientObj['name']?.toString() ?? 'Mteja' : 'Mteja';
+        _partnerRole = 'Mteja';
+      } else {
+        _partnerName = proProfile != null ? proProfile['name']?.toString() ?? 'Mtaalamu' : 'Mtaalamu';
+        _partnerRole = proObj != null ? proObj['category']?.toString() ?? 'Mtaalamu' : 'Mtaalamu';
+      }
+
+      // 2. Load historical messages
+      final msgsResponse = await client
+          .from('messages')
+          .select()
+          .eq('conversation_id', widget.chatId)
+          .order('created_at', ascending: true);
+
+      final List<dynamic> rawMsgs = msgsResponse as List<dynamic>;
+      _messages = rawMsgs.map((e) => Map<String, dynamic>.from(e)).toList();
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _scrollToBottom();
+      });
+    } catch (e) {
+      debugPrint('Failed to load chat details: $e');
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  void _subscribeToMessages() {
+    final client = Supabase.instance.client;
+    
+    _realtimeSubscription = client
+        .channel('public:messages:conversation_id=eq.${widget.chatId}')
+        .onPostgresChanges(
+          event: PostgresChangeEvent.insert,
+          schema: 'public',
+          table: 'messages',
+          filter: PostgresChangeFilter(
+            type: PostgresChangeFilterType.eq,
+            column: 'conversation_id',
+            value: widget.chatId,
+          ),
+          callback: (payload) {
+            final newRecord = payload.newRecord;
+            if (newRecord.isNotEmpty) {
+              final parsedMsg = Map<String, dynamic>.from(newRecord);
+              if (!_messages.any((m) => m['id'] == parsedMsg['id'])) {
+                setState(() {
+                  _messages.add(parsedMsg);
+                });
+                _scrollToBottom();
+              }
+            }
+          },
+        )
+        .subscribe();
   }
 
   void _scrollToBottom() {
@@ -82,19 +132,43 @@ class _ClientsChatEnhancedState extends State<ClientsChatEnhanced> {
     }
   }
 
-  void _sendMessage() {
-    if (_messageController.text.trim().isNotEmpty) {
-      setState(() {
-        _messages.add({
-          'id': (_messages.length + 1).toString(),
-          'text': _messageController.text.trim(),
-          'time': '10:48 AM',
-          'isSent': true,
-          'sender': 'Me',
-        });
+  Future<void> _sendMessage() async {
+    final text = _messageController.text.trim();
+    if (text.isEmpty || _currentUserId == null) return;
+
+    _messageController.clear();
+
+    try {
+      final client = Supabase.instance.client;
+
+      // Optimistically append local message (or let realtime subscription handle it)
+      // Writing to table: conversation_id, sender_id, text
+      await client.from('messages').insert({
+        'conversation_id': widget.chatId,
+        'sender_id': _currentUserId,
+        'text': text,
       });
-      _messageController.clear();
+
       _scrollToBottom();
+    } catch (e) {
+      debugPrint('Failed to send message: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Ujumbe haukutwa: $e'), backgroundColor: Colors.redAccent),
+        );
+      }
+    }
+  }
+
+  String _formatTime(String? createdAtStr) {
+    if (createdAtStr == null) return '';
+    try {
+      final parsed = DateTime.parse(createdAtStr).toLocal();
+      final minuteStr = parsed.minute.toString().padLeft(2, '0');
+      final hourStr = parsed.hour.toString().padLeft(2, '0');
+      return '$hourStr:$minuteStr';
+    } catch (e) {
+      return '';
     }
   }
 
@@ -153,7 +227,9 @@ class _ClientsChatEnhancedState extends State<ClientsChatEnhanced> {
               
               // Chat Messages
               Expanded(
-                child: _buildChatMessages(screenWidth, screenHeight),
+                child: _isLoading
+                    ? const Center(child: CircularProgressIndicator(color: Color(0xFF38BDF8)))
+                    : _buildChatMessages(screenWidth, screenHeight),
               ),
               
               // Footer with Input
@@ -183,6 +259,18 @@ class _ClientsChatEnhancedState extends State<ClientsChatEnhanced> {
           // Left Section - User Info
           Row(
             children: [
+              GestureDetector(
+                onTap: () {
+                  HapticFeedback.lightImpact();
+                  context.pop();
+                },
+                child: const Icon(
+                  Icons.arrow_back_ios,
+                  color: Color(0xFF7DD3FC),
+                  size: 20,
+                ),
+              ),
+              const SizedBox(width: 12),
               // Avatar
               Container(
                 width: 45,
@@ -213,16 +301,16 @@ class _ClientsChatEnhancedState extends State<ClientsChatEnhanced> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    'Bakari Said',
-                    style: TextStyle(
+                  Text(
+                    _partnerName,
+                    style: const TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 15,
                       color: Color(0xFF7DD3FC),
                     ),
                   ),
                   Text(
-                    'Mtaalamu wa Mabomba',
+                    _partnerRole,
                     style: TextStyle(
                       fontSize: 12,
                       color: const Color(0xFF7DD3FC).withOpacity(0.8),
@@ -233,14 +321,12 @@ class _ClientsChatEnhancedState extends State<ClientsChatEnhanced> {
             ],
           ),
           
-          // Right Section - Icons
+          // Right Section - Call Icons
           Row(
             children: [
-              _buildHeaderIcon('Phone'),
+              _buildHeaderIcon(Icons.phone),
               const SizedBox(width: 10),
-              _buildHeaderIcon('Video'),
-              const SizedBox(width: 10),
-              _buildHeaderIcon('Info'),
+              _buildHeaderIcon(Icons.videocam),
             ],
           ),
         ],
@@ -248,7 +334,7 @@ class _ClientsChatEnhancedState extends State<ClientsChatEnhanced> {
     );
   }
 
-  Widget _buildHeaderIcon(String iconType) {
+  Widget _buildHeaderIcon(IconData icon) {
     return Container(
       width: 38,
       height: 38,
@@ -260,31 +346,40 @@ class _ClientsChatEnhancedState extends State<ClientsChatEnhanced> {
         ),
       ),
       child: Center(
-        child: Text(
-          iconType == 'Phone' ? 'Phone' : 
-          iconType == 'Video' ? 'Video' : 'Info',
-          style: const TextStyle(
-            fontSize: 16,
-            color: Color(0xFF7DD3FC),
-          ),
+        child: Icon(
+          icon,
+          size: 18,
+          color: const Color(0xFF7DD3FC),
         ),
       ),
     );
   }
 
   Widget _buildChatMessages(double screenWidth, double screenHeight) {
+    if (_messages.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.forum_outlined, size: 48, color: Colors.white.withOpacity(0.2)),
+            const SizedBox(height: 12),
+            Text(
+              "Hakuna ujumbe bado.\nAnza mazungumzo!",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 13),
+            ),
+          ],
+        ),
+      );
+    }
+
     return ListView.builder(
       controller: _scrollController,
       padding: const EdgeInsets.all(20),
-      itemCount: _messages.length + 1, // +1 for day divider
+      itemCount: _messages.length,
       itemBuilder: (context, index) {
-        if (index == 0) {
-          return _buildDayDivider();
-        }
-        
-        final messageIndex = index - 1;
-        final message = _messages[messageIndex];
-        final isSent = message['isSent'] as bool;
+        final message = _messages[index];
+        final isSent = message['sender_id'] == _currentUserId;
         
         return Container(
           margin: const EdgeInsets.only(bottom: 16),
@@ -357,7 +452,7 @@ class _ClientsChatEnhancedState extends State<ClientsChatEnhanced> {
                   Container(
                     margin: const EdgeInsets.only(top: 6),
                     child: Text(
-                      message['time'] as String,
+                      _formatTime(message['created_at']),
                       style: TextStyle(
                         fontSize: 11,
                         color: const Color(0xFF7DD3FC).withOpacity(0.65),
@@ -370,20 +465,6 @@ class _ClientsChatEnhancedState extends State<ClientsChatEnhanced> {
           ),
         );
       },
-    );
-  }
-
-  Widget _buildDayDivider() {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Text(
-        'Leo',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 12,
-          color: const Color(0xFF7DD3FC).withOpacity(0.75),
-        ),
-      ),
     );
   }
 
@@ -453,15 +534,10 @@ class _ClientsChatEnhancedState extends State<ClientsChatEnhanced> {
                 color: Color(0xFF38BDF8),
                 shape: BoxShape.circle,
               ),
-              child: const Center(
-                child: Text(
-                  'Send',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+              child: const Icon(
+                Icons.send,
+                color: Colors.black,
+                size: 20,
               ),
             ),
           ),

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../providers/auth_provider.dart';
+import '../../../../core/services/auth_manager.dart';
 
-class ProAccountRegistrationEnhanced extends StatefulWidget {
+class ProAccountRegistrationEnhanced extends ConsumerStatefulWidget {
   const ProAccountRegistrationEnhanced({super.key});
 
   @override
-  State<ProAccountRegistrationEnhanced> createState() => _ProAccountRegistrationEnhancedState();
+  ConsumerState<ProAccountRegistrationEnhanced> createState() => _ProAccountRegistrationEnhancedState();
 }
 
-class _ProAccountRegistrationEnhancedState extends State<ProAccountRegistrationEnhanced>
+class _ProAccountRegistrationEnhancedState extends ConsumerState<ProAccountRegistrationEnhanced>
     with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final _fullNameController = TextEditingController();
@@ -180,7 +183,7 @@ class _ProAccountRegistrationEnhancedState extends State<ProAccountRegistrationE
                 child: Container(
                   width: 40,
                   height: 40,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.transparent,
                     shape: BoxShape.circle,
                   ),
@@ -323,8 +326,8 @@ class _ProAccountRegistrationEnhancedState extends State<ProAccountRegistrationE
             // Email/Phone Field
             _buildFormField(
               controller: _contactController,
-              label: 'Barua Pepe au Simu',
-              hintText: 'barua@pepe.com au 07...',
+              label: 'Barua Pepe ya usajili',
+              hintText: 'barua@pepe.com',
               icon: Icons.contact_mail,
             ),
             
@@ -361,10 +364,10 @@ class _ProAccountRegistrationEnhancedState extends State<ProAccountRegistrationE
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Tayari una akaunti? ',
                   style: TextStyle(
-                    color: const Color(0xFF94A3B8),
+                    color: Color(0xFF94A3B8),
                     fontSize: 12,
                   ),
                 ),
@@ -426,6 +429,18 @@ class _ProAccountRegistrationEnhancedState extends State<ProAccountRegistrationE
               fontSize: 14,
               fontWeight: FontWeight.normal,
             ),
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Tafadhali jaza uwanja huu';
+              }
+              if (label.contains('Barua Pepe') && !value.contains('@')) {
+                return 'Tafadhali weka barua pepe halali';
+              }
+              if (label.contains('Nenosiri') && value.trim().length < 6) {
+                return 'Nenosiri liwe na urefu usiopungua 6';
+              }
+              return null;
+            },
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: const TextStyle(
@@ -453,6 +468,7 @@ class _ProAccountRegistrationEnhancedState extends State<ProAccountRegistrationE
   }
 
   Widget _buildSubmitButton() {
+    final isLoading = ref.watch(authProvider).isLoading;
     return Container(
       width: double.infinity,
       height: 56,
@@ -468,7 +484,7 @@ class _ProAccountRegistrationEnhancedState extends State<ProAccountRegistrationE
         ],
       ),
       child: ElevatedButton(
-        onPressed: _submitRegistration,
+        onPressed: isLoading ? null : _submitRegistration,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
           foregroundColor: Colors.black,
@@ -477,30 +493,68 @@ class _ProAccountRegistrationEnhancedState extends State<ProAccountRegistrationE
             borderRadius: BorderRadius.circular(16),
           ),
         ),
-        child: const Text(
-          'Endelea',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            letterSpacing: -0.5,
-          ),
-        ),
+        child: isLoading
+            ? const SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(
+                  color: Colors.black,
+                  strokeWidth: 2.5,
+                ),
+              )
+            : const Text(
+                'Endelea',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: -0.5,
+                ),
+              ),
       ),
     );
   }
 
-  void _submitRegistration() {
+  void _submitRegistration() async {
     if (_formKey.currentState!.validate()) {
       HapticFeedback.heavyImpact();
       
-      // Determine if contact is email or phone number
+      final fullName = _fullNameController.text.trim();
       final contact = _contactController.text.trim();
-      if (contact.contains('@')) {
-        // Email - go to email verification
-        context.go('/pro_registration/email');
-      } else {
-        // Phone number - go to OTP verification
-        context.go('/pro_registration/phone');
+      final password = _passwordController.text.trim();
+      final confirmPassword = _confirmPasswordController.text.trim();
+      
+      if (password != confirmPassword) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Nenosiri hazilingani!'),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+        return;
+      }
+      
+      final result = await ref.read(authProvider.notifier).register({
+        'name': fullName,
+        'email': contact,
+        'password': password,
+        'userType': 'pro',
+      });
+      
+      final authState = ref.read(authProvider);
+      if (authState.error != null) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(authState.error!),
+              backgroundColor: Colors.redAccent,
+            ),
+          );
+        }
+      } else if (result['success'] == true) {
+        AuthManager().login(authState.currentUser?['uid'] ?? '', 'pro');
+        if (mounted) {
+          context.go('/pro_registration/email');
+        }
       }
     }
   }

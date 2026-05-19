@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../../auth/presentation/providers/auth_provider.dart';
 
-class BookingSetupEnhanced extends StatefulWidget {
+class BookingSetupEnhanced extends ConsumerStatefulWidget {
   final String? proId; // null for multi-booking, specific pro ID for individual booking
   final String? proName; // for individual booking
   
@@ -13,14 +16,15 @@ class BookingSetupEnhanced extends StatefulWidget {
   });
 
   @override
-  _BookingSetupEnhancedState createState() => _BookingSetupEnhancedState();
+  ConsumerState<BookingSetupEnhanced> createState() => _BookingSetupEnhancedState();
 }
 
-class _BookingSetupEnhancedState extends State<BookingSetupEnhanced> {
+class _BookingSetupEnhancedState extends ConsumerState<BookingSetupEnhanced> {
   String service = "Fundi Umeme";
   TextEditingController desc = TextEditingController();
   TextEditingController location = TextEditingController();
   TextEditingController budget = TextEditingController();
+  bool _isLoading = false;
 
   DateTime? selectedDate;
   TimeOfDay? selectedTime;
@@ -40,337 +44,354 @@ class _BookingSetupEnhancedState extends State<BookingSetupEnhanced> {
       appBar: AppBar(
         backgroundColor: Colors.black.withOpacity(0.6),
         elevation: 0,
-        title: Text("Weka Maombi ya Kazi"),
+        title: const Text("Weka Maombi ya Kazi"),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          children: [
-
-            /// SERVICE
-            glassCard(
-              child: DropdownButtonFormField(
-                dropdownColor: Colors.black,
-                initialValue: service,
-                items: [
-                  "Fundi Umeme",
-                  "Fundi Bomba",
-                  "Usafi wa Nyumba",
-                  "Useremala"
-                ].map((e) => DropdownMenuItem(
-                      value: e,
-                      child: Text(e),
-                    )).toList(),
-                onChanged: (val) => setState(() => service = val!),
-                decoration: inputDecoration("Chagua Huduma"),
+      body: _isLoading
+          ? const Center(
+              child: CircularProgressIndicator(
+                color: Color(0xFF00D2FF),
               ),
-            ),
-
-            /// DESCRIPTION
-            glassCard(
-              child: TextField(
-                controller: desc,
-                maxLines: 3,
-                style: TextStyle(color: Colors.white),
-                decoration: inputDecoration("Maelezo ya kazi"),
-              ),
-            ),
-
-            /// LOCATION
-            glassCard(
-              child: TextField(
-                controller: location,
-                style: TextStyle(color: Colors.white),
-                decoration: inputDecoration("Mahali"),
-              ),
-            ),
-
-            /// DATE + TIME
-            glassCard(
+            )
+          : SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Lini?", style: labelStyle()),
-
-                  SizedBox(height: 10),
-
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: pickDate,
-                          child: Text(selectedDate == null
-                              ? "Chagua Tarehe"
-                              : selectedDate.toString().split(" ")[0]),
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: pickTime,
-                          child: Text(selectedTime == null
-                              ? "Chagua Saa"
-                              : selectedTime!.format(context)),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-
-            /// 🔥 ENHANCED RECURRING SECTION
-            glassCard(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.repeat, color: Color(0xFF00D2FF), size: 20),
-                          SizedBox(width: 8),
-                          Text("Recurring Booking", style: labelStyle()),
-                        ],
-                      ),
-                      Switch(
-                        value: isRecurring,
-                        activeThumbColor: Color(0xFF00D2FF),
-                        onChanged: (val) {
-                          setState(() => isRecurring = val);
-                        },
-                      ),
-                    ],
+                  /// SERVICE
+                  glassCard(
+                    child: DropdownButtonFormField<String>(
+                      dropdownColor: Colors.black,
+                      value: service,
+                      style: const TextStyle(color: Colors.white, fontSize: 16),
+                      items: [
+                        "Fundi Umeme",
+                        "Fundi Bomba",
+                        "Usafi wa Nyumba",
+                        "Useremala"
+                      ].map((e) => DropdownMenuItem<String>(
+                            value: e,
+                            child: Text(e),
+                          )).toList(),
+                      onChanged: (val) => setState(() => service = val!),
+                      decoration: inputDecoration("Chagua Huduma"),
+                    ),
                   ),
 
-                  if (isRecurring) ...[
-                    SizedBox(height: 15),
+                  /// DESCRIPTION
+                  glassCard(
+                    child: TextField(
+                      controller: desc,
+                      maxLines: 3,
+                      style: const TextStyle(color: Colors.white),
+                      decoration: inputDecoration("Maelezo ya kazi"),
+                    ),
+                  ),
 
-                    /// TYPE SELECTION WITH CARDS
-                    Text("Chagua Aina ya Ratiba", style: labelStyle()),
-                    SizedBox(height: 10),
-                    
-                    Row(
+                  /// LOCATION
+                  glassCard(
+                    child: TextField(
+                      controller: location,
+                      style: const TextStyle(color: Colors.white),
+                      decoration: inputDecoration("Mahali"),
+                    ),
+                  ),
+
+                  /// DATE + TIME
+                  glassCard(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () => setState(() => recurringType = "Daily"),
-                            child: Container(
-                              padding: EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                color: recurringType == "Daily" 
-                                    ? Color(0xFF00D2FF).withOpacity(0.2)
-                                    : Colors.grey.withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                  color: recurringType == "Daily" 
-                                      ? Color(0xFF00D2FF)
-                                      : Colors.grey.withOpacity(0.3),
+                        Text("Lini?", style: labelStyle()),
+
+                        const SizedBox(height: 10),
+
+                        Row(
+                          children: [
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: pickDate,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFF1E293B),
+                                  foregroundColor: Colors.white,
                                 ),
-                              ),
-                              child: Column(
-                                children: [
-                                  Icon(Icons.today, 
-                                       color: recurringType == "Daily" 
-                                           ? Color(0xFF00D2FF) 
-                                           : Colors.grey,
-                                       size: 24),
-                                  SizedBox(height: 5),
-                                  Text("Kila Siku",
-                                       style: TextStyle(
-                                         color: recurringType == "Daily" 
-                                             ? Colors.white 
-                                             : Colors.grey,
-                                         fontWeight: recurringType == "Daily" 
-                                             ? FontWeight.bold 
-                                             : FontWeight.normal,
-                                       )),
-                                ],
+                                child: Text(selectedDate == null
+                                    ? "Chagua Tarehe"
+                                    : selectedDate.toString().split(" ")[0]),
                               ),
                             ),
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () => setState(() => recurringType = "Weekly"),
-                            child: Container(
-                              padding: EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                color: recurringType == "Weekly" 
-                                    ? Color(0xFF00D2FF).withOpacity(0.2)
-                                    : Colors.grey.withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                  color: recurringType == "Weekly" 
-                                      ? Color(0xFF00D2FF)
-                                      : Colors.grey.withOpacity(0.3),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: pickTime,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFF1E293B),
+                                  foregroundColor: Colors.white,
                                 ),
-                              ),
-                              child: Column(
-                                children: [
-                                  Icon(Icons.calendar_view_week, 
-                                       color: recurringType == "Weekly" 
-                                           ? Color(0xFF00D2FF) 
-                                           : Colors.grey,
-                                       size: 24),
-                                  SizedBox(height: 5),
-                                  Text("Kila Wiki",
-                                       style: TextStyle(
-                                         color: recurringType == "Weekly" 
-                                             ? Colors.white 
-                                             : Colors.grey,
-                                         fontWeight: recurringType == "Weekly" 
-                                             ? FontWeight.bold 
-                                             : FontWeight.normal,
-                                       )),
-                                ],
+                                child: Text(selectedTime == null
+                                    ? "Chagua Saa"
+                                    : selectedTime!.format(context)),
                               ),
                             ),
-                          ),
+                          ],
                         ),
                       ],
                     ),
+                  ),
 
-                    if (recurringType == "Weekly") ...[
-                      SizedBox(height: 15),
-                      
-                      /// DAY SELECTION WITH GRID
-                      Text("Chagua Siku", style: labelStyle()),
-                      SizedBox(height: 10),
-                      
-                      SizedBox(
-                        height: 120,
-                        child: GridView.builder(
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 4,
-                            childAspectRatio: 1.2,
-                            crossAxisSpacing: 8,
-                            mainAxisSpacing: 8,
-                          ),
-                          itemCount: days.length,
-                          itemBuilder: (context, index) {
-                            final day = days[index];
-                            final isSelected = selectedDay == day;
-                            
-                            return GestureDetector(
-                              onTap: () => setState(() => selectedDay = day),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: isSelected 
-                                      ? Color(0xFF00D2FF).withOpacity(0.3)
-                                      : Colors.grey.withOpacity(0.1),
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: isSelected 
-                                        ? Color(0xFF00D2FF)
-                                        : Colors.grey.withOpacity(0.3),
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    day.substring(0, 3), // Show first 3 letters
-                                    style: TextStyle(
-                                      color: isSelected ? Colors.white : Colors.grey,
-                                      fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                                      fontSize: 12,
+                  /// 🔥 ENHANCED RECURRING SECTION
+                  glassCard(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(Icons.repeat, color: Color(0xFF00D2FF), size: 20),
+                                const SizedBox(width: 8),
+                                Text("Recurring Booking", style: labelStyle()),
+                              ],
+                            ),
+                            Switch(
+                              value: isRecurring,
+                              activeThumbColor: const Color(0xFF00D2FF),
+                              onChanged: (val) {
+                                setState(() => isRecurring = val);
+                              },
+                            ),
+                          ],
+                        ),
+
+                        if (isRecurring) ...[
+                          const SizedBox(height: 15),
+
+                          /// TYPE SELECTION WITH CARDS
+                          Text("Chagua Aina ya Ratiba", style: labelStyle()),
+                          const SizedBox(height: 10),
+                          
+                          Row(
+                            children: [
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () => setState(() => recurringType = "Daily"),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(15),
+                                    decoration: BoxDecoration(
+                                      color: recurringType == "Daily" 
+                                          ? const Color(0xFF00D2FF).withOpacity(0.2)
+                                          : Colors.grey.withOpacity(0.1),
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                        color: recurringType == "Daily" 
+                                            ? const Color(0xFF00D2FF)
+                                            : Colors.grey.withOpacity(0.3),
+                                      ),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Icon(Icons.today, 
+                                             color: recurringType == "Daily" 
+                                                 ? const Color(0xFF00D2FF) 
+                                                 : Colors.grey,
+                                             size: 24),
+                                        const SizedBox(height: 5),
+                                        Text("Kila Siku",
+                                             style: TextStyle(
+                                               color: recurringType == "Daily" 
+                                                   ? Colors.white 
+                                                   : Colors.grey,
+                                               fontWeight: recurringType == "Daily" 
+                                                   ? FontWeight.bold 
+                                                   : FontWeight.normal,
+                                             )),
+                                      ],
                                     ),
                                   ),
                                 ),
                               ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () => setState(() => recurringType = "Weekly"),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(15),
+                                    decoration: BoxDecoration(
+                                      color: recurringType == "Weekly" 
+                                          ? const Color(0xFF00D2FF).withOpacity(0.2)
+                                          : Colors.grey.withOpacity(0.1),
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                        color: recurringType == "Weekly" 
+                                            ? const Color(0xFF00D2FF)
+                                            : Colors.grey.withOpacity(0.3),
+                                      ),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Icon(Icons.calendar_view_week, 
+                                             color: recurringType == "Weekly" 
+                                                 ? const Color(0xFF00D2FF) 
+                                                 : Colors.grey,
+                                             size: 24),
+                                        const SizedBox(height: 5),
+                                        Text("Kila Wiki",
+                                             style: TextStyle(
+                                               color: recurringType == "Weekly" 
+                                                   ? Colors.white 
+                                                   : Colors.grey,
+                                               fontWeight: recurringType == "Weekly" 
+                                                   ? FontWeight.bold 
+                                                   : FontWeight.normal,
+                                             )),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
 
-                    SizedBox(height: 15),
-
-                    /// INFO CARD
-                    Container(
-                      padding: EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Color(0xFF00D2FF).withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: Color(0xFF00D2FF).withOpacity(0.3)),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(Icons.info_outline, color: Color(0xFF00D2FF), size: 16),
-                          SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              recurringType == "Daily"
-                                  ? "Maombi yako yatajirudia kila siku saa ${selectedTime?.format(context) ?? '??'}"
-                                  : "Maombi yako yatajirudia kila $selectedDay saa ${selectedTime?.format(context) ?? '??'}",
-                              style: TextStyle(
-                                color: Color(0xFF00D2FF),
-                                fontSize: 12,
+                          if (recurringType == "Weekly") ...[
+                            const SizedBox(height: 15),
+                            
+                            /// DAY SELECTION WITH GRID
+                            Text("Chagua Siku", style: labelStyle()),
+                            const SizedBox(height: 10),
+                            
+                            SizedBox(
+                              height: 120,
+                              child: GridView.builder(
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 4,
+                                  childAspectRatio: 1.2,
+                                  crossAxisSpacing: 8,
+                                  mainAxisSpacing: 8,
+                                ),
+                                itemCount: days.length,
+                                itemBuilder: (context, index) {
+                                  final day = days[index];
+                                  final isSelected = selectedDay == day;
+                                  
+                                  return GestureDetector(
+                                    onTap: () => setState(() => selectedDay = day),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: isSelected 
+                                            ? const Color(0xFF00D2FF).withOpacity(0.3)
+                                            : Colors.grey.withOpacity(0.1),
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(
+                                          color: isSelected 
+                                              ? const Color(0xFF00D2FF)
+                                              : Colors.grey.withOpacity(0.3),
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          day.substring(0, 3), // Show first 3 letters
+                                          style: TextStyle(
+                                            color: isSelected ? Colors.white : Colors.grey,
+                                            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
+                          ],
 
-                    SizedBox(height: 10),
+                          const SizedBox(height: 15),
 
-                    /// 24-HOUR TIMER INFO
-                    Container(
-                      padding: EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.orange.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: Colors.orange.withOpacity(0.3)),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(Icons.timer, color: Colors.orange, size: 16),
-                          SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              "Baada ya kukubaliwa, utakuwa na masaa 24 kukamilisha maombi",
-                              style: TextStyle(
-                                color: Colors.orange,
-                                fontSize: 12,
-                              ),
+                          /// INFO CARD
+                          Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF00D2FF).withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: const Color(0xFF00D2FF).withOpacity(0.3)),
+                            ),
+                            child: Row(
+                              children: [
+                                const Icon(Icons.info_outline, color: Color(0xFF00D2FF), size: 16),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    recurringType == "Daily"
+                                        ? "Maombi yako yatajirudia kila siku saa ${selectedTime?.format(context) ?? '??'}"
+                                        : "Maombi yako yatajirudia kila $selectedDay saa ${selectedTime?.format(context) ?? '??'}",
+                                    style: const TextStyle(
+                                      color: Color(0xFF00D2FF),
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
+
+                          const SizedBox(height: 10),
+
+                          /// 24-HOUR TIMER INFO
+                          Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: Colors.orange.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: Colors.orange.withOpacity(0.3)),
+                            ),
+                            child: Row(
+                              children: [
+                                const Icon(Icons.timer, color: Colors.orange, size: 16),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    "Baada ya kukubaliwa, utakuwa na masaa 24 kukamilisha maombi",
+                                    style: const TextStyle(
+                                      color: Colors.orange,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ]
+                      ],
+                    ),
+                  ),
+
+                  /// BUDGET
+                  glassCard(
+                    child: TextField(
+                      controller: budget,
+                      keyboardType: TextInputType.number,
+                      style: const TextStyle(color: Colors.white),
+                      decoration: inputDecoration("Bajeti (TZS)"),
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  /// SUBMIT
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF00D2FF),
+                      minimumSize: const Size(double.infinity, 55),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                  ]
+                    onPressed: submit,
+                    child: const Text("Tuma Maombi",
+                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16)),
+                  )
                 ],
               ),
             ),
-
-            /// BUDGET
-            glassCard(
-              child: TextField(
-                controller: budget,
-                keyboardType: TextInputType.number,
-                style: TextStyle(color: Colors.white),
-                decoration: inputDecoration("Bajeti (TZS)"),
-              ),
-            ),
-
-            SizedBox(height: 20),
-
-            /// SUBMIT
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF00D2FF),
-                minimumSize: Size(double.infinity, 55),
-              ),
-              onPressed: submit,
-              child: Text("Tuma Maombi",
-                  style: TextStyle(color: Colors.black)),
-            )
-          ],
-        ),
-      ),
     );
   }
 
@@ -378,8 +399,8 @@ class _BookingSetupEnhancedState extends State<BookingSetupEnhanced> {
 
   Widget glassCard({required Widget child}) {
     return Container(
-      margin: EdgeInsets.only(bottom: 16),
-      padding: EdgeInsets.all(16),
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.05),
         borderRadius: BorderRadius.circular(20),
@@ -392,20 +413,20 @@ class _BookingSetupEnhancedState extends State<BookingSetupEnhanced> {
   InputDecoration inputDecoration(String label) {
     return InputDecoration(
       labelText: label,
-      labelStyle: TextStyle(color: Colors.grey),
+      labelStyle: const TextStyle(color: Colors.grey),
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.white10),
+        borderSide: const BorderSide(color: Colors.white10),
         borderRadius: BorderRadius.circular(12),
       ),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Color(0xFF00D2FF)),
+        borderSide: const BorderSide(color: Color(0xFF00D2FF)),
         borderRadius: BorderRadius.circular(12),
       ),
     );
   }
 
   TextStyle labelStyle() {
-    return TextStyle(
+    return const TextStyle(
         color: Color(0xFF00D2FF),
         fontWeight: FontWeight.bold,
         fontSize: 12);
@@ -435,13 +456,13 @@ class _BookingSetupEnhancedState extends State<BookingSetupEnhanced> {
     }
   }
 
-  void submit() {
+  void submit() async {
     HapticFeedback.heavyImpact();
     
     // Validate that date and time are selected
     if (selectedDate == null || selectedTime == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Tafadhali chagua tarehe na saa'),
           backgroundColor: Colors.red,
         ),
@@ -463,109 +484,103 @@ class _BookingSetupEnhancedState extends State<BookingSetupEnhanced> {
     
     if (hoursUntilBooking < 24) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Miadi inapaswa kuwa angalau masaa 24 mbele'),
           backgroundColor: Colors.orange,
         ),
       );
       return;
     }
-    
-    print("Service: $service");
-    print("Recurring: $isRecurring");
-    print("Booking expires in: ${24 - hoursUntilBooking} hours");
 
-    if (isRecurring) {
-      print("Type: $recurringType");
-      print("Day: $selectedDay");
-    }
+    setState(() {
+      _isLoading = true;
+    });
 
-    print("Time: $selectedTime");
-    
-    // Determine booking type
-    final bookingType = widget.proId == null ? 'recurring' : 'individual';
-    
-    // Create booking data
-    final bookingData = {
-      'serviceType': service,
-      'description': desc.text,
-      'location': location.text,
-      'price': double.tryParse(budget.text) ?? 0.0,
-      'bookingDate': selectedDate.toString().split(' ')[0],
-      'bookingTime': selectedTime!.format(context),
-      'bookingType': bookingType,
-      'isRecurring': isRecurring,
-      'recurringType': recurringType,
-      'recurringDay': selectedDay,
-      'professionalId': widget.proId,
-      'professionalName': widget.proName,
-      'notes': isRecurring 
-          ? 'Recurring $recurringType${recurringType == 'Weekly' ? ' on $selectedDay' : ''}'
-          : desc.text,
-    };
-    
-    // Check if this is multi-booking (no specific pro) or individual booking
-    if (widget.proId == null) {
-      // Multi-booking: send to 10 pros
-      _sendMultiBookingRequest(service, bookingDateTime, bookingData);
-    } else {
-      // Individual booking: send to specific pro
-      _sendIndividualBookingRequest(widget.proId!, widget.proName!, service, bookingDateTime, bookingData);
+    try {
+      final client = Supabase.instance.client;
+      final userId = client.auth.currentUser?.id;
+      if (userId == null) {
+        throw Exception('User is not authenticated');
+      }
+
+      // 1. Create a row in the `bookings` table
+      final bookingResponse = await client.from('bookings').insert({
+        'client_id': userId,
+        'pro_id': widget.proId,
+        'service_type': service,
+        'description': desc.text.trim(),
+        'location': location.text.trim(),
+        'budget': double.tryParse(budget.text.trim()) ?? 0.0,
+        'booking_date': selectedDate.toString().split(' ')[0],
+        'booking_time': selectedTime!.format(context),
+        'status': 'pending',
+      }).select().single();
+
+      final bookingId = bookingResponse['id'] as String;
+
+      // 2. If isRecurring is true, write to recurring_bookings
+      if (isRecurring) {
+        await client.from('recurring_bookings').insert({
+          'booking_id': bookingId,
+          'frequency': recurringType,
+          'day_of_week': recurringType == 'Weekly' ? selectedDay : null,
+        });
+      }
+
+      // 3. Match pros: Route booking request to pro(s)
+      if (widget.proId != null) {
+        // Individual booking: Send directly to specific pro
+        await client.from('booking_requests').insert({
+          'booking_id': bookingId,
+          'pro_id': widget.proId,
+          'status': 'pending',
+        });
+      } else {
+        // Multi-booking matching criteria: Get top 10 matched pros and send booking requests
+        final pros = await client.from('pros').select('id').eq('category', service).limit(10);
+        if (pros.isNotEmpty) {
+          final List<Map<String, dynamic>> requests = [];
+          for (final pro in pros) {
+            requests.add({
+              'booking_id': bookingId,
+              'pro_id': pro['id'] as String,
+              'status': 'pending',
+            });
+          }
+          await client.from('booking_requests').insert(requests);
+        }
+      }
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Maombi yako yametumwa kikamilifu!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        // Navigate to kazi live client hub after submitting booking request
+        context.go('/kazi_live_client_hub');
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Kosa: ${e.toString()}'),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
-    
-    // Navigate to kazi live client hub after submitting booking request
-    // This is where users can track their booking requests and see which pro accepts first
-    context.go('/kazi_live_client_hub');
-  }
-  
-  void _sendMultiBookingRequest(String serviceType, DateTime bookingTime, Map<String, dynamic> bookingData) {
-    // Simulate sending booking requests to 10 pros based on service criteria
-    // In a real app, this would make API calls to find matching pros
-    
-    print('=== MULTI-BOOKING REQUEST SENT ===');
-    print('Service: $serviceType');
-    print('Booking Time: $bookingTime');
-    print('Sending requests to 10 top priority pros...');
-    
-    // Simulate finding 10 pros who match the service criteria
-    final matchingPros = [
-      'Pro 1 - $serviceType Expert',
-      'Pro 2 - $serviceType Specialist', 
-      'Pro 3 - $serviceType Professional',
-      'Pro 4 - $serviceType Technician',
-      'Pro 5 - $serviceType Provider',
-      'Pro 6 - $serviceType Contractor',
-      'Pro 7 - $serviceType Service Provider',
-      'Pro 8 - $serviceType Expert',
-      'Pro 9 - $serviceType Specialist',
-      'Pro 10 - $serviceType Professional',
-    ];
-    
-    for (int i = 0; i < matchingPros.length; i++) {
-      print('Request ${i + 1}/10 sent to: ${matchingPros[i]}');
-      // In real implementation: API call to send booking request
-    }
-    
-    print('Note: First pro to accept gets the job');
-    print('Service costs are ignored in matching criteria');
-  }
-  
-  void _sendIndividualBookingRequest(String proId, String proName, String serviceType, DateTime bookingTime, Map<String, dynamic> bookingData) {
-    // Simulate sending booking request to specific pro
-    print('=== INDIVIDUAL BOOKING REQUEST SENT ===');
-    print('Pro ID: $proId');
-    print('Pro Name: $proName');
-    print('Service: $serviceType');
-    print('Booking Time: $bookingTime');
-    print('Request sent directly to: $proName');
-    
-    // In real implementation: API call to send booking request to specific pro
-    print('Individual booking request sent to $proName');
   }
   
   void rescheduleBooking() {
     HapticFeedback.lightImpact();
-    // Open date/time picker for rescheduling
     showDialog(
       context: context,
       builder: (BuildContext context) {

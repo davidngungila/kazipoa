@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../providers/auth_provider.dart';
+import '../../../../core/services/auth_manager.dart';
 
-class ClientIdRegistrationEnhanced extends StatefulWidget {
+class ClientIdRegistrationEnhanced extends ConsumerStatefulWidget {
   const ClientIdRegistrationEnhanced({super.key});
 
   @override
-  State<ClientIdRegistrationEnhanced> createState() => _ClientIdRegistrationEnhancedState();
+  ConsumerState<ClientIdRegistrationEnhanced> createState() => _ClientIdRegistrationEnhancedState();
 }
 
-class _ClientIdRegistrationEnhancedState extends State<ClientIdRegistrationEnhanced>
+class _ClientIdRegistrationEnhancedState extends ConsumerState<ClientIdRegistrationEnhanced>
     with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
@@ -188,7 +191,7 @@ class _ClientIdRegistrationEnhancedState extends State<ClientIdRegistrationEnhan
             child: Container(
               width: 40,
               height: 40,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.transparent,
                 shape: BoxShape.circle,
               ),
@@ -290,8 +293,8 @@ class _ClientIdRegistrationEnhancedState extends State<ClientIdRegistrationEnhan
                 // Contact Field
                 _buildFormField(
                   controller: _contactController,
-                  label: 'Namba ya simu au Barua pepe',
-                  hintText: 'Namba ya simu au Barua pepe',
+                  label: 'Barua pepe ya usajili',
+                  hintText: 'Mfano: daniel@domain.com',
                   icon: Icons.contact_mail,
                   keyboardType: TextInputType.emailAddress,
                 ),
@@ -359,15 +362,15 @@ class _ClientIdRegistrationEnhancedState extends State<ClientIdRegistrationEnhan
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                children: [
+                children: const [
                   Icon(
                     Icons.verified_user,
-                    color: const Color(0xFF0EA5E9),
+                    color: Color(0xFF0EA5E9),
                     size: 16,
                     weight: 700,
                   ),
-                  const SizedBox(width: 8),
-                  const Text(
+                  SizedBox(width: 8),
+                  Text(
                     'Verified Platinum Secure',
                     style: TextStyle(
                       color: Color(0xFFD1D5DB),
@@ -424,6 +427,18 @@ class _ClientIdRegistrationEnhancedState extends State<ClientIdRegistrationEnhan
               fontSize: 16,
               fontWeight: FontWeight.w500,
             ),
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Tafadhali jaza uwanja huu';
+              }
+              if (label.contains('Barua pepe') && !value.contains('@')) {
+                return 'Weka barua pepe halali';
+              }
+              if (label.contains('Nenosiri') && value.trim().length < 6) {
+                return 'Nenosiri liwe na urefu usiopungua 6';
+              }
+              return null;
+            },
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: TextStyle(
@@ -451,6 +466,7 @@ class _ClientIdRegistrationEnhancedState extends State<ClientIdRegistrationEnhan
   }
 
   Widget _buildSubmitButton(double screenWidth) {
+    final isLoading = ref.watch(authProvider).isLoading;
     return Container(
       width: double.infinity,
       height: 56,
@@ -466,7 +482,7 @@ class _ClientIdRegistrationEnhancedState extends State<ClientIdRegistrationEnhan
         ],
       ),
       child: ElevatedButton(
-        onPressed: _submitForm,
+        onPressed: isLoading ? null : _submitForm,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
           foregroundColor: Colors.black,
@@ -475,40 +491,67 @@ class _ClientIdRegistrationEnhancedState extends State<ClientIdRegistrationEnhan
             borderRadius: BorderRadius.circular(16),
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'Sajili',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w900,
-                letterSpacing: -0.5,
+        child: isLoading
+            ? const SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(
+                  color: Colors.black,
+                  strokeWidth: 2.5,
+                ),
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    'Sajili',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: -0.5,
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Icon(
+                    Icons.arrow_forward,
+                    size: 16,
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(width: 8),
-            const Icon(
-              Icons.arrow_forward,
-              size: 16,
-            ),
-          ],
-        ),
       ),
     );
   }
 
-  void _submitForm() {
+  void _submitForm() async {
     if (_formKey.currentState!.validate()) {
       HapticFeedback.heavyImpact();
       
-      // Check if input is email or phone
+      final username = _usernameController.text.trim();
       final contact = _contactController.text.trim();
-      if (contact.contains('@')) {
-        // Navigate to email verification
-        context.go('/register/email');
-      } else {
-        // Navigate to OTP verification
-        context.go('/register/phone');
+      final password = _passwordController.text.trim();
+      
+      final result = await ref.read(authProvider.notifier).register({
+        'name': username,
+        'email': contact,
+        'password': password,
+        'userType': 'client',
+      });
+      
+      final authState = ref.read(authProvider);
+      if (authState.error != null) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(authState.error!),
+              backgroundColor: Colors.redAccent,
+            ),
+          );
+        }
+      } else if (result['success'] == true) {
+        AuthManager().login(authState.currentUser?['uid'] ?? '', 'client');
+        if (mounted) {
+          context.go('/register/email');
+        }
       }
     }
   }
