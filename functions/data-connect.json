@@ -1,0 +1,220 @@
+{
+  "connectorId": "kazipoa-sql-connector",
+  "location": "africa-south1",
+  "dataSources": [
+    {
+      "name": "kazipoa-database",
+      "type": "postgresql"
+    }
+  ],
+  "schema": {
+    "tables": {
+      "users": {
+        "columns": {
+          "id": {
+            "type": "string",
+            "primaryKey": true
+          },
+          "authId": {
+            "type": "string",
+            "unique": true
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "unique": true
+          },
+          "role": {
+            "type": "string",
+            "enum": ["client", "pro", "admin"]
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "isVerified": {
+            "type": "boolean",
+            "default": false
+          },
+          "tier": {
+            "type": "string",
+            "enum": ["bronze", "silver", "gold", "platinum"],
+            "default": "bronze"
+          },
+          "createdAt": {
+            "type": "timestamp",
+            "default": "CURRENT_TIMESTAMP"
+          },
+          "updatedAt": {
+            "type": "timestamp",
+            "default": "CURRENT_TIMESTAMP"
+          }
+        }
+      },
+      "services": {
+        "columns": {
+          "id": {
+            "type": "string",
+            "primaryKey": true
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "text"
+          },
+          "category": {
+            "type": "string"
+          },
+          "averagePrice": {
+            "type": "integer"
+          },
+          "priceUnit": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true
+          },
+          "createdAt": {
+            "type": "timestamp",
+            "default": "CURRENT_TIMESTAMP"
+          }
+        }
+      },
+      "bookings": {
+        "columns": {
+          "id": {
+            "type": "string",
+            "primaryKey": true
+          },
+          "clientId": {
+            "type": "string",
+            "references": "users(id)"
+          },
+          "proId": {
+            "type": "string",
+            "references": "users(id)"
+          },
+          "serviceId": {
+            "type": "string",
+            "references": "services(id)"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "confirmed", "in_progress", "completed", "cancelled"],
+            "default": "pending"
+          },
+          "bookingDate": {
+            "type": "timestamp"
+          },
+          "duration": {
+            "type": "integer"
+          },
+          "price": {
+            "type": "decimal"
+          },
+          "currency": {
+            "type": "string",
+            "default": "TZS"
+          },
+          "notes": {
+            "type": "text"
+          },
+          "createdAt": {
+            "type": "timestamp",
+            "default": "CURRENT_TIMESTAMP"
+          },
+          "updatedAt": {
+            "type": "timestamp",
+            "default": "CURRENT_TIMESTAMP"
+          }
+        }
+      },
+      "subscriptions": {
+        "columns": {
+          "id": {
+            "type": "string",
+            "primaryKey": true
+          },
+          "userId": {
+            "type": "string",
+            "references": "users(id)"
+          },
+          "plan": {
+            "type": "string",
+            "enum": ["trial", "basic", "premium"],
+            "default": "trial"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["active", "expired", "suspended", "grace_period"],
+            "default": "active"
+          },
+          "startDate": {
+            "type": "timestamp"
+          },
+          "endDate": {
+            "type": "timestamp"
+          },
+          "price": {
+            "type": "decimal",
+            "default": 5000
+          },
+          "currency": {
+            "type": "string",
+            "default": "TZS"
+          },
+          "autoRenew": {
+            "type": "boolean",
+            "default": true
+          },
+          "createdAt": {
+            "type": "timestamp",
+            "default": "CURRENT_TIMESTAMP"
+          },
+          "updatedAt": {
+            "type": "timestamp",
+            "default": "CURRENT_TIMESTAMP"
+          }
+        }
+      },
+      "reviews": {
+        "columns": {
+          "id": {
+            "type": "string",
+            "primaryKey": true
+          },
+          "bookingId": {
+            "type": "string",
+            "references": "bookings(id)"
+          },
+          "clientId": {
+            "type": "string",
+            "references": "users(id)"
+          },
+          "proId": {
+            "type": "string",
+            "references": "users(id)"
+          },
+          "rating": {
+            "type": "integer",
+            "min": 1,
+            "max": 5
+          },
+          "comment": {
+            "type": "text"
+          },
+          "createdAt": {
+            "type": "timestamp",
+            "default": "CURRENT_TIMESTAMP"
+          }
+        }
+      }
+    }
+  }
+}

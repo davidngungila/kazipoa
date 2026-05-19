@@ -1,0 +1,29 @@
+{
+  "name": "kazipoa-flutter",
+  "version": "1.0.0",
+  "description": "Flutter frontend for Kazi Poa platform",
+  "scripts": {
+    "install": "echo 'Flutter uses pub get, not npm install. Use: flutter pub get'",
+    "build": "flutter build web",
+    "dev": "flutter run",
+    "clean": "flutter clean",
+    "test": "flutter test",
+    "analyze": "flutter analyze",
+    "format": "dart format .",
+    "pub-get": "flutter pub get",
+    "pub-upgrade": "flutter pub upgrade",
+    "pub-outdated": "flutter pub outdated"
+  },
+  "keywords": [
+    "flutter",
+    "dart",
+    "mobile",
+    "kazi-poa",
+    "tanzania"
+  ],
+  "author": "Kazi Poa Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
