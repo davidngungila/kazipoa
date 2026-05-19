@@ -548,7 +548,7 @@ class _ClientIdRegistrationEnhancedState extends ConsumerState<ClientIdRegistrat
           );
         }
       } else if (result['success'] == true) {
-        AuthManager().login(authState.currentUser?['uid'] ?? '', 'client');
+        AuthManager().login(result['user']['id'] ?? '', 'client');
         if (mounted) {
           context.go('/register/email');
         }

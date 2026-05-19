@@ -589,7 +589,7 @@ class _ClientIdLoginEnhancedState extends ConsumerState<ClientIdLoginEnhanced>
       final email = _usernameController.text.trim();
       final password = _passwordController.text.trim();
       
-      await ref.read(authProvider.notifier).login(email, password);
+      await ref.read(authProvider.notifier).login(email, password, userType: 'client');
       
       final authState = ref.read(authProvider);
       if (authState.error != null) {
@@ -603,7 +603,7 @@ class _ClientIdLoginEnhancedState extends ConsumerState<ClientIdLoginEnhanced>
         }
       } else if (authState.isAuthenticated) {
         // Set state in manager
-        AuthManager().login(authState.currentUser?['uid'] ?? '', 'client');
+        AuthManager().login(authState.currentUser?['id'] ?? '', 'client');
         if (mounted) {
           context.go('/home');
         }

@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kazipoa/core/config/supabase_config.dart';
 import 'package:kazipoa/core/services/auth_manager.dart';
+import 'package:kazipoa/core/services/enhanced_auth_service.dart';
 import 'package:kazipoa/app/app.dart';
 
 Future<void> main() async {
@@ -26,29 +27,22 @@ Future<void> main() async {
   }
 
   // Check if session exists on startup and populate AuthManager
+  final container = ProviderContainer();
   try {
-    final client = Supabase.instance.client;
-    final session = client.auth.currentSession;
-    if (session != null) {
-      try {
-        final profile = await client
-            .from('profiles')
-            .select()
-            .eq('id', session.user.id)
-            .single();
-        final role = profile['role'] ?? 'client';
-        AuthManager().login(session.user.id, role);
-      } catch (e) {
-        debugPrint('Error loading user profile on startup: $e');
-      }
+    await container.read(enhancedAuthServiceProvider).init();
+    final authManager = AuthManager();
+    final user = container.read(enhancedAuthServiceProvider).currentUser;
+    if (user != null) {
+      authManager.login(user['id'], user['role'] ?? 'client');
     }
   } catch (e) {
-    debugPrint('Warning: Could not retrieve current session: $e');
+    debugPrint('Error initializing auth on startup: $e');
   }
 
   runApp(
-    const ProviderScope(
-      child: KazipoaApp(),
+    UncontrolledProviderScope(
+      container: container,
+      child: const KazipoaApp(),
     ),
   );
 }

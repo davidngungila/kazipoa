@@ -31,11 +31,11 @@ class AuthState {
 }
 
 class AuthNotifier extends Notifier<AuthState> {
-  late final AuthService _authService;
+  late final EnhancedAuthService _authService;
 
   @override
   AuthState build() {
-    _authService = ref.read(authServiceProvider);
+    _authService = ref.read(enhancedAuthServiceProvider);
     return const AuthState(
       isLoading: false,
       error: null,
@@ -45,15 +45,15 @@ class AuthNotifier extends Notifier<AuthState> {
   }
 
   
-  Future<void> login(String email, String password) async {
+  Future<void> login(String email, String password, {String userType = 'client'}) async {
     state = state.copyWith(isLoading: true, error: null);
     
     try {
-      final result = await _authService.login(email, password);
+      final result = await _authService.login(email, password, userType: userType);
       
       if (result['success'] == true) {
         final user = result['user'];
-        AuthManager().login(user['uid'], user['role'] ?? 'client');
+        AuthManager().login(user['id'], user['role'] ?? userType);
         
         state = state.copyWith(
           isLoading: false,
@@ -107,7 +107,7 @@ class AuthNotifier extends Notifier<AuthState> {
       
       if (result['success'] == true) {
         final user = result['user'];
-        AuthManager().login(user['uid'], user['userType'] ?? 'client');
+        AuthManager().login(user['id'], user['role'] ?? 'client');
         
         state = state.copyWith(
           isLoading: false,
@@ -152,7 +152,7 @@ class AuthNotifier extends Notifier<AuthState> {
       } else {
         state = state.copyWith(
           isLoading: false,
-          error: result['error'] ?? 'Profile update failed',
+          error: result['error'] ?? 'Update failed',
         );
       }
     } catch (e) {
@@ -168,7 +168,7 @@ class AuthNotifier extends Notifier<AuthState> {
   }
 }
 
-// Provider using Riverpod v3 syntax
+// Provider
 final authProvider = NotifierProvider<AuthNotifier, AuthState>(() => AuthNotifier());
 
 // Convenience getters

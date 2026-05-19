@@ -616,7 +616,7 @@ class _ProAccountLoginEnhancedState extends ConsumerState<ProAccountLoginEnhance
       final email = _emailController.text.trim();
       final password = _passwordController.text.trim();
       
-      await ref.read(authProvider.notifier).login(email, password);
+      await ref.read(authProvider.notifier).login(email, password, userType: 'pro');
       
       final authState = ref.read(authProvider);
       if (authState.error != null) {
@@ -630,7 +630,7 @@ class _ProAccountLoginEnhancedState extends ConsumerState<ProAccountLoginEnhance
         }
       } else if (authState.isAuthenticated) {
         // Set state in manager
-        AuthManager().login(authState.currentUser?['uid'] ?? '', 'pro');
+        AuthManager().login(authState.currentUser?['id'] ?? '', 'pro');
         if (mounted) {
           context.go('/wasifu/pro_dashboard');
         }

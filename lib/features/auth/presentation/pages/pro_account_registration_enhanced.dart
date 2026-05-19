@@ -551,7 +551,7 @@ class _ProAccountRegistrationEnhancedState extends ConsumerState<ProAccountRegis
           );
         }
       } else if (result['success'] == true) {
-        AuthManager().login(authState.currentUser?['uid'] ?? '', 'pro');
+        AuthManager().login(result['user']['id'] ?? '', 'pro');
         if (mounted) {
           context.go('/pro_registration/email');
         }

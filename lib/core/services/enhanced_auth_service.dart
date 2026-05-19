@@ -64,18 +64,22 @@ class EnhancedAuthService {
         // Get additional user data from Supabase
         final userData = await SupabaseService.getUserProfile(result.user!.id) ?? {};
         
+        final role = userData['role'] ?? userType;
+        
         // Create user object matching JavaScript structure
         final user = {
           'id': result.user!.id,
           'email': result.user!.email,
           'name': userData['name'] ?? result.user!.userMetadata?['name'] ?? 'User',
           'phone': userData['phone'] ?? '',
-          'userType': userData['userType'] ?? userType,
+          'userType': role,
+          'role': role,
           'isEmailVerified': result.user!.emailConfirmedAt != null,
           'createdAt': userData['created_at'] ?? DateTime.now().toIso8601String(),
           'lastLoginAt': DateTime.now().toIso8601String(),
           'isVerified': userData['isVerified'] ?? false,
           'profileImage': userData['profileImage'] ?? '',
+          'profile_completed': userData['profile_completed'] ?? false,
         };
 
         // Update session state
@@ -132,12 +136,14 @@ class EnhancedAuthService {
 
       if (result.user != null) {
         // User profile is already created in SupabaseService.registerWithEmail
+        final role = userData['userType'] ?? 'client';
         final user = {
           'id': result.user!.id,
           'email': result.user!.email,
           'name': userData['name'],
           'phone': userData['phone'] ?? '',
-          'userType': userData['userType'] ?? 'client',
+          'userType': role,
+          'role': role,
           'isEmailVerified': result.user!.emailConfirmedAt != null,
           'createdAt': DateTime.now().toIso8601String(),
           'lastLoginAt': DateTime.now().toIso8601String(),
@@ -149,6 +155,7 @@ class EnhancedAuthService {
           'location': userData['location'] ?? {},
           'rating': 0.0,
           'totalBookings': 0,
+          'profile_completed': false,
         };
 
         // Update session state
@@ -157,7 +164,7 @@ class EnhancedAuthService {
 
         // Store session data
         await StorageManager.setCurrentUser(user);
-        await StorageManager.setUserType(userData['userType'] ?? 'client');
+        await StorageManager.setUserType(role);
 
         // Start session timer
         _startSessionTimer();

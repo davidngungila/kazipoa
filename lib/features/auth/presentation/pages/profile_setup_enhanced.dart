@@ -1032,6 +1032,7 @@ class _ProfileSetupEnhancedState extends ConsumerState<ProfileSetupEnhanced>
         ref.read(authProvider.notifier).updateProfile({
           'phone': phone,
           'profile_completed': true,
+          'role': 'pro',
         });
         
         if (mounted) {
